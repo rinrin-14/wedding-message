@@ -12,9 +12,9 @@
   <title>Wedding Message</title>
 
 
-  <!-- =====================================
+  <!-- ================================
        手書き風フォント
-  ====================================== -->
+  ================================= -->
 
   <link
     rel="preconnect"
@@ -36,9 +36,9 @@
   <style>
 
 
-    /* =====================================
+    /* =================================
        基本設定
-    ===================================== */
+    ================================= */
 
     * {
       box-sizing: border-box;
@@ -48,10 +48,10 @@
     html,
     body {
 
-      margin: 0;
-
       width: 100%;
       height: 100%;
+
+      margin: 0;
 
     }
 
@@ -74,9 +74,9 @@
     }
 
 
-    /* =====================================
+    /* =================================
        全体
-    ===================================== */
+    ================================= */
 
     .screen {
 
@@ -94,9 +94,9 @@
     }
 
 
-    /* =====================================
+    /* =================================
        写真エリア
-    ===================================== */
+    ================================= */
 
     .photo-area {
 
@@ -108,33 +108,31 @@
 
       overflow: hidden;
 
-      background:
-        rgba(255,255,255,0.12);
+      background: #1f1f1f;
 
       touch-action: pan-y;
 
     }
 
 
-    /* =====================================
+    /* =================================
        写真トラック
-    ===================================== */
+    ================================= */
 
     .photo-track {
 
       position: absolute;
 
       top: 50%;
-
       left: 0;
 
-      height: 82%;
+      height: 76%;
 
       display: flex;
 
       align-items: center;
 
-      gap: 20px;
+      gap: 28px;
 
       width: max-content;
 
@@ -149,6 +147,8 @@
 
       -webkit-user-select: none;
 
+      z-index: 5;
+
     }
 
 
@@ -159,13 +159,13 @@
     }
 
 
-    /* =====================================
-       写真カード
-
-       枠・背景・影を全部なくす
-    ===================================== */
+    /* =================================
+       写真1枚分
+    ================================= */
 
     .photo-card {
+
+      position: relative;
 
       flex-shrink: 0;
 
@@ -182,11 +182,9 @@
     }
 
 
-    /* =====================================
+    /* =================================
        写真
-
-       縦横比そのまま
-    ===================================== */
+    ================================= */
 
     .photo-card img {
 
@@ -196,11 +194,11 @@
 
       width: auto;
 
-      max-width: 62vw;
+      max-width: 68vw;
 
       object-fit: contain;
 
-      border-radius: 5px;
+      border-radius: 2px;
 
       pointer-events: none;
 
@@ -209,10 +207,6 @@
     }
 
 
-    /* =====================================
-       写真なし
-    ===================================== */
-
     .photo-card.hidden {
 
       display: none;
@@ -220,12 +214,104 @@
     }
 
 
-    /* =====================================
-       写真とメッセージの境目
+    /* =================================
+       フィルム穴
+       
+       写真の上下に小さな穴
+    ================================= */
 
-       真っ二つに切らず、
-       少しだけ柔らかくする
-    ===================================== */
+    .photo-card::before,
+    .photo-card::after {
+
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      right: 0;
+
+      height: 9px;
+
+      z-index: 10;
+
+      pointer-events: none;
+
+      /*
+        穴を横に並べる
+      */
+
+      background-image:
+        radial-gradient(
+          ellipse at center,
+          rgba(255,255,255,0.72) 0,
+          rgba(255,255,255,0.72) 3px,
+          transparent 3.5px
+        );
+
+      background-size:
+        15px 9px;
+
+      background-repeat:
+        repeat-x;
+
+      opacity: 0.75;
+
+    }
+
+
+    .photo-card::before {
+
+      top: -15px;
+
+    }
+
+
+    .photo-card::after {
+
+      bottom: -15px;
+
+    }
+
+
+    /* =================================
+       写真と写真の間
+       
+       フィルムの区切り感
+    ================================= */
+
+    .photo-card + .photo-card {
+
+      margin-left: 0;
+
+    }
+
+
+    /* =================================
+       上下のフィルムライン
+    ================================= */
+
+    .photo-area::before {
+
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      right: 0;
+
+      top: 12%;
+
+      height: 1px;
+
+      background:
+        rgba(255,255,255,0.14);
+
+      z-index: 3;
+
+      pointer-events: none;
+
+    }
+
 
     .photo-area::after {
 
@@ -234,30 +320,182 @@
       position: absolute;
 
       left: 0;
-
       right: 0;
 
+      bottom: 12%;
+
+      height: 1px;
+
+      background:
+        rgba(255,255,255,0.14);
+
+      z-index: 3;
+
+      pointer-events: none;
+
+    }
+
+
+    /* =================================
+       フィルムの光漏れ
+       
+       ごく薄く画面を横切る
+    ================================= */
+
+    .light-leak {
+
+      position: absolute;
+
+      top: 0;
       bottom: 0;
 
-      height: 45px;
+      left: -35%;
+
+      width: 35%;
 
       background:
         linear-gradient(
-          to bottom,
-          rgba(255,255,255,0),
-          rgba(255,255,255,0.35)
+          90deg,
+          transparent 0%,
+          rgba(255,150,90,0.04) 35%,
+          rgba(255,210,140,0.12) 60%,
+          rgba(255,130,80,0.04) 80%,
+          transparent 100%
         );
+
+      filter:
+        blur(10px);
 
       pointer-events: none;
 
       z-index: 20;
 
+      animation:
+        lightLeakMove 11s
+        ease-in-out
+        infinite;
+
     }
 
 
-    /* =====================================
+    @keyframes lightLeakMove {
+
+      0% {
+
+        transform:
+          translateX(-20%);
+
+        opacity: 0;
+
+      }
+
+      20% {
+
+        opacity: 0.8;
+
+      }
+
+      50% {
+
+        opacity: 1;
+
+      }
+
+      80% {
+
+        opacity: 0.5;
+
+      }
+
+      100% {
+
+        transform:
+          translateX(420%);
+
+        opacity: 0;
+
+      }
+
+    }
+
+
+    /* =================================
+       フィルム粒子
+    ================================= */
+
+    .film-grain {
+
+      position: absolute;
+
+      inset: 0;
+
+      z-index: 30;
+
+      pointer-events: none;
+
+      opacity: 0.13;
+
+      background-image:
+
+        radial-gradient(
+          rgba(255,255,255,0.7) 0.5px,
+          transparent 0.8px
+        ),
+
+        radial-gradient(
+          rgba(0,0,0,0.5) 0.5px,
+          transparent 0.8px
+        );
+
+      background-size:
+        5px 5px,
+        7px 7px;
+
+      background-position:
+        0 0,
+        3px 4px;
+
+      animation:
+        grainMove 0.25s
+        steps(2)
+        infinite;
+
+    }
+
+
+    @keyframes grainMove {
+
+      0% {
+        transform:
+          translate(0,0);
+      }
+
+      25% {
+        transform:
+          translate(1px,-1px);
+      }
+
+      50% {
+        transform:
+          translate(-1px,1px);
+      }
+
+      75% {
+        transform:
+          translate(1px,1px);
+      }
+
+      100% {
+        transform:
+          translate(0,0);
+      }
+
+    }
+
+
+    /* =================================
        メッセージエリア
-    ===================================== */
+    ================================= */
 
     .message-area {
 
@@ -276,22 +514,14 @@
 
       align-items: stretch;
 
-      /*
-        背景はJSでゲストごとに変更
-      */
-
       background:
-        rgba(255,255,255,0.55);
-
-      /*
-        紙っぽい質感
-      */
+        rgba(255,255,255,0.65);
 
       background-image:
 
         radial-gradient(
-          rgba(80,80,80,0.035) 0.6px,
-          transparent 0.6px
+          rgba(70,70,70,0.035) 0.6px,
+          transparent 0.7px
         );
 
       background-size:
@@ -300,12 +530,9 @@
     }
 
 
-    /* =====================================
-       薄い装飾
-
-       左上から葉っぱが
-       ほんのり伸びているイメージ
-    ===================================== */
+    /* =================================
+       さりげない円形装飾
+    ================================= */
 
     .message-area::before {
 
@@ -313,18 +540,15 @@
 
       position: absolute;
 
-      width: 170px;
+      width: 190px;
+      height: 190px;
 
-      height: 170px;
-
-      top: -85px;
-
-      right: -70px;
+      top: -100px;
+      right: -75px;
 
       border:
-
         1px solid
-        rgba(90,100,85,0.08);
+        rgba(80,90,80,0.08);
 
       border-radius:
         50% 40% 55% 45%;
@@ -343,18 +567,15 @@
 
       position: absolute;
 
-      width: 110px;
+      width: 120px;
+      height: 120px;
 
-      height: 110px;
-
-      bottom: -55px;
-
-      left: -45px;
+      bottom: -60px;
+      left: -50px;
 
       border:
-
         1px solid
-        rgba(90,100,85,0.07);
+        rgba(80,90,80,0.07);
 
       border-radius:
         45% 55% 40% 60%;
@@ -367,9 +588,9 @@
     }
 
 
-    /* =====================================
+    /* =================================
        宛名
-    ===================================== */
+    ================================= */
 
     .name {
 
@@ -399,9 +620,9 @@
     }
 
 
-    /* =====================================
+    /* =================================
        区切り線
-    ===================================== */
+    ================================= */
 
     .line {
 
@@ -422,9 +643,9 @@
     }
 
 
-    /* =====================================
-       メッセージスクロール部分
-    ===================================== */
+    /* =================================
+       メッセージ
+    ================================= */
 
     .message-wrapper {
 
@@ -434,16 +655,13 @@
 
       width: 100%;
 
-      max-width: 500px;
-
       flex: 1;
 
       min-height: 0;
 
       overflow-y: auto;
 
-      padding:
-        0 4px 0 0;
+      padding-right: 4px;
 
       -webkit-overflow-scrolling:
         touch;
@@ -459,10 +677,6 @@
 
     }
 
-
-    /* =====================================
-       メッセージ本文
-    ===================================== */
 
     .message {
 
@@ -490,11 +704,9 @@
     }
 
 
-    /* =====================================
-       一番下の英字
-       
-       右寄せ
-    ===================================== */
+    /* =================================
+       一番下
+    ================================= */
 
     .message-footer {
 
@@ -523,23 +735,14 @@
     }
 
 
-    /* =====================================
-       小さいスマホ
-    ===================================== */
+    /* =================================
+       スマホ小画面
+    ================================= */
 
     @media (max-height: 700px) {
 
 
-      .photo-area {
-
-        height: 50%;
-
-      }
-
-
       .message-area {
-
-        height: 50%;
 
         padding:
           19px 23px 13px;
@@ -549,16 +752,16 @@
 
       .photo-track {
 
-        height: 78%;
+        height: 75%;
 
-        gap: 15px;
+        gap: 22px;
 
       }
 
 
       .photo-card img {
 
-        max-width: 65vw;
+        max-width: 72vw;
 
       }
 
@@ -596,9 +799,9 @@
     }
 
 
-    /* =====================================
-       PC表示
-    ===================================== */
+    /* =================================
+       PC
+    ================================= */
 
     @media (min-width: 700px) {
 
@@ -615,8 +818,6 @@
         height: 850px;
 
         border-radius: 20px;
-
-        overflow: hidden;
 
         box-shadow:
           0 10px 40px
@@ -647,6 +848,18 @@
       id="photoArea"
     >
 
+
+      <!-- 光漏れ -->
+
+      <div class="light-leak"></div>
+
+
+      <!-- フィルム粒子 -->
+
+      <div class="film-grain"></div>
+
+
+      <!-- 写真 -->
 
       <div
         class="photo-track"
@@ -703,7 +916,7 @@
 
 
         <!-- =================================
-             無限ループ用コピー
+             無限ループ用
         ================================== -->
 
         <div
@@ -750,11 +963,12 @@
 
       </div>
 
+
     </section>
 
 
     <!-- =================================
-         メッセージエリア
+         メッセージ
     ================================== -->
 
     <section
@@ -762,8 +976,6 @@
       id="messageArea"
     >
 
-
-      <!-- 宛名 -->
 
       <h1
         id="name"
@@ -775,12 +987,8 @@
       </h1>
 
 
-      <!-- 区切り -->
-
       <div class="line"></div>
 
-
-      <!-- メッセージ -->
 
       <div
         class="message-wrapper"
@@ -798,8 +1006,6 @@
 
       </div>
 
-
-      <!-- フッター -->
 
       <div class="message-footer">
 
@@ -839,7 +1045,7 @@
 
 
     /* =====================================
-       背景色
+       ゲストごとの背景色
     ===================================== */
 
     const backgroundColors = [
@@ -897,11 +1103,6 @@
       guestBackground;
 
 
-    /*
-      メッセージエリアにも
-      同じ色を薄く反映
-    */
-
     document.getElementById(
       "messageArea"
     ).style.backgroundColor =
@@ -909,7 +1110,7 @@
 
 
     /* =====================================
-       写真セット関数
+       写真設定
     ===================================== */
 
     function setPhoto(
@@ -1038,10 +1239,6 @@
     } else {
 
 
-      /* =================================
-         IDなし
-      ================================== */
-
       document.getElementById(
         "name"
       ).textContent =
@@ -1146,20 +1343,12 @@
       }
 
 
-      /*
-        自動移動
-      */
-
       if (!isDragging) {
 
         position -= velocity;
 
       }
 
-
-      /*
-        無限ループ
-      */
 
       if (
         position <=
@@ -1194,9 +1383,7 @@
 
     function animate() {
 
-
       updatePhotoPosition();
-
 
       requestAnimationFrame(
         animate
