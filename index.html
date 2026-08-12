@@ -3,11 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Wedding Message</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 30px 20px;
+      background: #f8f6f2;
+      color: #333;
+      font-family: sans-serif;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px 20px;
+      border-radius: 16px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .message {
+      line-height: 2;
+      margin-top: 25px;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>Thank you for coming!</h1>
-  <p>今日は私たちの結婚式に来てくれてありがとう。</p>
+
+  <div class="container">
+
+    <h1 id="name">Thank you!</h1>
+
+    <div class="message" id="message">
+      メッセージを読み込んでいます。
+    </div>
+
+  </div>
+
+  <script>
+
+    // ゲストデータ
+    const guests = {
+
+      "abc123": {
+        name: "山田さん",
+        message: "今日は私たちの結婚式に来てくれて本当にありがとう！これからもよろしくね！"
+      },
+
+      "xyz789": {
+        name: "佐藤さん",
+        message: "今日は来てくれてありがとう！また近いうちにゆっくりご飯行こう！"
+      }
+
+    };
+
+
+    // URLからIDを取得
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+
+    // ゲスト情報を表示
+    if (id && guests[id]) {
+
+      document.getElementById("name").textContent =
+        `${guests[id].name}へ`;
+
+      document.getElementById("message").textContent =
+        guests[id].message;
+
+    } else {
+
+      document.getElementById("name").textContent =
+        "Welcome!";
+
+      document.getElementById("message").textContent =
+        "QRコードからアクセスしてください。";
+
+    }
+
+  </script>
+
 </body>
 </html>
