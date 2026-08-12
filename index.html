@@ -38,7 +38,7 @@
 
     /* =====================================
        基本設定
-    ====================================== */
+    ===================================== */
 
     * {
       box-sizing: border-box;
@@ -69,14 +69,14 @@
         sans-serif;
 
       transition:
-        background-color 0.5s ease;
+        background-color 0.6s ease;
 
     }
 
 
     /* =====================================
        全体
-    ====================================== */
+    ===================================== */
 
     .screen {
 
@@ -96,9 +96,7 @@
 
     /* =====================================
        写真エリア
-       
-       上半分
-    ====================================== */
+    ===================================== */
 
     .photo-area {
 
@@ -111,12 +109,7 @@
       overflow: hidden;
 
       background:
-        rgba(255,255,255,0.15);
-
-      /*
-        横スワイプを許可。
-        縦方向のページ操作には干渉しにくくする。
-      */
+        rgba(255,255,255,0.12);
 
       touch-action: pan-y;
 
@@ -124,8 +117,8 @@
 
 
     /* =====================================
-       写真を流すトラック
-    ====================================== */
+       写真トラック
+    ===================================== */
 
     .photo-track {
 
@@ -135,23 +128,18 @@
 
       left: 0;
 
-      height: 78%;
+      height: 82%;
 
       display: flex;
 
       align-items: center;
 
-      gap: 18px;
+      gap: 20px;
 
       width: max-content;
 
       transform:
         translateY(-50%);
-
-      /*
-        JSで位置を動かすので
-        CSS animationは使わない。
-      */
 
       will-change: transform;
 
@@ -173,7 +161,9 @@
 
     /* =====================================
        写真カード
-    ====================================== */
+
+       枠・背景・影を全部なくす
+    ===================================== */
 
     .photo-card {
 
@@ -182,16 +172,6 @@
       height: 100%;
 
       width: auto;
-
-      padding: 7px;
-
-      background: #fff;
-
-      border-radius: 8px;
-
-      box-shadow:
-        0 8px 24px
-        rgba(0,0,0,0.14);
 
       display: flex;
 
@@ -203,10 +183,10 @@
 
 
     /* =====================================
-       写真本体
-       
-       縦横比を完全維持
-    ====================================== */
+       写真
+
+       縦横比そのまま
+    ===================================== */
 
     .photo-card img {
 
@@ -216,11 +196,11 @@
 
       width: auto;
 
-      max-width: 58vw;
+      max-width: 62vw;
 
       object-fit: contain;
 
-      border-radius: 4px;
+      border-radius: 5px;
 
       pointer-events: none;
 
@@ -230,8 +210,8 @@
 
 
     /* =====================================
-       写真がない場合
-    ====================================== */
+       写真なし
+    ===================================== */
 
     .photo-card.hidden {
 
@@ -241,11 +221,11 @@
 
 
     /* =====================================
-       写真エリア下端
-       
-       メッセージとの境目を
-       少し柔らかくする
-    ====================================== */
+       写真とメッセージの境目
+
+       真っ二つに切らず、
+       少しだけ柔らかくする
+    ===================================== */
 
     .photo-area::after {
 
@@ -254,17 +234,18 @@
       position: absolute;
 
       left: 0;
+
       right: 0;
 
       bottom: 0;
 
-      height: 35px;
+      height: 45px;
 
       background:
         linear-gradient(
           to bottom,
           rgba(255,255,255,0),
-          rgba(255,255,255,0.40)
+          rgba(255,255,255,0.35)
         );
 
       pointer-events: none;
@@ -276,9 +257,7 @@
 
     /* =====================================
        メッセージエリア
-       
-       下半分
-    ====================================== */
+    ===================================== */
 
     .message-area {
 
@@ -289,25 +268,114 @@
       height: 50%;
 
       padding:
-        24px 28px 18px;
+        25px 28px 16px;
 
       display: flex;
 
       flex-direction: column;
 
-      align-items: center;
+      align-items: stretch;
+
+      /*
+        背景はJSでゲストごとに変更
+      */
 
       background:
-        rgba(255,255,255,0.25);
+        rgba(255,255,255,0.55);
+
+      /*
+        紙っぽい質感
+      */
+
+      background-image:
+
+        radial-gradient(
+          rgba(80,80,80,0.035) 0.6px,
+          transparent 0.6px
+        );
+
+      background-size:
+        7px 7px;
 
     }
 
 
     /* =====================================
-       名前
-    ====================================== */
+       薄い装飾
+
+       左上から葉っぱが
+       ほんのり伸びているイメージ
+    ===================================== */
+
+    .message-area::before {
+
+      content: "";
+
+      position: absolute;
+
+      width: 170px;
+
+      height: 170px;
+
+      top: -85px;
+
+      right: -70px;
+
+      border:
+
+        1px solid
+        rgba(90,100,85,0.08);
+
+      border-radius:
+        50% 40% 55% 45%;
+
+      transform:
+        rotate(25deg);
+
+      pointer-events: none;
+
+    }
+
+
+    .message-area::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 110px;
+
+      height: 110px;
+
+      bottom: -55px;
+
+      left: -45px;
+
+      border:
+
+        1px solid
+        rgba(90,100,85,0.07);
+
+      border-radius:
+        45% 55% 40% 60%;
+
+      transform:
+        rotate(-20deg);
+
+      pointer-events: none;
+
+    }
+
+
+    /* =====================================
+       宛名
+    ===================================== */
 
     .name {
+
+      position: relative;
+
+      z-index: 2;
 
       flex-shrink: 0;
 
@@ -318,7 +386,7 @@
         "Hiragino Maru Gothic ProN",
         cursive;
 
-      font-size: 28px;
+      font-size: 27px;
 
       font-weight: 600;
 
@@ -326,37 +394,43 @@
 
       line-height: 1.5;
 
-      text-align: center;
+      text-align: left;
 
     }
 
 
     /* =====================================
        区切り線
-    ====================================== */
+    ===================================== */
 
     .line {
 
-      flex-shrink: 0;
+      position: relative;
 
-      width: 45px;
+      z-index: 2;
+
+      width: 55px;
 
       height: 1px;
 
       margin:
-        10px auto 16px;
+        9px 0 15px;
 
       background:
-        rgba(60,60,60,0.38);
+        rgba(60,60,60,0.32);
 
     }
 
 
     /* =====================================
        メッセージスクロール部分
-    ====================================== */
+    ===================================== */
 
     .message-wrapper {
+
+      position: relative;
+
+      z-index: 2;
 
       width: 100%;
 
@@ -369,7 +443,7 @@
       overflow-y: auto;
 
       padding:
-        0 8px;
+        0 4px 0 0;
 
       -webkit-overflow-scrolling:
         touch;
@@ -388,7 +462,7 @@
 
     /* =====================================
        メッセージ本文
-    ====================================== */
+    ===================================== */
 
     .message {
 
@@ -409,7 +483,7 @@
 
       letter-spacing: 0.045em;
 
-      text-align: center;
+      text-align: left;
 
       white-space: pre-line;
 
@@ -417,33 +491,41 @@
 
 
     /* =====================================
-       フッター
-    ====================================== */
+       一番下の英字
+       
+       右寄せ
+    ===================================== */
 
     .message-footer {
 
+      position: relative;
+
+      z-index: 2;
+
       flex-shrink: 0;
 
-      margin-top: 8px;
+      margin-top: 7px;
+
+      text-align: right;
 
       font-family:
         Georgia,
         "Times New Roman",
         serif;
 
-      font-size: 9px;
+      font-size: 8px;
 
-      letter-spacing: 0.18em;
+      letter-spacing: 0.16em;
 
       color:
-        rgba(60,60,60,0.55);
+        rgba(60,60,60,0.50);
 
     }
 
 
     /* =====================================
        小さいスマホ
-    ====================================== */
+    ===================================== */
 
     @media (max-height: 700px) {
 
@@ -460,23 +542,23 @@
         height: 50%;
 
         padding:
-          18px 22px 15px;
+          19px 23px 13px;
 
       }
 
 
       .photo-track {
 
-        height: 76%;
+        height: 78%;
 
-        gap: 14px;
+        gap: 15px;
 
       }
 
 
-      .photo-card {
+      .photo-card img {
 
-        padding: 6px;
+        max-width: 65vw;
 
       }
 
@@ -491,7 +573,7 @@
       .line {
 
         margin:
-          8px auto 13px;
+          7px 0 12px;
 
       }
 
@@ -507,7 +589,7 @@
 
       .message-footer {
 
-        font-size: 8px;
+        font-size: 7px;
 
       }
 
@@ -515,8 +597,8 @@
 
 
     /* =====================================
-       PC
-    ====================================== */
+       PC表示
+    ===================================== */
 
     @media (min-width: 700px) {
 
@@ -533,6 +615,8 @@
         height: 850px;
 
         border-radius: 20px;
+
+        overflow: hidden;
 
         box-shadow:
           0 10px 40px
@@ -622,7 +706,6 @@
              無限ループ用コピー
         ================================== -->
 
-
         <div
           class="photo-card"
           id="card1copy"
@@ -674,8 +757,13 @@
          メッセージエリア
     ================================== -->
 
-    <section class="message-area">
+    <section
+      class="message-area"
+      id="messageArea"
+    >
 
+
+      <!-- 宛名 -->
 
       <h1
         id="name"
@@ -687,8 +775,12 @@
       </h1>
 
 
+      <!-- 区切り -->
+
       <div class="line"></div>
 
+
+      <!-- メッセージ -->
 
       <div
         class="message-wrapper"
@@ -706,6 +798,8 @@
 
       </div>
 
+
+      <!-- フッター -->
 
       <div class="message-footer">
 
@@ -795,8 +889,23 @@
     }
 
 
-    document.body.style.backgroundColor =
+    const guestBackground =
       getBackgroundColor(id);
+
+
+    document.body.style.backgroundColor =
+      guestBackground;
+
+
+    /*
+      メッセージエリアにも
+      同じ色を薄く反映
+    */
+
+    document.getElementById(
+      "messageArea"
+    ).style.backgroundColor =
+      guestBackground;
 
 
     /* =====================================
@@ -961,10 +1070,7 @@
 
 
     /* =====================================
-       写真の自動スクロール
-       
-       JavaScript方式なので
-       手動操作と共存できる
+       写真スクロール
     ===================================== */
 
     const photoArea =
@@ -981,7 +1087,11 @@
 
     let position = 0;
 
-    let velocity = 0.45;
+    /*
+      自動スクロール速度
+    */
+
+    let velocity = 0.55;
 
     let isDragging = false;
 
@@ -989,11 +1099,9 @@
 
     let startPosition = 0;
 
-    let lastTime = null;
-
 
     /* =====================================
-       1セット分の幅を取得
+       ループ幅
     ===================================== */
 
     function getLoopWidth() {
@@ -1005,10 +1113,6 @@
         );
 
 
-      /*
-        最初の3枚分を基準にする
-      */
-
       if (cards.length < 6) {
 
         return 0;
@@ -1016,23 +1120,16 @@
       }
 
 
-      const first =
-        cards[0];
-
-      const fourth =
-        cards[3];
-
-
       return (
-        fourth.offsetLeft -
-        first.offsetLeft
+        cards[3].offsetLeft -
+        cards[0].offsetLeft
       );
 
     }
 
 
     /* =====================================
-       写真位置を更新
+       写真位置更新
     ===================================== */
 
     function updatePhotoPosition() {
@@ -1050,7 +1147,7 @@
 
 
       /*
-        自動スクロール
+        自動移動
       */
 
       if (!isDragging) {
@@ -1092,22 +1189,10 @@
 
 
     /* =====================================
-       アニメーションループ
+       アニメーション
     ===================================== */
 
-    function animate(timestamp) {
-
-
-      if (lastTime === null) {
-
-        lastTime =
-          timestamp;
-
-      }
-
-
-      lastTime =
-        timestamp;
+    function animate() {
 
 
       updatePhotoPosition();
@@ -1126,9 +1211,7 @@
 
 
     /* =====================================
-       タッチ操作
-       
-       指で左右にスワイプできる
+       スマホ：タッチ開始
     ===================================== */
 
     photoArea.addEventListener(
@@ -1162,6 +1245,10 @@
     );
 
 
+    /* =====================================
+       スマホ：スワイプ
+    ===================================== */
+
     photoArea.addEventListener(
       "touchmove",
       function(event) {
@@ -1185,10 +1272,6 @@
         position =
           startPosition + deltaX;
 
-
-        /*
-          ループ幅
-        */
 
         const loopWidth =
           getLoopWidth();
@@ -1233,6 +1316,10 @@
     );
 
 
+    /* =====================================
+       スマホ：指を離す
+    ===================================== */
+
     photoArea.addEventListener(
       "touchend",
       function() {
@@ -1254,7 +1341,7 @@
 
 
     /* =====================================
-       PCでもマウスで操作可能
+       PC：マウス操作
     ===================================== */
 
     photoArea.addEventListener(
@@ -1271,7 +1358,6 @@
 
         startPosition =
           position;
-
 
       }
     );
