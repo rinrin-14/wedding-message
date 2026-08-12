@@ -8,10 +8,6 @@
 
   <style>
 
-    /* =========================
-       基本設定
-    ========================= */
-
     * {
       box-sizing: border-box;
     }
@@ -24,6 +20,8 @@
     }
 
     body {
+      overflow: hidden;
+
       color: #333;
 
       font-family:
@@ -31,18 +29,15 @@
         "Yu Gothic",
         sans-serif;
 
-      overflow: hidden;
-
       transition: background-color 0.5s ease;
     }
 
 
-    /* =========================
-       メイン画面
-    ========================= */
+    /* =================================
+       全体
+    ================================= */
 
     .screen {
-
       position: relative;
 
       width: 100%;
@@ -53,15 +48,16 @@
       margin: 0 auto;
 
       overflow: hidden;
+
+      background: transparent;
     }
 
 
-    /* =========================
+    /* =================================
        写真共通
-    ========================= */
+    ================================= */
 
     .photo {
-
       position: absolute;
 
       display: block;
@@ -69,108 +65,108 @@
       width: auto;
       height: auto;
 
-      max-width: 48%;
-      max-height: 34%;
-
       object-fit: contain;
 
-      border-radius: 6px;
+      border: 5px solid rgba(255, 255, 255, 0.95);
+
+      border-radius: 2px;
 
       box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.15);
+        0 8px 25px rgba(0, 0, 0, 0.16);
 
       z-index: 1;
-
-      background: rgba(255,255,255,0.15);
     }
 
 
-    /* =========================
+    /* =================================
        写真①
        左上・小さめ
-    ========================= */
+    ================================= */
 
     .photo-1 {
 
-      top: 5%;
-      left: 4%;
+      top: 4%;
+      left: 3%;
 
       max-width: 43%;
-      max-height: 30%;
-    }
-
-
-    /* =========================
-       写真②
-       右側・一番大きい
-    ========================= */
-
-    .photo-2 {
-
-      top: 8%;
-      right: 4%;
-
-      max-width: 55%;
-      max-height: 40%;
+      max-height: 31%;
 
       z-index: 2;
     }
 
 
-    /* =========================
-       写真③
-       下側
-    ========================= */
+    /* =================================
+       写真②
+       メイン写真
+       中央寄り・大きめ
+    ================================= */
 
-    .photo-3 {
+    .photo-2 {
 
-      bottom: 5%;
-      left: 10%;
+      top: 7%;
+      right: 2%;
 
-      max-width: 48%;
-      max-height: 30%;
+      max-width: 68%;
+      max-height: 43%;
 
       z-index: 1;
     }
 
 
-    /* =========================
+    /* =================================
+       写真③
+       下側
+    ================================= */
+
+    .photo-3 {
+
+      bottom: 7%;
+      right: 3%;
+
+      max-width: 57%;
+      max-height: 31%;
+
+      z-index: 2;
+    }
+
+
+    /* =================================
        中央メッセージカード
-    ========================= */
+    ================================= */
 
     .message-card {
 
       position: absolute;
-
-      width: 76%;
-      max-width: 450px;
-
-      height: auto;
-      max-height: 48%;
 
       top: 50%;
       left: 50%;
 
       transform: translate(-50%, -50%);
 
-      padding: 30px 25px;
+      width: 76%;
+      max-width: 460px;
+
+      max-height: 51%;
+
+      padding: 28px 25px;
 
       /*
-        透明度高め。
-        後ろの写真が少し透けて見える。
+        かなり透けるように設定
       */
 
-      background: rgba(255, 255, 255, 0.68);
+      background:
+        rgba(255, 255, 255, 0.64);
 
-      border: 1px solid rgba(255,255,255,0.7);
+      border:
+        1px solid rgba(255, 255, 255, 0.85);
 
-      border-radius: 18px;
+      border-radius: 20px;
 
       box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.10);
+        0 12px 35px rgba(0, 0, 0, 0.12);
 
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
 
       text-align: center;
 
@@ -180,13 +176,13 @@
     }
 
 
-    /* =========================
+    /* =================================
        名前
-    ========================= */
+    ================================= */
 
     .name {
 
-      margin: 0 0 16px;
+      margin: 0 0 13px;
 
       font-family:
         "Klee One",
@@ -194,35 +190,36 @@
         "Yu Gothic",
         cursive;
 
-      font-size: 27px;
+      font-size: 29px;
 
-      font-weight: 600;
+      font-weight: 500;
 
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
 
-      color: #333;
+      color: #303030;
     }
 
 
-    /* =========================
-       区切り線
-    ========================= */
+    /* =================================
+       飾り線
+    ================================= */
 
     .line {
 
-      width: 42px;
+      width: 48px;
+
       height: 1px;
 
-      margin: 0 auto 18px;
+      margin: 0 auto 17px;
 
-      background: rgba(60,60,60,0.45);
+      background:
+        rgba(80, 70, 60, 0.45);
     }
 
 
-    /* =========================
-       メッセージ部分
-       長文の場合だけスクロール
-    ========================= */
+    /* =================================
+       メッセージ
+    ================================= */
 
     .message-wrapper {
 
@@ -230,9 +227,11 @@
 
       overflow-y: auto;
 
-      padding-right: 5px;
+      padding: 0 4px;
 
       -webkit-overflow-scrolling: touch;
+
+      scrollbar-width: thin;
     }
 
 
@@ -246,7 +245,7 @@
         "Yu Gothic",
         cursive;
 
-      font-size: 15px;
+      font-size: 16px;
 
       line-height: 2;
 
@@ -258,16 +257,16 @@
     }
 
 
-    /* =========================
-       フッター
-    ========================= */
+    /* =================================
+       下部
+    ================================= */
 
     .footer {
 
       position: absolute;
 
-      bottom: 1.5%;
       left: 0;
+      bottom: 2.2%;
 
       width: 100%;
 
@@ -280,89 +279,91 @@
 
       font-size: 10px;
 
-      letter-spacing: 0.16em;
+      letter-spacing: 0.15em;
 
-      color: rgba(60,60,60,0.65);
+      color:
+        rgba(80, 70, 60, 0.7);
 
       z-index: 20;
     }
 
 
-    /* =========================
-       非表示
-    ========================= */
+    /* =================================
+       写真がない場合
+    ================================= */
 
     .hidden {
       display: none;
     }
 
 
-    /* =========================
+    /* =================================
        小さいスマホ
-    ========================= */
+    ================================= */
 
     @media (max-height: 700px) {
 
-      .photo {
-        max-height: 30%;
+      .photo-1 {
+        max-height: 28%;
       }
 
       .photo-2 {
-        max-height: 35%;
+        max-height: 38%;
+      }
+
+      .photo-3 {
+        max-height: 27%;
       }
 
       .message-card {
 
         width: 78%;
 
-        padding: 22px 20px;
-
+        padding:
+          22px 19px;
       }
 
       .name {
 
-        font-size: 23px;
+        font-size: 24px;
 
-        margin-bottom: 12px;
-
+        margin-bottom: 10px;
       }
 
       .message-wrapper {
 
         max-height: 23vh;
-
       }
 
       .message {
 
-        font-size: 13px;
+        font-size: 14px;
 
-        line-height: 1.8;
-
+        line-height: 1.85;
       }
-
     }
 
 
-    /* =========================
+    /* =================================
        PC
-    ========================= */
+    ================================= */
 
     @media (min-width: 700px) {
+
+      body {
+        padding-top: 20px;
+      }
 
       .screen {
 
         height: 850px;
 
-        margin-top: 20px;
-
         border-radius: 20px;
 
         box-shadow:
-          0 10px 40px rgba(0,0,0,0.12);
-
+          0 10px 40px
+          rgba(0, 0, 0, 0.12);
       }
-
     }
 
   </style>
@@ -374,9 +375,9 @@
   <main class="screen">
 
 
-    <!-- =====================
+    <!-- =============================
          写真
-    ====================== -->
+    ============================== -->
 
     <img
       id="photo1"
@@ -400,9 +401,9 @@
     >
 
 
-    <!-- =====================
-         中央メッセージ
-    ====================== -->
+    <!-- =============================
+         メッセージ
+    ============================== -->
 
     <section class="message-card">
 
@@ -413,9 +414,7 @@
         Thank you!
       </h1>
 
-
       <div class="line"></div>
-
 
       <div class="message-wrapper">
 
@@ -431,35 +430,31 @@
     </section>
 
 
-    <!-- =====================
+    <!-- =============================
          フッター
-    ====================== -->
+    ============================== -->
 
     <div class="footer">
-
       THANK YOU FOR CELEBRATING WITH US
-
     </div>
 
   </main>
 
 
-  <!-- =====================
-       ゲストデータ
-  ====================== -->
+  <!-- =============================
+       ゲスト情報
+  ============================== -->
 
   <script src="guests.js"></script>
 
 
-  <!-- =====================
+  <!-- =============================
        表示処理
-  ====================== -->
+  ============================== -->
 
   <script>
 
-    /*
-      URLからID取得
-    */
+    /* URLからID取得 */
 
     const params =
       new URLSearchParams(
@@ -470,27 +465,26 @@
       params.get("id");
 
 
-    /*
-      背景色
-      IDによって固定する
-    */
+    /* =================================
+       背景色
+    ================================= */
 
     const backgroundColors = [
 
-      "#F3E9E3",
-      "#EDE8E2",
-      "#E8ECE7",
-      "#E8EDF2",
-      "#F1E9D8",
-      "#EEE7EF",
-      "#E9E5DE",
-      "#E7ECEB"
+      "#F3E9DD",
+      "#EDE8DF",
+      "#E8EDE7",
+      "#E8EDF1",
+      "#F0E7D5",
+      "#EEE7EE",
+      "#E9E4DA",
+      "#E5ECE9"
 
     ];
 
 
     /*
-      IDから背景色を決定
+      IDごとに背景色を固定
     */
 
     function getBackgroundColor(id) {
@@ -503,7 +497,11 @@
 
       let number = 0;
 
-      for (let i = 0; i < id.length; i++) {
+      for (
+        let i = 0;
+        i < id.length;
+        i++
+      ) {
 
         number +=
           id.charCodeAt(i);
@@ -511,9 +509,9 @@
       }
 
       return backgroundColors[
-        number % backgroundColors.length
+        number %
+        backgroundColors.length
       ];
-
     }
 
 
@@ -521,9 +519,9 @@
       getBackgroundColor(id);
 
 
-    /*
-      写真を表示
-    */
+    /* =================================
+       写真表示
+    ================================= */
 
     function setPhoto(
       elementId,
@@ -552,13 +550,12 @@
         );
 
       }
-
     }
 
 
-    /*
-      ゲストが存在する場合
-    */
+    /* =================================
+       ゲスト表示
+    ================================= */
 
     if (
       id &&
@@ -615,7 +612,7 @@
 
 
       /*
-        IDがない場合
+        IDなし
       */
 
       document.getElementById(
@@ -629,10 +626,6 @@
       ).textContent =
         "QRコードからアクセスしてください。";
 
-
-      /*
-        写真を非表示
-      */
 
       document.getElementById(
         "photo1"
