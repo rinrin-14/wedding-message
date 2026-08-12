@@ -12,7 +12,10 @@
   <title>Wedding Message</title>
 
 
-  <!-- 手書き風フォント -->
+  <!-- =====================================
+       手書き風フォント
+  ====================================== -->
+
   <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
@@ -20,7 +23,7 @@
 
   <link
     rel="preconnect"
-    href="https://fonts.googleapis.com"
+    href="https://fonts.gstatic.com"
     crossorigin
   >
 
@@ -32,9 +35,10 @@
 
   <style>
 
-    /* =========================================
+
+    /* =====================================
        基本設定
-    ========================================= */
+    ====================================== */
 
     * {
       box-sizing: border-box;
@@ -70,9 +74,9 @@
     }
 
 
-    /* =========================================
-       メイン画面
-    ========================================= */
+    /* =====================================
+       全体
+    ====================================== */
 
     .screen {
 
@@ -90,9 +94,11 @@
     }
 
 
-    /* =========================================
+    /* =====================================
        写真エリア
-    ========================================= */
+       
+       上半分
+    ====================================== */
 
     .photo-area {
 
@@ -100,51 +106,26 @@
 
       width: 100%;
 
-      height: 45%;
+      height: 50%;
 
       overflow: hidden;
 
       background:
-        rgba(255,255,255,0.18);
+        rgba(255,255,255,0.15);
+
+      /*
+        横スワイプを許可。
+        縦方向のページ操作には干渉しにくくする。
+      */
+
+      touch-action: pan-y;
 
     }
 
 
-    /*
-      写真エリアの上に
-      ほんのり白いグラデーション
-    */
-
-    .photo-area::after {
-
-      content: "";
-
-      position: absolute;
-
-      left: 0;
-      right: 0;
-
-      bottom: 0;
-
-      height: 50px;
-
-      background:
-        linear-gradient(
-          to bottom,
-          rgba(255,255,255,0),
-          rgba(255,255,255,0.45)
-        );
-
-      pointer-events: none;
-
-      z-index: 10;
-
-    }
-
-
-    /* =========================================
-       写真を流すレーン
-    ========================================= */
+    /* =====================================
+       写真を流すトラック
+    ====================================== */
 
     .photo-track {
 
@@ -154,7 +135,7 @@
 
       left: 0;
 
-      height: 72%;
+      height: 78%;
 
       display: flex;
 
@@ -162,26 +143,37 @@
 
       gap: 18px;
 
-      /*
-        写真3枚分＋複製3枚分。
-
-        右→左へ流す。
-      */
-
       width: max-content;
 
       transform:
         translateY(-50%);
 
-      animation:
-        photoScroll 28s linear infinite;
+      /*
+        JSで位置を動かすので
+        CSS animationは使わない。
+      */
+
+      will-change: transform;
+
+      cursor: grab;
+
+      user-select: none;
+
+      -webkit-user-select: none;
 
     }
 
 
-    /* =========================================
+    .photo-track:active {
+
+      cursor: grabbing;
+
+    }
+
+
+    /* =====================================
        写真カード
-    ========================================= */
+    ====================================== */
 
     .photo-card {
 
@@ -195,7 +187,7 @@
 
       background: #fff;
 
-      border-radius: 7px;
+      border-radius: 8px;
 
       box-shadow:
         0 8px 24px
@@ -210,12 +202,11 @@
     }
 
 
-    /* =========================================
+    /* =====================================
        写真本体
-
-       object-fit: containなので
+       
        縦横比を完全維持
-    ========================================= */
+    ====================================== */
 
     .photo-card img {
 
@@ -225,18 +216,22 @@
 
       width: auto;
 
-      max-width: 55vw;
+      max-width: 58vw;
 
       object-fit: contain;
 
-      border-radius: 3px;
+      border-radius: 4px;
+
+      pointer-events: none;
+
+      -webkit-user-drag: none;
 
     }
 
 
-    /* =========================================
+    /* =====================================
        写真がない場合
-    ========================================= */
+    ====================================== */
 
     .photo-card.hidden {
 
@@ -245,76 +240,45 @@
     }
 
 
-    /* =========================================
-       写真スクロールアニメーション
-    ========================================= */
+    /* =====================================
+       写真エリア下端
+       
+       メッセージとの境目を
+       少し柔らかくする
+    ====================================== */
 
-    @keyframes photoScroll {
+    .photo-area::after {
 
-      from {
-
-        transform:
-          translate(
-            0,
-            -50%
-          );
-
-      }
-
-      to {
-
-        /*
-          3枚分＋gap分を
-          左へ移動
-        */
-
-        transform:
-          translate(
-            -50%,
-            -50%
-          );
-
-      }
-
-    }
-
-
-    /* =========================================
-       写真エリアタイトル
-    ========================================= */
-
-    .photo-title {
+      content: "";
 
       position: absolute;
 
-      top: 14px;
-
       left: 0;
+      right: 0;
 
-      width: 100%;
+      bottom: 0;
 
-      text-align: center;
+      height: 35px;
+
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(255,255,255,0),
+          rgba(255,255,255,0.40)
+        );
+
+      pointer-events: none;
 
       z-index: 20;
-
-      font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-      font-size: 10px;
-
-      letter-spacing: 0.22em;
-
-      color:
-        rgba(60,60,60,0.58);
 
     }
 
 
-    /* =========================================
+    /* =====================================
        メッセージエリア
-    ========================================= */
+       
+       下半分
+    ====================================== */
 
     .message-area {
 
@@ -322,10 +286,10 @@
 
       width: 100%;
 
-      height: 55%;
+      height: 50%;
 
       padding:
-        28px 28px 25px;
+        24px 28px 18px;
 
       display: flex;
 
@@ -334,14 +298,14 @@
       align-items: center;
 
       background:
-        rgba(255,255,255,0.28);
+        rgba(255,255,255,0.25);
 
     }
 
 
-    /* =========================================
+    /* =====================================
        名前
-    ========================================= */
+    ====================================== */
 
     .name {
 
@@ -367,9 +331,9 @@
     }
 
 
-    /* =========================================
+    /* =====================================
        区切り線
-    ========================================= */
+    ====================================== */
 
     .line {
 
@@ -380,7 +344,7 @@
       height: 1px;
 
       margin:
-        12px auto 20px;
+        10px auto 16px;
 
       background:
         rgba(60,60,60,0.38);
@@ -388,9 +352,9 @@
     }
 
 
-    /* =========================================
+    /* =====================================
        メッセージスクロール部分
-    ========================================= */
+    ====================================== */
 
     .message-wrapper {
 
@@ -422,13 +386,15 @@
     }
 
 
-    /* =========================================
+    /* =====================================
        メッセージ本文
-    ========================================= */
+    ====================================== */
 
     .message {
 
       margin: 0;
+
+      padding-bottom: 20px;
 
       font-family:
         "Klee One",
@@ -439,7 +405,7 @@
 
       font-weight: 400;
 
-      line-height: 2.1;
+      line-height: 2.05;
 
       letter-spacing: 0.045em;
 
@@ -447,20 +413,18 @@
 
       white-space: pre-line;
 
-      padding-bottom: 25px;
-
     }
 
 
-    /* =========================================
-       メッセージ下部
-    ========================================= */
+    /* =====================================
+       フッター
+    ====================================== */
 
     .message-footer {
 
       flex-shrink: 0;
 
-      margin-top: 12px;
+      margin-top: 8px;
 
       font-family:
         Georgia,
@@ -477,33 +441,33 @@
     }
 
 
-    /* =========================================
-       小さいスマホ対応
-    ========================================= */
+    /* =====================================
+       小さいスマホ
+    ====================================== */
 
     @media (max-height: 700px) {
 
 
       .photo-area {
 
-        height: 43%;
+        height: 50%;
 
       }
 
 
       .message-area {
 
-        height: 57%;
+        height: 50%;
 
         padding:
-          20px 22px 18px;
+          18px 22px 15px;
 
       }
 
 
       .photo-track {
 
-        height: 68%;
+        height: 76%;
 
         gap: 14px;
 
@@ -527,7 +491,7 @@
       .line {
 
         margin:
-          9px auto 15px;
+          8px auto 13px;
 
       }
 
@@ -536,16 +500,23 @@
 
         font-size: 14px;
 
-        line-height: 1.95;
+        line-height: 1.9;
+
+      }
+
+
+      .message-footer {
+
+        font-size: 8px;
 
       }
 
     }
 
 
-    /* =========================================
-       PC表示
-    ========================================= */
+    /* =====================================
+       PC
+    ====================================== */
 
     @media (min-width: 700px) {
 
@@ -571,6 +542,7 @@
 
     }
 
+
   </style>
 
 </head>
@@ -582,18 +554,14 @@
   <main class="screen">
 
 
-    <!-- =====================================
+    <!-- =================================
          写真エリア
-    ====================================== -->
+    ================================== -->
 
-    <section class="photo-area">
-
-
-      <div class="photo-title">
-
-        MEMORIES
-
-      </div>
+    <section
+      class="photo-area"
+      id="photoArea"
+    >
 
 
       <div
@@ -651,7 +619,7 @@
 
 
         <!-- =================================
-             ループ用コピー
+             無限ループ用コピー
         ================================== -->
 
 
@@ -699,13 +667,12 @@
 
       </div>
 
-
     </section>
 
 
-    <!-- =====================================
+    <!-- =================================
          メッセージエリア
-    ====================================== -->
+    ================================== -->
 
     <section class="message-area">
 
@@ -723,8 +690,10 @@
       <div class="line"></div>
 
 
-      <div class="message-wrapper">
-
+      <div
+        class="message-wrapper"
+        id="messageWrapper"
+      >
 
         <p
           id="message"
@@ -734,7 +703,6 @@
           メッセージを読み込んでいます。
 
         </p>
-
 
       </div>
 
@@ -752,9 +720,9 @@
   </main>
 
 
-  <!-- =======================================
+  <!-- =====================================
        ゲストデータ
-  ======================================== -->
+  ====================================== -->
 
   <script src="guests.js"></script>
 
@@ -762,9 +730,9 @@
   <script>
 
 
-    /* =======================================
+    /* =====================================
        URLからID取得
-    ======================================= */
+    ===================================== */
 
     const params =
       new URLSearchParams(
@@ -776,9 +744,9 @@
       params.get("id");
 
 
-    /* =======================================
+    /* =====================================
        背景色
-    ======================================= */
+    ===================================== */
 
     const backgroundColors = [
 
@@ -831,9 +799,9 @@
       getBackgroundColor(id);
 
 
-    /* =======================================
-       写真をセット
-    ======================================= */
+    /* =====================================
+       写真セット関数
+    ===================================== */
 
     function setPhoto(
       imageId,
@@ -874,9 +842,9 @@
     }
 
 
-    /* =======================================
+    /* =====================================
        ゲスト情報
-    ======================================= */
+    ===================================== */
 
     if (
       id &&
@@ -888,9 +856,7 @@
         guests[id];
 
 
-      /* -----------------------------------
-         名前
-      ----------------------------------- */
+      /* 名前 */
 
       document.getElementById(
         "name"
@@ -898,9 +864,7 @@
         `${guest.name}へ`;
 
 
-      /* -----------------------------------
-         メッセージ
-      ----------------------------------- */
+      /* メッセージ */
 
       document.getElementById(
         "message"
@@ -908,9 +872,7 @@
         guest.message;
 
 
-      /* -----------------------------------
-         写真①
-      ----------------------------------- */
+      /* 写真① */
 
       setPhoto(
         "photo1",
@@ -919,9 +881,7 @@
       );
 
 
-      /* -----------------------------------
-         写真②
-      ----------------------------------- */
+      /* 写真② */
 
       setPhoto(
         "photo2",
@@ -930,9 +890,7 @@
       );
 
 
-      /* -----------------------------------
-         写真③
-      ----------------------------------- */
+      /* 写真③ */
 
       setPhoto(
         "photo3",
@@ -941,9 +899,7 @@
       );
 
 
-      /* -----------------------------------
-         ループ用コピー
-      ----------------------------------- */
+      /* コピー① */
 
       setPhoto(
         "photo1copy",
@@ -952,12 +908,16 @@
       );
 
 
+      /* コピー② */
+
       setPhoto(
         "photo2copy",
         "card2copy",
         guest.photos[1]
       );
 
+
+      /* コピー③ */
 
       setPhoto(
         "photo3copy",
@@ -966,15 +926,12 @@
       );
 
 
-    }
+    } else {
 
 
-    /* =======================================
-       IDが存在しない場合
-    ======================================= */
-
-    else {
-
+      /* =================================
+         IDなし
+      ================================== */
 
       document.getElementById(
         "name"
@@ -992,13 +949,365 @@
         ".photo-card"
       ).forEach(
         card => {
+
           card.classList.add(
             "hidden"
           );
+
         }
       );
 
     }
+
+
+    /* =====================================
+       写真の自動スクロール
+       
+       JavaScript方式なので
+       手動操作と共存できる
+    ===================================== */
+
+    const photoArea =
+      document.getElementById(
+        "photoArea"
+      );
+
+
+    const photoTrack =
+      document.getElementById(
+        "photoTrack"
+      );
+
+
+    let position = 0;
+
+    let velocity = 0.45;
+
+    let isDragging = false;
+
+    let startX = 0;
+
+    let startPosition = 0;
+
+    let lastTime = null;
+
+
+    /* =====================================
+       1セット分の幅を取得
+    ===================================== */
+
+    function getLoopWidth() {
+
+
+      const cards =
+        photoTrack.querySelectorAll(
+          ".photo-card"
+        );
+
+
+      /*
+        最初の3枚分を基準にする
+      */
+
+      if (cards.length < 6) {
+
+        return 0;
+
+      }
+
+
+      const first =
+        cards[0];
+
+      const fourth =
+        cards[3];
+
+
+      return (
+        fourth.offsetLeft -
+        first.offsetLeft
+      );
+
+    }
+
+
+    /* =====================================
+       写真位置を更新
+    ===================================== */
+
+    function updatePhotoPosition() {
+
+
+      const loopWidth =
+        getLoopWidth();
+
+
+      if (!loopWidth) {
+
+        return;
+
+      }
+
+
+      /*
+        自動スクロール
+      */
+
+      if (!isDragging) {
+
+        position -= velocity;
+
+      }
+
+
+      /*
+        無限ループ
+      */
+
+      if (
+        position <=
+        -loopWidth
+      ) {
+
+        position +=
+          loopWidth;
+
+      }
+
+
+      if (
+        position > 0
+      ) {
+
+        position -=
+          loopWidth;
+
+      }
+
+
+      photoTrack.style.transform =
+        `translate3d(${position}px, -50%, 0)`;
+
+    }
+
+
+    /* =====================================
+       アニメーションループ
+    ===================================== */
+
+    function animate(timestamp) {
+
+
+      if (lastTime === null) {
+
+        lastTime =
+          timestamp;
+
+      }
+
+
+      lastTime =
+        timestamp;
+
+
+      updatePhotoPosition();
+
+
+      requestAnimationFrame(
+        animate
+      );
+
+    }
+
+
+    requestAnimationFrame(
+      animate
+    );
+
+
+    /* =====================================
+       タッチ操作
+       
+       指で左右にスワイプできる
+    ===================================== */
+
+    photoArea.addEventListener(
+      "touchstart",
+      function(event) {
+
+
+        if (
+          event.touches.length !== 1
+        ) {
+
+          return;
+
+        }
+
+
+        isDragging = true;
+
+
+        startX =
+          event.touches[0].clientX;
+
+
+        startPosition =
+          position;
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    photoArea.addEventListener(
+      "touchmove",
+      function(event) {
+
+
+        if (!isDragging) {
+
+          return;
+
+        }
+
+
+        const currentX =
+          event.touches[0].clientX;
+
+
+        const deltaX =
+          currentX - startX;
+
+
+        position =
+          startPosition + deltaX;
+
+
+        /*
+          ループ幅
+        */
+
+        const loopWidth =
+          getLoopWidth();
+
+
+        if (loopWidth) {
+
+
+          if (
+            position <=
+            -loopWidth
+          ) {
+
+            position +=
+              loopWidth;
+
+            startPosition +=
+              loopWidth;
+
+          }
+
+
+          if (
+            position > 0
+          ) {
+
+            position -=
+              loopWidth;
+
+            startPosition -=
+              loopWidth;
+
+          }
+
+        }
+
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    photoArea.addEventListener(
+      "touchend",
+      function() {
+
+        isDragging = false;
+
+      }
+    );
+
+
+    photoArea.addEventListener(
+      "touchcancel",
+      function() {
+
+        isDragging = false;
+
+      }
+    );
+
+
+    /* =====================================
+       PCでもマウスで操作可能
+    ===================================== */
+
+    photoArea.addEventListener(
+      "mousedown",
+      function(event) {
+
+
+        isDragging = true;
+
+
+        startX =
+          event.clientX;
+
+
+        startPosition =
+          position;
+
+
+      }
+    );
+
+
+    window.addEventListener(
+      "mousemove",
+      function(event) {
+
+
+        if (!isDragging) {
+
+          return;
+
+        }
+
+
+        const deltaX =
+          event.clientX - startX;
+
+
+        position =
+          startPosition + deltaX;
+
+      }
+    );
+
+
+    window.addEventListener(
+      "mouseup",
+      function() {
+
+        isDragging = false;
+
+      }
+    );
 
 
   </script>
