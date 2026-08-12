@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
 
   <meta charset="UTF-8">
@@ -53,23 +54,22 @@
 
       margin: 0;
 
+      overflow: hidden;
+
     }
 
 
     body {
 
-      overflow: hidden;
+      background: #202020;
 
-      color: #333;
+      color: #eee9df;
 
       font-family:
         "Klee One",
         "Hiragino Maru Gothic ProN",
         "Yu Gothic",
         sans-serif;
-
-      transition:
-        background-color 0.6s ease;
 
     }
 
@@ -91,6 +91,8 @@
 
       overflow: hidden;
 
+      background: #202020;
+
     }
 
 
@@ -108,9 +110,50 @@
 
       overflow: hidden;
 
-      background: #1f1f1f;
+      background:
+        #202020;
 
       touch-action: pan-y;
+
+    }
+
+
+    /* =================================
+       上下のフィルムライン
+    ================================= */
+
+    .photo-area::before,
+    .photo-area::after {
+
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      right: 0;
+
+      height: 1px;
+
+      background:
+        rgba(255,255,255,0.15);
+
+      z-index: 3;
+
+      pointer-events: none;
+
+    }
+
+
+    .photo-area::before {
+
+      top: 12%;
+
+    }
+
+
+    .photo-area::after {
+
+      bottom: 12%;
 
     }
 
@@ -160,7 +203,7 @@
 
 
     /* =================================
-       写真1枚分
+       写真カード
     ================================= */
 
     .photo-card {
@@ -181,10 +224,6 @@
 
     }
 
-
-    /* =================================
-       写真
-    ================================= */
 
     .photo-card img {
 
@@ -216,8 +255,6 @@
 
     /* =================================
        フィルム穴
-       
-       写真の上下に小さな穴
     ================================= */
 
     .photo-card::before,
@@ -236,11 +273,8 @@
 
       pointer-events: none;
 
-      /*
-        穴を横に並べる
-      */
-
       background-image:
+
         radial-gradient(
           ellipse at center,
           rgba(255,255,255,0.72) 0,
@@ -254,7 +288,7 @@
       background-repeat:
         repeat-x;
 
-      opacity: 0.75;
+      opacity: 0.72;
 
     }
 
@@ -274,221 +308,22 @@
 
 
     /* =================================
-       写真と写真の間
+       写真エリアの静かな質感
        
-       フィルムの区切り感
+       ※アニメーションなし
     ================================= */
 
-    .photo-card + .photo-card {
-
-      margin-left: 0;
-
-    }
-
-
-    /* =================================
-       上下のフィルムライン
-    ================================= */
-
-    .photo-area::before {
-
-      content: "";
-
-      position: absolute;
-
-      left: 0;
-      right: 0;
-
-      top: 12%;
-
-      height: 1px;
-
-      background:
-        rgba(255,255,255,0.14);
-
-      z-index: 3;
-
-      pointer-events: none;
-
-    }
-
-
-    .photo-area::after {
-
-      content: "";
-
-      position: absolute;
-
-      left: 0;
-      right: 0;
-
-      bottom: 12%;
-
-      height: 1px;
-
-      background:
-        rgba(255,255,255,0.14);
-
-      z-index: 3;
-
-      pointer-events: none;
-
-    }
-
-
-    /* =================================
-       フィルムの光漏れ
-       
-       ごく薄く画面を横切る
-    ================================= */
-
-    .light-leak {
-
-      position: absolute;
-
-      top: 0;
-      bottom: 0;
-
-      left: -35%;
-
-      width: 35%;
-
-      background:
-        linear-gradient(
-          90deg,
-          transparent 0%,
-          rgba(255,150,90,0.04) 35%,
-          rgba(255,210,140,0.12) 60%,
-          rgba(255,130,80,0.04) 80%,
-          transparent 100%
-        );
-
-      filter:
-        blur(10px);
-
-      pointer-events: none;
-
-      z-index: 20;
-
-      animation:
-        lightLeakMove 11s
-        ease-in-out
-        infinite;
-
-    }
-
-
-    @keyframes lightLeakMove {
-
-      0% {
-
-        transform:
-          translateX(-20%);
-
-        opacity: 0;
-
-      }
-
-      20% {
-
-        opacity: 0.8;
-
-      }
-
-      50% {
-
-        opacity: 1;
-
-      }
-
-      80% {
-
-        opacity: 0.5;
-
-      }
-
-      100% {
-
-        transform:
-          translateX(420%);
-
-        opacity: 0;
-
-      }
-
-    }
-
-
-    /* =================================
-       フィルム粒子
-    ================================= */
-
-    .film-grain {
-
-      position: absolute;
-
-      inset: 0;
-
-      z-index: 30;
-
-      pointer-events: none;
-
-      opacity: 0.13;
+    .photo-area {
 
       background-image:
 
         radial-gradient(
-          rgba(255,255,255,0.7) 0.5px,
-          transparent 0.8px
-        ),
-
-        radial-gradient(
-          rgba(0,0,0,0.5) 0.5px,
-          transparent 0.8px
+          rgba(255,255,255,0.025) 0.6px,
+          transparent 0.7px
         );
 
       background-size:
-        5px 5px,
-        7px 7px;
-
-      background-position:
-        0 0,
-        3px 4px;
-
-      animation:
-        grainMove 0.25s
-        steps(2)
-        infinite;
-
-    }
-
-
-    @keyframes grainMove {
-
-      0% {
-        transform:
-          translate(0,0);
-      }
-
-      25% {
-        transform:
-          translate(1px,-1px);
-      }
-
-      50% {
-        transform:
-          translate(-1px,1px);
-      }
-
-      75% {
-        transform:
-          translate(1px,1px);
-      }
-
-      100% {
-        transform:
-          translate(0,0);
-      }
+        6px 6px;
 
     }
 
@@ -506,32 +341,27 @@
       height: 50%;
 
       padding:
-        25px 28px 16px;
+        27px 28px 17px;
 
       display: flex;
 
       flex-direction: column;
 
-      align-items: stretch;
-
       background:
-        rgba(255,255,255,0.65);
+        #202020;
 
-      background-image:
+      color:
+        #eee9df;
 
-        radial-gradient(
-          rgba(70,70,70,0.035) 0.6px,
-          transparent 0.7px
-        );
-
-      background-size:
-        7px 7px;
+      overflow: hidden;
 
     }
 
 
     /* =================================
-       さりげない円形装飾
+       メッセージエリア上部
+       
+       フィルムの境界っぽく
     ================================= */
 
     .message-area::before {
@@ -540,26 +370,21 @@
 
       position: absolute;
 
-      width: 190px;
-      height: 190px;
+      top: 0;
+      left: 0;
+      right: 0;
 
-      top: -100px;
-      right: -75px;
+      height: 1px;
 
-      border:
-        1px solid
-        rgba(80,90,80,0.08);
-
-      border-radius:
-        50% 40% 55% 45%;
-
-      transform:
-        rotate(25deg);
-
-      pointer-events: none;
+      background:
+        rgba(255,255,255,0.18);
 
     }
 
+
+    /* =================================
+       メッセージエリア下部
+    ================================= */
 
     .message-area::after {
 
@@ -567,21 +392,84 @@
 
       position: absolute;
 
-      width: 120px;
-      height: 120px;
+      bottom: 0;
+      left: 0;
+      right: 0;
 
-      bottom: -60px;
-      left: -50px;
+      height: 1px;
 
-      border:
-        1px solid
-        rgba(80,90,80,0.07);
+      background:
+        rgba(255,255,255,0.12);
 
-      border-radius:
-        45% 55% 40% 60%;
+    }
 
-      transform:
-        rotate(-20deg);
+
+    /* =================================
+       上部の小さなフィルム穴
+    ================================= */
+
+    .film-edge-top {
+
+      position: absolute;
+
+      top: 5px;
+      left: 0;
+      right: 0;
+
+      height: 7px;
+
+      background-image:
+
+        radial-gradient(
+          ellipse at center,
+          rgba(255,255,255,0.42) 0,
+          rgba(255,255,255,0.42) 2.5px,
+          transparent 3px
+        );
+
+      background-size:
+        15px 7px;
+
+      background-repeat:
+        repeat-x;
+
+      opacity: 0.45;
+
+      pointer-events: none;
+
+    }
+
+
+    /* =================================
+       下部の小さなフィルム穴
+    ================================= */
+
+    .film-edge-bottom {
+
+      position: absolute;
+
+      bottom: 5px;
+      left: 0;
+      right: 0;
+
+      height: 7px;
+
+      background-image:
+
+        radial-gradient(
+          ellipse at center,
+          rgba(255,255,255,0.35) 0,
+          rgba(255,255,255,0.35) 2.5px,
+          transparent 3px
+        );
+
+      background-size:
+        15px 7px;
+
+      background-repeat:
+        repeat-x;
+
+      opacity: 0.35;
 
       pointer-events: none;
 
@@ -611,11 +499,15 @@
 
       font-weight: 600;
 
-      letter-spacing: 0.08em;
+      letter-spacing:
+        0.08em;
 
       line-height: 1.5;
 
       text-align: left;
+
+      color:
+        #f1ece2;
 
     }
 
@@ -635,16 +527,16 @@
       height: 1px;
 
       margin:
-        9px 0 15px;
+        9px 0 16px;
 
       background:
-        rgba(60,60,60,0.32);
+        rgba(238,233,223,0.45);
 
     }
 
 
     /* =================================
-       メッセージ
+       メッセージスクロール領域
     ================================= */
 
     .message-wrapper {
@@ -661,12 +553,13 @@
 
       overflow-y: auto;
 
-      padding-right: 4px;
+      padding-right: 5px;
 
       -webkit-overflow-scrolling:
         touch;
 
-      scrollbar-width: none;
+      scrollbar-width:
+        none;
 
     }
 
@@ -678,11 +571,15 @@
     }
 
 
+    /* =================================
+       メッセージ本文
+    ================================= */
+
     .message {
 
       margin: 0;
 
-      padding-bottom: 20px;
+      padding-bottom: 25px;
 
       font-family:
         "Klee One",
@@ -695,11 +592,66 @@
 
       line-height: 2.05;
 
-      letter-spacing: 0.045em;
+      letter-spacing:
+        0.045em;
 
       text-align: left;
 
       white-space: pre-line;
+
+      color:
+        #e8e3da;
+
+    }
+
+
+    /* =================================
+       エンドロールっぽい細いライン
+    ================================= */
+
+    .credit-line {
+
+      position: relative;
+
+      z-index: 2;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      margin-top: 3px;
+
+      margin-bottom: 8px;
+
+      opacity: 0.45;
+
+    }
+
+
+    .credit-line span {
+
+      display: block;
+
+      height: 1px;
+
+      background:
+        #eee9df;
+
+    }
+
+
+    .credit-line span:first-child {
+
+      width: 24px;
+
+    }
+
+
+    .credit-line span:last-child {
+
+      width: 70px;
 
     }
 
@@ -716,7 +668,7 @@
 
       flex-shrink: 0;
 
-      margin-top: 7px;
+      margin-top: 4px;
 
       text-align: right;
 
@@ -727,16 +679,17 @@
 
       font-size: 8px;
 
-      letter-spacing: 0.16em;
+      letter-spacing:
+        0.16em;
 
       color:
-        rgba(60,60,60,0.50);
+        rgba(238,233,223,0.55);
 
     }
 
 
     /* =================================
-       スマホ小画面
+       小さいスマホ
     ================================= */
 
     @media (max-height: 700px) {
@@ -745,7 +698,7 @@
       .message-area {
 
         padding:
-          19px 23px 13px;
+          20px 23px 14px;
 
       }
 
@@ -817,11 +770,12 @@
 
         height: 850px;
 
-        border-radius: 20px;
+        border-radius:
+          20px;
 
         box-shadow:
           0 10px 40px
-          rgba(0,0,0,0.12);
+          rgba(0,0,0,0.25);
 
       }
 
@@ -848,18 +802,6 @@
       id="photoArea"
     >
 
-
-      <!-- 光漏れ -->
-
-      <div class="light-leak"></div>
-
-
-      <!-- フィルム粒子 -->
-
-      <div class="film-grain"></div>
-
-
-      <!-- 写真 -->
 
       <div
         class="photo-track"
@@ -915,9 +857,9 @@
         </div>
 
 
-        <!-- =================================
-             無限ループ用
-        ================================== -->
+        <!-- =============================
+             無限スクロール用コピー
+        ============================== -->
 
         <div
           class="photo-card"
@@ -963,12 +905,11 @@
 
       </div>
 
-
     </section>
 
 
     <!-- =================================
-         メッセージ
+         メッセージエリア
     ================================== -->
 
     <section
@@ -976,6 +917,15 @@
       id="messageArea"
     >
 
+
+      <!-- 上端のフィルム穴 -->
+
+      <div
+        class="film-edge-top"
+      ></div>
+
+
+      <!-- 宛名 -->
 
       <h1
         id="name"
@@ -987,8 +937,12 @@
       </h1>
 
 
+      <!-- 区切り -->
+
       <div class="line"></div>
 
+
+      <!-- メッセージ -->
 
       <div
         class="message-wrapper"
@@ -1007,11 +961,31 @@
       </div>
 
 
+      <!-- エンドロールっぽいライン -->
+
+      <div class="credit-line">
+
+        <span></span>
+
+        <span></span>
+
+      </div>
+
+
+      <!-- フッター -->
+
       <div class="message-footer">
 
         THANK YOU FOR CELEBRATING WITH US
 
       </div>
+
+
+      <!-- 下端のフィルム穴 -->
+
+      <div
+        class="film-edge-bottom"
+      ></div>
 
 
     </section>
@@ -1042,71 +1016,6 @@
 
     const id =
       params.get("id");
-
-
-    /* =====================================
-       ゲストごとの背景色
-    ===================================== */
-
-    const backgroundColors = [
-
-      "#F3E9DD",
-      "#EEE9E1",
-      "#E7EDE8",
-      "#E8EDF1",
-      "#F2E8D5",
-      "#EEE7EE",
-      "#E9E4DC",
-      "#E5ECE9"
-
-    ];
-
-
-    function getBackgroundColor(id) {
-
-
-      if (!id) {
-
-        return backgroundColors[0];
-
-      }
-
-
-      let number = 0;
-
-
-      for (
-        let i = 0;
-        i < id.length;
-        i++
-      ) {
-
-        number +=
-          id.charCodeAt(i);
-
-      }
-
-
-      return backgroundColors[
-        number %
-        backgroundColors.length
-      ];
-
-    }
-
-
-    const guestBackground =
-      getBackgroundColor(id);
-
-
-    document.body.style.backgroundColor =
-      guestBackground;
-
-
-    document.getElementById(
-      "messageArea"
-    ).style.backgroundColor =
-      guestBackground;
 
 
     /* =====================================
@@ -1284,11 +1193,14 @@
 
     let position = 0;
 
+
     /*
       自動スクロール速度
+      少しゆっくりめ
     */
 
-    let velocity = 0.55;
+    const velocity = 0.55;
+
 
     let isDragging = false;
 
@@ -1298,7 +1210,7 @@
 
 
     /* =====================================
-       ループ幅
+       無限ループ幅
     ===================================== */
 
     function getLoopWidth() {
@@ -1372,7 +1284,11 @@
 
 
       photoTrack.style.transform =
-        `translate3d(${position}px, -50%, 0)`;
+        `translate3d(
+          ${position}px,
+          -50%,
+          0
+        )`;
 
     }
 
@@ -1457,7 +1373,8 @@
 
 
         position =
-          startPosition + deltaX;
+          startPosition +
+          deltaX;
 
 
         const loopWidth =
@@ -1563,11 +1480,13 @@
 
 
         const deltaX =
-          event.clientX - startX;
+          event.clientX -
+          startX;
 
 
         position =
-          startPosition + deltaX;
+          startPosition +
+          deltaX;
 
       }
     );
@@ -1587,4 +1506,5 @@
 
 
 </body>
+
 </html>
