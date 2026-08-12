@@ -7,85 +7,449 @@
   <title>Wedding Message</title>
 
   <style>
+
+    /* =========================
+       全体
+    ========================= */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
     body {
       margin: 0;
-      padding: 30px 20px;
-      background: #f8f6f2;
-      color: #333;
-      font-family: sans-serif;
-      text-align: center;
+      width: 100%;
+      height: 100%;
     }
 
-    .container {
+    body {
+      background: #f3f0eb;
+      color: #333;
+      font-family:
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        sans-serif;
+
+      overflow: hidden;
+    }
+
+
+    /* =========================
+       メイン画面
+    ========================= */
+
+    .screen {
+      position: relative;
+
+      width: 100%;
+      height: 100dvh;
+
       max-width: 600px;
       margin: 0 auto;
-      background: white;
-      padding: 30px 20px;
-      border-radius: 16px;
+
+      overflow: hidden;
+
+      background: #f3f0eb;
     }
 
-    h1 {
-      font-size: 28px;
-      margin-bottom: 10px;
+
+    /* =========================
+       写真
+    ========================= */
+
+    .photo {
+      position: absolute;
+
+      object-fit: cover;
+
+      border-radius: 10px;
+
+      box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.12);
     }
+
+
+    /* 左上 */
+
+    .photo-1 {
+      width: 47%;
+      height: 32%;
+
+      top: 5%;
+      left: 3%;
+
+      transform: rotate(-3deg);
+
+      z-index: 1;
+    }
+
+
+    /* 右上 */
+
+    .photo-2 {
+      width: 47%;
+      height: 32%;
+
+      top: 8%;
+      right: 3%;
+
+      transform: rotate(3deg);
+
+      z-index: 2;
+    }
+
+
+    /* 下 */
+
+    .photo-3 {
+      width: 58%;
+      height: 32%;
+
+      bottom: 5%;
+      left: 21%;
+
+      transform: rotate(-2deg);
+
+      z-index: 1;
+    }
+
+
+    /* =========================
+       中央メッセージ
+    ========================= */
+
+    .message-card {
+
+      position: absolute;
+
+      width: 76%;
+      max-width: 450px;
+
+      top: 50%;
+      left: 50%;
+
+      transform: translate(-50%, -50%);
+
+      padding: 28px 24px;
+
+      background: rgba(255, 255, 255, 0.94);
+
+      border-radius: 18px;
+
+      box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.15);
+
+      text-align: center;
+
+      z-index: 10;
+    }
+
+
+    /* 名前 */
+
+    .name {
+
+      margin: 0 0 18px;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size: 27px;
+
+      font-weight: normal;
+
+      letter-spacing: 0.05em;
+
+      color: #333;
+    }
+
+
+    /* 区切り線 */
+
+    .line {
+
+      width: 45px;
+      height: 1px;
+
+      margin: 0 auto 20px;
+
+      background: #aaa;
+    }
+
+
+    /* メッセージ */
 
     .message {
+
+      margin: 0;
+
+      font-size: 15px;
+
       line-height: 2;
-      margin-top: 25px;
+
+      white-space: pre-line;
     }
 
-    #photo {
+
+    /* =========================
+       下の小さなメッセージ
+    ========================= */
+
+    .footer {
+
+      position: absolute;
+
+      bottom: 1.5%;
+      left: 0;
+
       width: 100%;
-      max-width: 500px;
-      border-radius: 12px;
-      margin: 20px 0;
+
+      text-align: center;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size: 11px;
+
+      letter-spacing: 0.15em;
+
+      color: #777;
+
+      z-index: 20;
     }
+
+
+    /* =========================
+       写真がない場合
+    ========================= */
+
+    .hidden {
+      display: none;
+    }
+
+
+    /* =========================
+       スマホが小さい場合
+    ========================= */
+
+    @media (max-height: 700px) {
+
+      .photo-1,
+      .photo-2 {
+        height: 29%;
+      }
+
+      .photo-3 {
+        height: 29%;
+      }
+
+      .message-card {
+        padding: 22px 20px;
+      }
+
+      .name {
+        font-size: 23px;
+        margin-bottom: 14px;
+      }
+
+      .message {
+        font-size: 13px;
+        line-height: 1.8;
+      }
+
+    }
+
+
+    /* =========================
+       PCなど横長画面
+    ========================= */
+
+    @media (min-width: 700px) {
+
+      .screen {
+        height: 850px;
+
+        margin-top: 20px;
+
+        border-radius: 20px;
+
+        box-shadow:
+          0 10px 40px rgba(0, 0, 0, 0.12);
+      }
+
+    }
+
   </style>
 </head>
 
+
 <body>
 
-  <div class="container">
+  <main class="screen">
 
-    <h1 id="name">Thank you!</h1>
+    <!-- 写真 -->
 
-    <img id="photo" src="" alt="思い出の写真">
+    <img
+      id="photo1"
+      class="photo photo-1"
+      src=""
+      alt="思い出の写真"
+    >
 
-    <div class="message" id="message">
-      メッセージを読み込んでいます。
+    <img
+      id="photo2"
+      class="photo photo-2"
+      src=""
+      alt="思い出の写真"
+    >
+
+    <img
+      id="photo3"
+      class="photo photo-3"
+      src=""
+      alt="思い出の写真"
+    >
+
+
+    <!-- 中央メッセージ -->
+
+    <section class="message-card">
+
+      <h1 id="name" class="name">
+        Thank you!
+      </h1>
+
+      <div class="line"></div>
+
+      <p id="message" class="message">
+        メッセージを読み込んでいます。
+      </p>
+
+    </section>
+
+
+    <!-- フッター -->
+
+    <div class="footer">
+      THANK YOU FOR CELEBRATING WITH US
     </div>
 
-  </div>
+  </main>
 
 
-  <!-- ゲスト情報を読み込む -->
+  <!-- =========================
+       ゲスト情報
+  ========================= -->
+
   <script src="guests.js"></script>
 
 
-  <!-- ゲスト情報を表示する -->
+  <!-- =========================
+       ゲスト情報を表示
+  ========================= -->
+
   <script>
 
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
+    // URLからゲストIDを取得
+
+    const params =
+      new URLSearchParams(window.location.search);
+
+    const id =
+      params.get("id");
+
+
+    // 写真を表示する関数
+
+    function setPhoto(elementId, photoPath) {
+
+      const photo =
+        document.getElementById(elementId);
+
+
+      if (photoPath) {
+
+        photo.src = photoPath;
+
+        photo.classList.remove("hidden");
+
+      } else {
+
+        photo.classList.add("hidden");
+
+      }
+
+    }
+
+
+    // ゲストが存在する場合
 
     if (id && guests[id]) {
 
+      const guest =
+        guests[id];
+
+
+      // 名前
+
       document.getElementById("name").textContent =
-        `${guests[id].name}へ`;
+        `${guest.name}へ`;
+
+
+      // メッセージ
 
       document.getElementById("message").textContent =
-        guests[id].message;
+        guest.message;
 
-      document.getElementById("photo").src =
-        guests[id].photos[0];
+
+      // 写真
+
+      setPhoto(
+        "photo1",
+        guest.photos[0]
+      );
+
+
+      setPhoto(
+        "photo2",
+        guest.photos[1]
+      );
+
+
+      setPhoto(
+        "photo3",
+        guest.photos[2]
+      );
+
 
     } else {
+
+
+      // IDがない場合
 
       document.getElementById("name").textContent =
         "Welcome!";
 
+
       document.getElementById("message").textContent =
         "QRコードからアクセスしてください。";
+
+
+      // 写真を非表示
+
+      document.getElementById("photo1")
+        .classList.add("hidden");
+
+      document.getElementById("photo2")
+        .classList.add("hidden");
+
+      document.getElementById("photo3")
+        .classList.add("hidden");
 
     }
 
