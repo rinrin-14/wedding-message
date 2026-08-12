@@ -33,6 +33,14 @@
       line-height: 2;
       margin-top: 25px;
     }
+
+    #photo {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 12px;
+      margin: 20px 0;
+    }
+    
   </style>
 </head>
 
@@ -41,6 +49,8 @@
   <div class="container">
 
     <h1 id="name">Thank you!</h1>
+
+    <img id="photo" src="" alt="思い出の写真">
 
     <div class="message" id="message">
       メッセージを読み込んでいます。
@@ -55,6 +65,7 @@
 
       "abc123": {
         name: "山田さん",
+        photo: "abc123-1.jpg",
         message: "今日は私たちの結婚式に来てくれて本当にありがとう！これからもよろしくね！"
       },
 
@@ -79,6 +90,9 @@
 
       document.getElementById("message").textContent =
         guests[id].message;
+
+      document.getElementById("photo").src =
+        guests[id].photo;
 
     } else {
 
