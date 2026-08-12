@@ -60,23 +60,6 @@
 
   <script>
 
-    // ゲストデータ
-    const guests = {
-
-      "abc123": {
-        name: "山田さん",
-        photo: "abc123-1.jpg",
-        message: "今日は私たちの結婚式に来てくれて本当にありがとう！これからもよろしくね！"
-      },
-
-      "xyz789": {
-        name: "佐藤さん",
-        message: "今日は来てくれてありがとう！また近いうちにゆっくりご飯行こう！"
-      }
-
-    };
-
-
     // URLからIDを取得
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
@@ -106,5 +89,35 @@
 
   </script>
 
+  <script src="guests.js"></script>
+
+<script>
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (id && guests[id]) {
+
+    document.getElementById("name").textContent =
+      `${guests[id].name}へ`;
+
+    document.getElementById("message").textContent =
+      guests[id].message;
+
+    document.getElementById("photo").src =
+      guests[id].photos[0];
+
+  } else {
+
+    document.getElementById("name").textContent =
+      "Welcome!";
+
+    document.getElementById("message").textContent =
+      "QRコードからアクセスしてください。";
+
+  }
+
+</script>
+  
 </body>
 </html>
