@@ -1,43 +1,81 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Wedding Message</title>
 
+
+  <!-- 手書き風フォント -->
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap"
+    rel="stylesheet"
+  >
+
+
   <style>
+
+    /* =================================
+       基本設定
+    ================================= */
 
     * {
       box-sizing: border-box;
     }
 
+
     html,
     body {
+
       margin: 0;
+
       width: 100%;
       height: 100%;
+
     }
 
+
     body {
+
       overflow: hidden;
 
       color: #333;
 
       font-family:
+        "Klee One",
         "Hiragino Kaku Gothic ProN",
         "Yu Gothic",
         sans-serif;
 
-      transition: background-color 0.5s ease;
+      transition:
+        background-color 0.5s ease;
+
     }
 
 
     /* =================================
-       全体
+       メイン画面
     ================================= */
 
     .screen {
+
       position: relative;
 
       width: 100%;
@@ -49,7 +87,6 @@
 
       overflow: hidden;
 
-      background: transparent;
     }
 
 
@@ -58,6 +95,7 @@
     ================================= */
 
     .photo {
+
       position: absolute;
 
       display: block;
@@ -67,66 +105,72 @@
 
       object-fit: contain;
 
-      border: 5px solid rgba(255, 255, 255, 0.95);
-
-      border-radius: 2px;
+      border-radius: 7px;
 
       box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.16);
+        0 8px 28px rgba(0, 0, 0, 0.16);
 
-      z-index: 1;
     }
 
 
     /* =================================
        写真①
-       左上・小さめ
+       左上
     ================================= */
 
     .photo-1 {
 
-      top: 4%;
-      left: 3%;
+      width: 58%;
 
-      max-width: 43%;
-      max-height: 31%;
+      max-height: 36%;
 
-      z-index: 2;
+      top: 5%;
+
+      left: 2%;
+
+      z-index: 1;
+
     }
 
 
     /* =================================
        写真②
-       メイン写真
-       中央寄り・大きめ
+       中央寄り・一番大きい
+       メッセージの後ろに配置
     ================================= */
 
     .photo-2 {
 
-      top: 7%;
-      right: 2%;
+      width: 62%;
 
-      max-width: 68%;
       max-height: 43%;
 
-      z-index: 1;
+      top: 15%;
+
+      right: 3%;
+
+      z-index: 4;
+
     }
 
 
     /* =================================
        写真③
-       下側
+       左下
     ================================= */
 
     .photo-3 {
 
-      bottom: 7%;
-      right: 3%;
+      width: 57%;
 
-      max-width: 57%;
-      max-height: 31%;
+      max-height: 35%;
 
-      z-index: 2;
+      bottom: 5%;
+
+      left: 8%;
+
+      z-index: 1;
+
     }
 
 
@@ -138,41 +182,49 @@
 
       position: absolute;
 
-      top: 50%;
+      width: 78%;
+
+      max-width: 470px;
+
+      max-height: 48%;
+
+      top: 53%;
+
       left: 50%;
 
-      transform: translate(-50%, -50%);
+      transform:
+        translate(-50%, -50%);
 
-      width: 76%;
-      max-width: 460px;
-
-      max-height: 51%;
-
-      padding: 28px 25px;
+      padding:
+        30px 27px 28px;
 
       /*
-        かなり透けるように設定
+        かなり透ける白。
+        後ろの写真が見える。
       */
 
       background:
-        rgba(255, 255, 255, 0.64);
+        rgba(255, 255, 255, 0.58);
 
       border:
-        1px solid rgba(255, 255, 255, 0.85);
+        1px solid rgba(255, 255, 255, 0.75);
 
       border-radius: 20px;
 
       box-shadow:
-        0 12px 35px rgba(0, 0, 0, 0.12);
+        0 12px 35px
+        rgba(0, 0, 0, 0.10);
 
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
+      backdrop-filter:
+        blur(3px);
+
+      -webkit-backdrop-filter:
+        blur(3px);
 
       text-align: center;
 
       z-index: 10;
 
-      overflow: hidden;
     }
 
 
@@ -182,38 +234,39 @@
 
     .name {
 
-      margin: 0 0 13px;
+      margin: 0 0 15px;
 
       font-family:
         "Klee One",
-        "Hiragino Maru Gothic ProN",
-        "Yu Gothic",
         cursive;
 
-      font-size: 29px;
+      font-size: 30px;
 
-      font-weight: 500;
+      font-weight: 600;
 
-      letter-spacing: 0.12em;
+      letter-spacing: 0.08em;
 
-      color: #303030;
+      line-height: 1.4;
+
     }
 
 
     /* =================================
-       飾り線
+       区切り線
     ================================= */
 
     .line {
 
-      width: 48px;
+      width: 45px;
 
       height: 1px;
 
-      margin: 0 auto 17px;
+      margin:
+        0 auto 18px;
 
       background:
-        rgba(80, 70, 60, 0.45);
+        rgba(60, 60, 60, 0.45);
+
     }
 
 
@@ -227,11 +280,25 @@
 
       overflow-y: auto;
 
-      padding: 0 4px;
+      padding:
+        0 5px;
 
-      -webkit-overflow-scrolling: touch;
+      -webkit-overflow-scrolling:
+        touch;
 
-      scrollbar-width: thin;
+      /*
+        スクロールバーを目立たせない
+      */
+
+      scrollbar-width: none;
+
+    }
+
+
+    .message-wrapper::-webkit-scrollbar {
+
+      display: none;
+
     }
 
 
@@ -241,11 +308,11 @@
 
       font-family:
         "Klee One",
-        "Hiragino Maru Gothic ProN",
-        "Yu Gothic",
         cursive;
 
       font-size: 16px;
+
+      font-weight: 400;
 
       line-height: 2;
 
@@ -253,20 +320,20 @@
 
       white-space: pre-line;
 
-      color: #333;
     }
 
 
     /* =================================
-       下部
+       下部テキスト
     ================================= */
 
     .footer {
 
       position: absolute;
 
+      bottom: 1.8%;
+
       left: 0;
-      bottom: 2.2%;
 
       width: 100%;
 
@@ -274,26 +341,28 @@
 
       font-family:
         Georgia,
-        "Times New Roman",
         serif;
 
       font-size: 10px;
 
-      letter-spacing: 0.15em;
+      letter-spacing: 0.16em;
 
       color:
-        rgba(80, 70, 60, 0.7);
+        rgba(60, 60, 60, 0.62);
 
       z-index: 20;
+
     }
 
 
     /* =================================
-       写真がない場合
+       写真なし
     ================================= */
 
     .hidden {
+
       display: none;
+
     }
 
 
@@ -303,44 +372,77 @@
 
     @media (max-height: 700px) {
 
+
       .photo-1 {
-        max-height: 28%;
+
+        width: 55%;
+
+        max-height: 32%;
+
       }
+
 
       .photo-2 {
+
+        width: 60%;
+
         max-height: 38%;
+
       }
 
+
       .photo-3 {
-        max-height: 27%;
+
+        width: 54%;
+
+        max-height: 31%;
+
       }
+
 
       .message-card {
 
-        width: 78%;
+        width: 80%;
+
+        max-height: 47%;
 
         padding:
-          22px 19px;
+          23px 21px 22px;
+
       }
+
 
       .name {
 
-        font-size: 24px;
+        font-size: 25px;
 
-        margin-bottom: 10px;
+        margin-bottom: 11px;
+
       }
+
+
+      .line {
+
+        margin-bottom: 13px;
+
+      }
+
 
       .message-wrapper {
 
-        max-height: 23vh;
+        max-height: 22vh;
+
       }
+
 
       .message {
 
         font-size: 14px;
 
         line-height: 1.85;
+
       }
+
     }
 
 
@@ -350,33 +452,36 @@
 
     @media (min-width: 700px) {
 
-      body {
-        padding-top: 20px;
-      }
 
       .screen {
 
         height: 850px;
+
+        margin-top: 20px;
 
         border-radius: 20px;
 
         box-shadow:
           0 10px 40px
           rgba(0, 0, 0, 0.12);
+
       }
+
     }
 
   </style>
+
 </head>
 
 
 <body>
 
+
   <main class="screen">
 
 
     <!-- =============================
-         写真
+         写真①
     ============================== -->
 
     <img
@@ -386,12 +491,22 @@
       alt="思い出の写真"
     >
 
+
+    <!-- =============================
+         写真②
+    ============================== -->
+
     <img
       id="photo2"
       class="photo photo-2"
       src=""
       alt="思い出の写真"
     >
+
+
+    <!-- =============================
+         写真③
+    ============================== -->
 
     <img
       id="photo3"
@@ -407,6 +522,7 @@
 
     <section class="message-card">
 
+
       <h1
         id="name"
         class="name"
@@ -414,7 +530,9 @@
         Thank you!
       </h1>
 
+
       <div class="line"></div>
+
 
       <div class="message-wrapper">
 
@@ -427,6 +545,7 @@
 
       </div>
 
+
     </section>
 
 
@@ -435,14 +554,17 @@
     ============================== -->
 
     <div class="footer">
+
       THANK YOU FOR CELEBRATING WITH US
+
     </div>
+
 
   </main>
 
 
   <!-- =============================
-       ゲスト情報
+       ゲストデータ
   ============================== -->
 
   <script src="guests.js"></script>
@@ -454,7 +576,10 @@
 
   <script>
 
-    /* URLからID取得 */
+
+    /* --------------------------------
+       URLからID取得
+    -------------------------------- */
 
     const params =
       new URLSearchParams(
@@ -465,29 +590,27 @@
       params.get("id");
 
 
-    /* =================================
+    /* --------------------------------
        背景色
-    ================================= */
+       ゲストごとに固定
+    -------------------------------- */
 
     const backgroundColors = [
 
       "#F3E9DD",
-      "#EDE8DF",
-      "#E8EDE7",
+      "#EEE9E1",
+      "#E7EDE8",
       "#E8EDF1",
-      "#F0E7D5",
+      "#F2E8D5",
       "#EEE7EE",
-      "#E9E4DA",
+      "#E9E4DC",
       "#E5ECE9"
 
     ];
 
 
-    /*
-      IDごとに背景色を固定
-    */
-
     function getBackgroundColor(id) {
+
 
       if (!id) {
 
@@ -495,7 +618,9 @@
 
       }
 
+
       let number = 0;
+
 
       for (
         let i = 0;
@@ -508,10 +633,12 @@
 
       }
 
+
       return backgroundColors[
         number %
         backgroundColors.length
       ];
+
     }
 
 
@@ -519,14 +646,15 @@
       getBackgroundColor(id);
 
 
-    /* =================================
-       写真表示
-    ================================= */
+    /* --------------------------------
+       写真をセット
+    -------------------------------- */
 
     function setPhoto(
       elementId,
       photoPath
     ) {
+
 
       const photo =
         document.getElementById(
@@ -550,25 +678,25 @@
         );
 
       }
+
     }
 
 
-    /* =================================
-       ゲスト表示
-    ================================= */
+    /* --------------------------------
+       ゲストが存在
+    -------------------------------- */
 
     if (
       id &&
       guests[id]
     ) {
 
+
       const guest =
         guests[id];
 
 
-      /*
-        名前
-      */
+      /* 名前 */
 
       document.getElementById(
         "name"
@@ -576,9 +704,7 @@
         `${guest.name}へ`;
 
 
-      /*
-        メッセージ
-      */
+      /* メッセージ */
 
       document.getElementById(
         "message"
@@ -586,9 +712,7 @@
         guest.message;
 
 
-      /*
-        写真
-      */
+      /* 写真 */
 
       setPhoto(
         "photo1",
@@ -608,12 +732,15 @@
       );
 
 
-    } else {
+    }
 
 
-      /*
-        IDなし
-      */
+    /* --------------------------------
+       ゲストが存在しない場合
+    -------------------------------- */
+
+    else {
+
 
       document.getElementById(
         "name"
@@ -649,7 +776,9 @@
 
     }
 
+
   </script>
+
 
 </body>
 </html>
