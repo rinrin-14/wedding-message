@@ -312,11 +312,34 @@
     }
 
 
+    /* ==================================================
+       下側フィルム穴
+       ※ 下穴だけ確実に表示
+    ================================================== */
+
     .film-holes.bottom {
 
-      bottom: 12px;
+      position: absolute;
+
+      left: 0;
+      right: 0;
+
+      bottom: 8px;
+
+      height: 17px;
 
       z-index: 30;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-around;
+
+      overflow: visible;
+
+      pointer-events:
+        none;
 
     }
 
@@ -326,7 +349,12 @@
       flex:
         0 0 13px;
 
+      width: 13px;
+
       height: 9px;
+
+      min-width: 13px;
+      min-height: 9px;
 
       border-radius:
         2px;
