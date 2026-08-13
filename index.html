@@ -25,6 +25,11 @@
   <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
     crossorigin
   >
 
@@ -249,6 +254,7 @@
 
     /* ==================================================
        上部：フィルムエリア
+       ※ 上端だけ少し余白を入れて黒背景を下げる
     ================================================== */
 
     .film-section {
@@ -267,8 +273,8 @@
         linear-gradient(
           to bottom,
           #f7f3e9 0,
-          #f7f3e9 23px,
-          #252624 23px,
+          #f7f3e9 4px,
+          #252624 4px,
           #252624 100%
         );
 
@@ -310,7 +316,7 @@
 
     .film-holes.top {
 
-      top: 25px;
+      top: 8px;
 
     }
 
@@ -337,41 +343,6 @@
 
       opacity:
         0.92;
-
-    }
-
-
-    /* ==================================================
-       フィルム内側のライン
-    ================================================== */
-
-    .film-line {
-
-      position: absolute;
-
-      left: 0;
-      right: 0;
-
-      height: 1px;
-
-      background:
-        rgba(245, 241, 231, 0.18);
-
-      z-index: 15;
-
-    }
-
-
-    .film-line.top {
-
-      top: 35px;
-
-    }
-
-
-    .film-line.bottom {
-
-      bottom: 35px;
 
     }
 
@@ -1098,13 +1069,6 @@
         ></div>
 
 
-        <!-- フィルムライン -->
-
-        <div class="film-line top"></div>
-
-        <div class="film-line bottom"></div>
-
-
         <!-- 写真表示領域 -->
 
         <div
@@ -1551,7 +1515,7 @@
 
 
     let startX =
-      0;
+        0;
 
 
     let startPosition =
