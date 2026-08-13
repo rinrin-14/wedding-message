@@ -24,7 +24,7 @@
 
   <link
     rel="preconnect"
-    href="https://fonts.gstatic.com"
+    href="https://fonts.googleapis.com"
     crossorigin
   >
 
@@ -493,61 +493,6 @@
 
 
     /* ==================================================
-       フィルム左右の装飾
-    ================================================== */
-
-    .film-side {
-
-      position: absolute;
-
-      top: 50%;
-
-      transform:
-        translateY(-50%);
-
-      z-index: 30;
-
-      color:
-        rgba(245,241,231,0.75);
-
-      font-family:
-        "Libre Baskerville",
-        serif;
-
-      font-size:
-        8px;
-
-      letter-spacing:
-        0.24em;
-
-      writing-mode:
-        vertical-rl;
-
-      pointer-events:
-        none;
-
-    }
-
-
-    .film-side.left {
-
-      left: 12px;
-
-    }
-
-
-    .film-side.right {
-
-      right: 12px;
-
-      transform:
-        translateY(-50%)
-        rotate(180deg);
-
-    }
-
-
-    /* ==================================================
        フィルム中央の小さなマーク
     ================================================== */
 
@@ -744,35 +689,6 @@
 
       transform:
         translateY(-50%);
-
-    }
-
-
-    /* ==================================================
-       上部の小さな文字
-    ================================================== */
-
-    .eyebrow {
-
-      position: relative;
-
-      z-index: 3;
-
-      margin:
-        0 0 8px;
-
-      font-family:
-        "Libre Baskerville",
-        serif;
-
-      font-size:
-        7px;
-
-      letter-spacing:
-        0.23em;
-
-      color:
-        rgba(91,73,44,0.75);
 
     }
 
@@ -1080,14 +996,6 @@
       }
 
 
-      .eyebrow {
-
-        margin-bottom:
-          5px;
-
-      }
-
-
       .name-line {
 
         margin:
@@ -1183,17 +1091,6 @@
         <div class="film-line top"></div>
 
         <div class="film-line bottom"></div>
-
-
-        <!-- 左右のフィルム文字 -->
-
-        <div class="film-side left">
-          MEMORIES
-        </div>
-
-        <div class="film-side right">
-          RIN & RIN
-        </div>
 
 
         <!-- 写真表示領域 -->
@@ -1322,13 +1219,6 @@
           <div class="notch left"></div>
 
           <div class="notch right"></div>
-
-
-          <!-- 上部タイトル -->
-
-          <p class="eyebrow">
-            TO OUR GUEST
-          </p>
 
 
           <!-- 宛名 -->
