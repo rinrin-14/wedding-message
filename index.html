@@ -254,7 +254,6 @@
 
     /* ==================================================
        上部：フィルムエリア
-       ※ 上端だけ少し余白を入れて黒背景を下げる
     ================================================== */
 
     .film-section {
@@ -270,17 +269,37 @@
       overflow: hidden;
 
       background:
-        linear-gradient(
-          to bottom,
-          #f7f3e9 0,
-          #f7f3e9 4px,
-          #252624 4px,
-          #252624 100%
-        );
+        transparent;
 
       border-bottom:
         1px solid
         rgba(65, 61, 53, 0.4);
+
+    }
+
+
+    /* ==================================================
+       黒フィルム背景
+       ※ 上端を四隅の下端より少し下げる
+    ================================================== */
+
+    .film-section::before {
+
+      content: "";
+
+      position: absolute;
+
+      top: 23px;
+
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      background:
+        #252624;
+
+      z-index:
+        0;
 
     }
 
@@ -316,7 +335,7 @@
 
     .film-holes.top {
 
-      top: 8px;
+      top: 23px;
 
     }
 
@@ -343,6 +362,19 @@
 
       opacity:
         0.92;
+
+    }
+
+
+    /* ==================================================
+       フィルム内側のライン
+       ※ 上下とも削除
+    ================================================== */
+
+    .film-line {
+
+      display:
+        none;
 
     }
 
@@ -1067,6 +1099,13 @@
           class="film-holes bottom"
           id="holesBottom"
         ></div>
+
+
+        <!-- フィルムライン -->
+
+        <div class="film-line top"></div>
+
+        <div class="film-line bottom"></div>
 
 
         <!-- 写真表示領域 -->
