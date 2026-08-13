@@ -1,1130 +1,717 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-
   <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Wedding Memory Ticket</title>
-
-
-  <!-- ================================
-       Google Fonts
-  ================================= -->
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Libre+Baskerville:wght@400;700&family=Noto+Serif+JP:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  >
-
+  <title>Wedding Message</title>
 
   <style>
 
-    /* ==================================================
-       基本設定
-    ================================================== */
+    /* =========================
+       全体
+    ========================= */
 
     * {
       box-sizing: border-box;
     }
 
-
     html,
     body {
-
       margin: 0;
-
+      padding: 0;
       width: 100%;
-      height: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      background: #f8f7f2;
+      color: #333333;
+      font-family:
+        "Hiragino Mincho ProN",
+        "Yu Mincho",
+        "Noto Serif JP",
+        serif;
+      overflow-x: hidden;
+    }
+
+
+    /* =========================
+       ページ全体
+    ========================= */
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      background: #f8f7f2;
+    }
+
+
+    /* =========================
+       PHOTO / FILM AREA
+    ========================= */
+
+    .photo-section {
+      position: relative;
+
+      height: 47vh;
+      min-height: 390px;
+      max-height: 560px;
+
+      background:
+        radial-gradient(
+          circle at 50% 50%,
+          rgba(255,255,255,0.025) 1px,
+          transparent 1px
+        );
+
+      background-size: 7px 7px;
+
+      background-color: #252525;
 
       overflow: hidden;
 
+      border-bottom: 1px solid rgba(0,0,0,0.15);
+    }
+
+
+    /* =========================
+       フィルム上下の帯
+    ========================= */
+
+    .film-strip {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 52px;
+
+      display: flex;
+      align-items: center;
+
+      overflow: hidden;
+
+      z-index: 5;
+
+      background: #252525;
+    }
+
+    .film-strip.top {
+      top: 0;
+    }
+
+    .film-strip.bottom {
+      bottom: 0;
+    }
+
+
+    /* フィルム穴 */
+
+    .film-holes {
+      width: 100%;
+
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      padding: 0 8px;
+    }
+
+    .film-hole {
+      width: 24px;
+      height: 15px;
+
+      background: #f8f7f2;
+
+      border-radius: 3px;
+
+      flex-shrink: 0;
+    }
+
+
+    /* =========================
+       フィルム内側ライン
+    ========================= */
+
+    .film-line {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+
+      height: 1px;
+
+      background: rgba(248,247,242,0.28);
+
+      z-index: 6;
+    }
+
+    .film-line.top-line {
+      top: 51px;
+    }
+
+    .film-line.bottom-line {
+      bottom: 51px;
+    }
+
+
+    /* =========================
+       写真スライダー
+    ========================= */
+
+    .photo-track {
+      position: absolute;
+
+      top: 52px;
+      bottom: 52px;
+
+      left: 0;
+
+      display: flex;
+      align-items: center;
+
+      gap: 32px;
+
+      width: max-content;
+
+      animation: filmMove 24s linear infinite;
+
+      z-index: 2;
+
+      will-change: transform;
+    }
+
+
+    /* 手動操作を可能にする */
+
+    .photo-section {
+      touch-action: pan-x;
+    }
+
+
+    /* =========================
+       写真
+    ========================= */
+
+    .photo-frame {
+      height: calc(47vh - 104px);
+
+      min-height: 280px;
+      max-height: 450px;
+
+      width: auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      flex-shrink: 0;
+
+      background: transparent;
+
+      overflow: hidden;
+    }
+
+
+    .photo-frame img {
+      display: block;
+
+      height: 100%;
+      width: auto;
+
+      max-width: 78vw;
+
+      object-fit: contain;
+
+      border-radius: 2px;
+
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.22);
+
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+
+    /* =========================
+       写真スクロール
+    ========================= */
+
+    @keyframes filmMove {
+
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+
+    }
+
+
+    /* =========================
+       メッセージエリア
+    ========================= */
+
+    .message-section {
+      position: relative;
+
+      min-height: 53vh;
+
+      padding:
+        30px
+        28px
+        24px;
+
+      background: #f8f7f2;
+
+      overflow: hidden;
+    }
+
+
+    /* =========================
+       上部のフィルムライン
+    ========================= */
+
+    .message-top-film {
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 15px;
+
+      border-top: 2px solid #d8d5cb;
+      border-bottom: 1px solid #e3e0d7;
+
       background:
-        #f5f1e7;
+        radial-gradient(
+          ellipse,
+          #c9c6bd 45%,
+          transparent 50%
+        );
 
-      color:
-        #30302d;
+      background-size: 25px 8px;
+      background-position: center;
+      background-repeat: repeat-x;
 
+      opacity: 0.85;
     }
 
 
-    body {
+    /* =========================
+       チケット外枠
+    ========================= */
 
-      font-family:
-        "Noto Serif JP",
-        serif;
-
-      -webkit-font-smoothing:
-        antialiased;
-
-    }
-
-
-    /* ==================================================
-       ページ本体
-    ================================================== */
-
-    .page {
-
+    .ticket {
       position: relative;
 
       width: 100%;
-      height: 100dvh;
-
-      max-width: 600px;
+      max-width: 720px;
 
       margin: 0 auto;
 
+      padding:
+        28px
+        34px
+        22px;
+
+      border: 1px solid #bdb7a8;
+
+      background: rgba(255,255,255,0.35);
+
       overflow: hidden;
-
-      background:
-        #f7f3e9;
-
     }
 
 
-    /* ==================================================
-       外側のチケットフレーム
-    ================================================== */
+    /* 内側の細いライン */
 
-    .ticket-frame {
-
-      position: absolute;
-
-      inset: 11px;
-
-      border:
-        1px solid
-        rgba(112, 91, 57, 0.55);
-
-      pointer-events:
-        none;
-
-      z-index:
-        50;
-
-    }
-
-
-    .ticket-frame::before {
-
+    .ticket::before {
       content: "";
 
       position: absolute;
 
-      inset: 7px;
+      top: 9px;
+      left: 9px;
+      right: 9px;
+      bottom: 9px;
 
-      border:
-        1px solid
-        rgba(112, 91, 57, 0.28);
+      border: 1px solid #d4cec1;
 
+      pointer-events: none;
     }
 
 
-    /* ==================================================
-       四隅の丸み
-    ================================================== */
+    /* =========================
+       上部装飾
+    ========================= */
 
-    .corner {
+    .ticket-header {
+      position: relative;
 
+      text-align: center;
+
+      height: 20px;
+
+      margin-bottom: 2px;
+    }
+
+    .ticket-header::before,
+    .ticket-header::after {
+      content: "";
+
+      position: absolute;
+
+      top: 50%;
+
+      width: 27%;
+
+      height: 1px;
+
+      background: #c3bbaa;
+    }
+
+    .ticket-header::before {
+      left: 6%;
+    }
+
+    .ticket-header::after {
+      right: 6%;
+    }
+
+
+    .diamond {
+      position: relative;
+
+      display: inline-block;
+
+      width: 10px;
+      height: 10px;
+
+      background: #b8ad99;
+
+      transform: rotate(45deg);
+
+      z-index: 2;
+    }
+
+
+    /* =========================
+       宛名
+    ========================= */
+
+    .guest-name {
+      position: relative;
+
+      margin:
+        12px
+        0
+        8px;
+
+      padding-left: 4px;
+
+      font-size: clamp(25px, 7vw, 38px);
+
+      font-weight: 400;
+
+      letter-spacing: 0.08em;
+
+      color: #333333;
+
+      line-height: 1.35;
+    }
+
+
+    /* 宛名下ライン */
+
+    .name-line {
+      width: 95px;
+      height: 2px;
+
+      background: #a9a295;
+
+      margin-left: 4px;
+      margin-bottom: 20px;
+    }
+
+
+    /* =========================
+       メッセージ本文
+    ========================= */
+
+    .message-box {
+      position: relative;
+
+      width: 100%;
+
+      max-height: 285px;
+
+      overflow-y: auto;
+
+      padding:
+        0
+        4px;
+
+      scrollbar-width: thin;
+
+      scrollbar-color:
+        #c7c1b5
+        transparent;
+    }
+
+
+    /* iPhoneなどでのスクロール */
+
+    .message-box {
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+
+    /* スクロールバー */
+
+    .message-box::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .message-box::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .message-box::-webkit-scrollbar-thumb {
+      background: #c7c1b5;
+      border-radius: 10px;
+    }
+
+
+    .message {
+      font-size: clamp(17px, 4.3vw, 22px);
+
+      line-height: 2.05;
+
+      letter-spacing: 0.055em;
+
+      color: #414141;
+
+      white-space: pre-wrap;
+
+      padding-right: 6px;
+    }
+
+
+    /* =========================
+       チケット下部
+    ========================= */
+
+    .ticket-footer {
+      position: relative;
+
+      display: flex;
+
+      justify-content: space-between;
+      align-items: flex-end;
+
+      margin-top: 17px;
+
+      padding:
+        0
+        4px;
+
+      color: #817a6e;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      letter-spacing: 0.16em;
+
+      font-size: 10px;
+
+      line-height: 1.5;
+    }
+
+
+    .footer-left {
+      text-align: left;
+    }
+
+    .footer-right {
+      text-align: right;
+    }
+
+
+    /* ハート */
+
+    .heart {
+      position: absolute;
+
+      left: 50%;
+      bottom: 2px;
+
+      transform: translateX(-50%);
+
+      color: #9d927e;
+
+      font-size: 16px;
+    }
+
+
+    /* =========================
+       チケット下の切れ込み
+    ========================= */
+
+    .ticket-notch {
       position: absolute;
 
       width: 30px;
       height: 30px;
 
-      background:
-        #f7f3e9;
+      border: 1px solid #bdb7a8;
 
-      border:
-        1px solid
-        rgba(112, 91, 57, 0.55);
+      border-radius: 50%;
 
-    }
-
-
-    .corner.tl {
-
-      top: -1px;
-      left: -1px;
-
-      border-radius:
-        0 0 28px 0;
-
-      border-top:
-        none;
-
-      border-left:
-        none;
-
-    }
-
-
-    .corner.tr {
-
-      top: -1px;
-      right: -1px;
-
-      border-radius:
-        0 0 0 28px;
-
-      border-top:
-        none;
-
-      border-right:
-        none;
-
-    }
-
-
-    .corner.bl {
-
-      bottom: -1px;
-      left: -1px;
-
-      border-radius:
-        0 28px 0 0;
-
-      border-bottom:
-        none;
-
-      border-left:
-        none;
-
-    }
-
-
-    .corner.br {
-
-      bottom: -1px;
-      right: -1px;
-
-      border-radius:
-        28px 0 0 0;
-
-      border-bottom:
-        none;
-
-      border-right:
-        none;
-
-    }
-
-
-    /* ==================================================
-       メインコンテンツ
-    ================================================== */
-
-    .content {
-
-      position: relative;
-
-      width: 100%;
-      height: 100%;
-
-      overflow: hidden;
-
-    }
-
-
-    /* ==================================================
-       上部：フィルムエリア
-    ================================================== */
-
-    .film-section {
-
-      position: relative;
-
-      width: 100%;
-
-      height: 50%;
-
-      min-height: 310px;
-
-      overflow: hidden;
-
-      background:
-        #252624;
-
-      border-bottom:
-        1px solid
-        rgba(65, 61, 53, 0.4);
-
-    }
-
-
-    /* ==================================================
-       フィルム上下の穴
-    ================================================== */
-
-    .film-holes {
-
-      position: absolute;
-
-      left: 0;
-      right: 0;
-
-      height: 17px;
-
-      z-index: 20;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-around;
-
-      overflow: hidden;
-
-      pointer-events:
-        none;
-
-    }
-
-
-    .film-holes.top {
-
-      top: 8px;
-
-    }
-
-
-    .film-holes.bottom {
-
-      bottom: 8px;
-
-    }
-
-
-    .film-hole {
-
-      flex:
-        0 0 13px;
-
-      height: 9px;
-
-      border-radius:
-        2px;
-
-      background:
-        #f7f3e9;
-
-      opacity:
-        0.92;
-
-    }
-
-
-    /* ==================================================
-       フィルム内側のライン
-    ================================================== */
-
-    .film-line {
-
-      position: absolute;
-
-      left: 0;
-      right: 0;
-
-      height: 1px;
-
-      background:
-        rgba(245, 241, 231, 0.18);
-
-      z-index: 15;
-
-    }
-
-
-    .film-line.top {
-
-      top: 35px;
-
-    }
-
-
-    .film-line.bottom {
-
-      bottom: 35px;
-
-    }
-
-
-    /* ==================================================
-       写真トラック
-    ================================================== */
-
-    .photo-window {
-
-      position: absolute;
-
-      left: 0;
-      right: 0;
-
-      top: 50%;
-
-      height: 72%;
-
-      transform:
-        translateY(-50%);
-
-      overflow: hidden;
-
-      z-index: 10;
-
-      touch-action:
-        pan-y;
-
-    }
-
-
-    .photo-track {
-
-      position: absolute;
-
-      top: 50%;
-      left: 0;
-
-      height: 100%;
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 18px;
-
-      width: max-content;
-
-      transform:
-        translate3d(
-          0,
-          -50%,
-          0
-        );
-
-      will-change:
-        transform;
-
-      user-select:
-        none;
-
-      -webkit-user-select:
-        none;
-
-      cursor:
-        grab;
-
-    }
-
-
-    .photo-track.dragging {
-
-      cursor:
-        grabbing;
-
-    }
-
-
-    /* ==================================================
-       写真
-    ================================================== */
-
-    .photo-card {
-
-      position: relative;
-
-      flex:
-        0 0 auto;
-
-      height: 100%;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-    }
-
-
-    .photo-card img {
-
-      display: block;
-
-      height: 100%;
-
-      width: auto;
-
-      max-width:
-        61vw;
-
-      object-fit:
-        contain;
-
-      border-radius:
-        2px;
-
-      box-shadow:
-        0 3px 10px
-        rgba(0,0,0,0.22);
-
-      pointer-events:
-        none;
-
-      -webkit-user-drag:
-        none;
-
-    }
-
-
-    /* ==================================================
-       フィルム左右の装飾
-    ================================================== */
-
-    .film-side {
-
-      position: absolute;
-
-      top: 50%;
-
-      transform:
-        translateY(-50%);
-
-      z-index: 30;
-
-      color:
-        rgba(245,241,231,0.75);
-
-      font-family:
-        "Libre Baskerville",
-        serif;
-
-      font-size:
-        8px;
-
-      letter-spacing:
-        0.24em;
-
-      writing-mode:
-        vertical-rl;
-
-      pointer-events:
-        none;
-
-    }
-
-
-    .film-side.left {
-
-      left: 12px;
-
-    }
-
-
-    .film-side.right {
-
-      right: 12px;
-
-      transform:
-        translateY(-50%)
-        rotate(180deg);
-
-    }
-
-
-    /* ==================================================
-       フィルム中央の小さなマーク
-    ================================================== */
-
-    .film-mark {
-
-      position: absolute;
-
-      left: 50%;
-      top: 50%;
-
-      transform:
-        translate(-50%, -50%);
-
-      z-index: 40;
-
-      color:
-        rgba(245,241,231,0.35);
-
-      font-family:
-        Georgia,
-        serif;
-
-      font-size:
-        14px;
-
-      pointer-events:
-        none;
-
-    }
-
-
-    /* ==================================================
-       下部メッセージエリア
-    ================================================== */
-
-    .message-section {
-
-      position: relative;
-
-      width: 100%;
-
-      height: 50%;
-
-      padding:
-        27px 35px 18px;
-
-      background:
-        #f7f3e9;
-
-      overflow:
-        hidden;
-
-    }
-
-
-    /* ==================================================
-       メッセージ上部装飾
-    ================================================== */
-
-    .ornament-top {
-
-      position: absolute;
-
-      top: 7px;
-
-      left: 50%;
-
-      transform:
-        translateX(-50%);
-
-      width: 150px;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      gap: 8px;
-
-      color:
-        rgba(126, 103, 66, 0.6);
-
-      font-family:
-        Georgia,
-        serif;
-
-      font-size:
-        14px;
-
-    }
-
-
-    .ornament-top::before,
-    .ornament-top::after {
-
-      content: "";
-
-      height: 1px;
-
-      flex: 1;
-
-      background:
-        rgba(126, 103, 66, 0.4);
-
-    }
-
-
-    /* ==================================================
-       チケット風メッセージカード
-    ================================================== */
-
-    .message-card {
-
-      position: relative;
-
-      width: 100%;
-      height: 100%;
-
-      border:
-        1px solid
-        rgba(112,91,57,0.62);
-
-      padding:
-        20px 24px 16px;
-
-      overflow: hidden;
-
-      background:
-        rgba(250,247,239,0.88);
-
-    }
-
-
-    .message-card::before {
-
-      content: "";
-
-      position: absolute;
-
-      inset: 5px;
-
-      border:
-        1px solid
-        rgba(112,91,57,0.27);
-
-      pointer-events:
-        none;
-
-    }
-
-
-    /* ==================================================
-       チケット左右の切り欠き
-    ================================================== */
-
-    .notch {
-
-      position: absolute;
-
-      width: 34px;
-      height: 34px;
-
-      border-radius:
-        50%;
-
-      background:
-        #f7f3e9;
-
-      border:
-        1px solid
-        rgba(112,91,57,0.55);
-
-      z-index: 5;
-
-    }
-
-
-    .notch.left {
-
-      left: -18px;
-      top: 50%;
-
-      transform:
-        translateY(-50%);
-
-    }
-
-
-    .notch.right {
-
-      right: -18px;
-      top: 50%;
-
-      transform:
-        translateY(-50%);
-
-    }
-
-
-    /* ==================================================
-       上部の小さな文字
-    ================================================== */
-
-    .eyebrow {
-
-      position: relative;
-
-      z-index: 3;
-
-      margin:
-        0 0 8px;
-
-      font-family:
-        "Libre Baskerville",
-        serif;
-
-      font-size:
-        7px;
-
-      letter-spacing:
-        0.23em;
-
-      color:
-        rgba(91,73,44,0.75);
-
-    }
-
-
-    /* ==================================================
-       宛名
-    ================================================== */
-
-    .guest-name {
-
-      position: relative;
-
-      z-index: 3;
-
-      margin:
-        0;
-
-      font-family:
-        "Klee One",
-        cursive;
-
-      font-size:
-        23px;
-
-      font-weight:
-        600;
-
-      letter-spacing:
-        0.08em;
-
-      line-height:
-        1.5;
-
-      color:
-        #30302d;
-
-    }
-
-
-    /* ==================================================
-       宛名下ライン
-    ================================================== */
-
-    .name-line {
-
-      position: relative;
-
-      z-index: 3;
-
-      width: 52px;
-
-      height: 1px;
-
-      margin:
-        7px 0 14px;
-
-      background:
-        rgba(82,67,44,0.55);
-
-    }
-
-
-    /* ==================================================
-       メッセージスクロール
-    ================================================== */
-
-    .message-scroll {
-
-      position: relative;
-
-      z-index: 3;
-
-      height:
-        calc(100% - 125px);
-
-      overflow-y:
-        auto;
-
-      padding-right:
-        5px;
-
-      -webkit-overflow-scrolling:
-        touch;
-
-      scrollbar-width:
-        none;
-
-    }
-
-
-    .message-scroll::-webkit-scrollbar {
-
-      display:
-        none;
-
-    }
-
-
-    /* ==================================================
-       本文
-    ================================================== */
-
-    .message {
-
-      margin:
-        0;
-
-      padding-bottom:
-        20px;
-
-      font-family:
-        "Klee One",
-        "Noto Serif JP",
-        serif;
-
-      font-size:
-        14px;
-
-      line-height:
-        2.05;
-
-      letter-spacing:
-        0.045em;
-
-      white-space:
-        pre-line;
-
-      color:
-        #3c3a36;
-
-    }
-
-
-    /* ==================================================
-       下部装飾
-    ================================================== */
-
-    .message-bottom {
-
-      position: absolute;
-
-      left: 24px;
-      right: 24px;
-
-      bottom: 14px;
+      background: #f8f7f2;
 
       z-index: 4;
+    }
 
-      display: flex;
+    .ticket-notch.left {
+      left: -16px;
+      top: 50%;
 
-      align-items: flex-end;
+      transform: translateY(-50%);
+    }
 
-      justify-content: space-between;
+    .ticket-notch.right {
+      right: -16px;
+      top: 50%;
 
+      transform: translateY(-50%);
     }
 
 
-    .wedding-mark {
-
-      font-family:
-        "Libre Baskerville",
-        serif;
-
-      font-size:
-        7px;
-
-      line-height:
-        1.8;
-
-      letter-spacing:
-        0.17em;
-
-      color:
-        rgba(91,73,44,0.68);
-
-    }
-
-
-    .thank-you {
-
-      font-family:
-        "Libre Baskerville",
-        serif;
-
-      font-size:
-        7px;
-
-      line-height:
-        1.7;
-
-      letter-spacing:
-        0.13em;
-
-      text-align:
-        right;
-
-      color:
-        rgba(91,73,44,0.65);
-
-    }
-
-
-    /* ==================================================
-       下部の点線
-    ================================================== */
-
-    .bottom-dash {
-
-      position: absolute;
-
-      left: 24px;
-      right: 24px;
-
-      bottom: 5px;
-
-      height: 1px;
-
-      background:
-        repeating-linear-gradient(
-          to right,
-          rgba(126,103,66,0.45) 0,
-          rgba(126,103,66,0.45) 8px,
-          transparent 8px,
-          transparent 15px
-        );
-
-      z-index: 4;
-
-    }
-
-
-    /* ==================================================
+    /* =========================
        小さな装飾
-    ================================================== */
+    ========================= */
 
-    .little-heart {
+    .bottom-decoration {
+      position: relative;
 
-      position: absolute;
+      display: flex;
 
-      left: 50%;
+      align-items: center;
+      justify-content: center;
 
-      bottom: 13px;
+      gap: 12px;
 
-      transform:
-        translateX(-50%);
+      margin-top: 12px;
 
-      z-index: 6;
+      opacity: 0.7;
+    }
 
-      color:
-        rgba(126,103,66,0.58);
+    .bottom-decoration::before,
+    .bottom-decoration::after {
+      content: "";
 
-      font-size:
-        11px;
+      width: 55px;
+      height: 1px;
 
+      background: #bdb7a8;
     }
 
 
-    /* ==================================================
-       スマホ小画面対応
-    ================================================== */
+    /* =========================
+       スマホ調整
+    ========================= */
 
-    @media (max-height: 700px) {
+    @media (max-width: 600px) {
 
-
-      .film-section {
-
-        min-height:
-          280px;
-
+      .photo-section {
+        height: 47vh;
+        min-height: 390px;
       }
 
+      .film-strip {
+        height: 48px;
+      }
+
+      .film-hole {
+        width: 22px;
+        height: 14px;
+      }
+
+      .photo-track {
+        top: 48px;
+        bottom: 48px;
+
+        gap: 24px;
+      }
+
+      .photo-frame {
+        height: calc(47vh - 96px);
+        min-height: 290px;
+      }
 
       .message-section {
+        min-height: 53vh;
 
         padding:
-          23px 31px 15px;
-
+          25px
+          18px
+          20px;
       }
 
-
-      .message-card {
-
+      .ticket {
         padding:
-          17px 21px 13px;
-
+          25px
+          22px
+          20px;
       }
-
 
       .guest-name {
-
-        font-size:
-          21px;
-
+        font-size: 28px;
       }
 
+      .message-box {
+        max-height: 320px;
+      }
 
       .message {
-
-        font-size:
-          13px;
-
-        line-height:
-          1.95;
-
+        font-size: 17px;
+        line-height: 2.05;
+        letter-spacing: 0.045em;
       }
 
-
-      .eyebrow {
-
-        margin-bottom:
-          5px;
-
-      }
-
-
-      .name-line {
-
-        margin:
-          5px 0 10px;
-
+      .ticket-footer {
+        font-size: 9px;
       }
 
     }
 
 
-    /* ==================================================
-       PC対応
-    ================================================== */
+    /* =========================
+       長文時
+    ========================= */
 
-    @media (min-width: 700px) {
+    @media (min-height: 800px) {
 
-
-      body {
-
-        padding:
-          20px 0;
-
+      .message-box {
+        max-height: 350px;
       }
 
+    }
 
-      .page {
 
-        height:
-          850px;
+    /* =========================
+       動きを減らしたい端末
+    ========================= */
 
-        border-radius:
-          12px;
+    @media (prefers-reduced-motion: reduce) {
 
-        box-shadow:
-          0 15px 50px
-          rgba(0,0,0,0.15);
-
+      .photo-track {
+        animation: none;
       }
 
     }
@@ -1136,843 +723,354 @@
 
 <body>
 
+<div class="page">
 
-  <main class="page">
+
+  <!-- =========================
+       PHOTO SECTION
+  ========================== -->
+
+  <section class="photo-section" id="photoSection">
 
 
-    <!-- 外側フレーム -->
+    <!-- 上フィルム -->
 
-    <div class="ticket-frame">
+    <div class="film-strip top">
 
-      <div class="corner tl"></div>
-      <div class="corner tr"></div>
-      <div class="corner bl"></div>
-      <div class="corner br"></div>
+      <div class="film-holes">
+
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+
+      </div>
 
     </div>
 
 
-    <div class="content">
+    <!-- 下フィルム -->
+
+    <div class="film-strip bottom">
+
+      <div class="film-holes">
+
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+        <span class="film-hole"></span>
+
+      </div>
+
+    </div>
 
 
-      <!-- =================================================
-           写真・フィルムエリア
-      ================================================== -->
-
-      <section class="film-section">
+    <div class="film-line top-line"></div>
+    <div class="film-line bottom-line"></div>
 
 
-        <!-- 上側フィルム穴 -->
+    <!-- 写真 -->
+
+    <div class="photo-track" id="photoTrack">
+
+      <!-- JavaScriptで写真を追加 -->
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       MESSAGE SECTION
+  ========================== -->
+
+  <section class="message-section">
+
+
+    <div class="message-top-film"></div>
+
+
+    <div class="ticket">
+
+
+      <!-- 上部装飾 -->
+
+      <div class="ticket-header">
+
+        <span class="diamond"></span>
+
+      </div>
+
+
+      <!-- 宛名 -->
+
+      <h1
+        class="guest-name"
+        id="name">
+        Welcome!
+      </h1>
+
+
+      <div class="name-line"></div>
+
+
+      <!-- メッセージ -->
+
+      <div
+        class="message-box"
+        id="messageBox">
 
         <div
-          class="film-holes top"
-          id="holesTop"
-        ></div>
-
-
-        <!-- 下側フィルム穴 -->
-
-        <div
-          class="film-holes bottom"
-          id="holesBottom"
-        ></div>
-
-
-        <!-- フィルムライン -->
-
-        <div class="film-line top"></div>
-
-        <div class="film-line bottom"></div>
-
-
-        <!-- 左右のフィルム文字 -->
-
-        <div class="film-side left">
-          MEMORIES
+          class="message"
+          id="message">
+          メッセージを読み込んでいます。
         </div>
 
-        <div class="film-side right">
-          RIN & RIN
+      </div>
+
+
+      <!-- 下部 -->
+
+      <div class="ticket-footer">
+
+        <div class="footer-left">
+          RIN &amp; RIN<br>
+          WEDDING
         </div>
 
-
-        <!-- 写真表示領域 -->
-
-        <div
-          class="photo-window"
-          id="photoWindow"
-        >
-
-          <div
-            class="photo-track"
-            id="photoTrack"
-          >
-
-
-            <!-- 写真1 -->
-
-            <div class="photo-card">
-
-              <img
-                id="photo1"
-                src=""
-                alt=""
-              >
-
-            </div>
-
-
-            <!-- 写真2 -->
-
-            <div class="photo-card">
-
-              <img
-                id="photo2"
-                src=""
-                alt=""
-              >
-
-            </div>
-
-
-            <!-- 写真3 -->
-
-            <div class="photo-card">
-
-              <img
-                id="photo3"
-                src=""
-                alt=""
-              >
-
-            </div>
-
-
-            <!-- コピー -->
-
-            <div class="photo-card">
-
-              <img
-                id="photo1copy"
-                src=""
-                alt=""
-              >
-
-            </div>
-
-
-            <div class="photo-card">
-
-              <img
-                id="photo2copy"
-                src=""
-                alt=""
-              >
-
-            </div>
-
-
-            <div class="photo-card">
-
-              <img
-                id="photo3copy"
-                src=""
-                alt=""
-              >
-
-            </div>
-
-
-          </div>
-
+        <div class="footer-right">
+          THANK YOU FOR<br>
+          CELEBRATING WITH US
         </div>
 
-
-        <!-- 中央の小さなマーク -->
-
-        <div class="film-mark">
-          ◆
+        <div class="heart">
+          ♥
         </div>
 
-
-      </section>
-
-
-      <!-- =================================================
-           メッセージエリア
-      ================================================== -->
-
-      <section class="message-section">
+      </div>
 
 
-        <!-- 上部装飾 -->
+      <!-- 左右の切れ込み -->
 
-        <div class="ornament-top">
-          ✦
-        </div>
-
-
-        <!-- チケットカード -->
-
-        <div class="message-card">
-
-
-          <!-- 左右切り欠き -->
-
-          <div class="notch left"></div>
-
-          <div class="notch right"></div>
-
-
-          <!-- 上部タイトル -->
-
-          <p class="eyebrow">
-            TO OUR GUEST
-          </p>
-
-
-          <!-- 宛名 -->
-
-          <h1
-            id="name"
-            class="guest-name"
-          >
-            Thank you!
-          </h1>
-
-
-          <!-- ライン -->
-
-          <div class="name-line"></div>
-
-
-          <!-- メッセージ -->
-
-          <div
-            class="message-scroll"
-            id="messageScroll"
-          >
-
-            <p
-              id="message"
-              class="message"
-            >
-              メッセージを読み込んでいます。
-            </p>
-
-          </div>
-
-
-          <!-- 下部情報 -->
-
-          <div class="message-bottom">
-
-
-            <div class="wedding-mark">
-
-              RIN & RIN<br>
-              WEDDING
-
-            </div>
-
-
-            <div class="thank-you">
-
-              THANK YOU FOR<br>
-              CELEBRATING WITH US
-
-            </div>
-
-
-          </div>
-
-
-          <!-- ハート -->
-
-          <div class="little-heart">
-            ♥
-          </div>
-
-
-          <!-- 点線 -->
-
-          <div class="bottom-dash"></div>
-
-
-        </div>
-
-
-      </section>
+      <div class="ticket-notch left"></div>
+      <div class="ticket-notch right"></div>
 
 
     </div>
 
 
-  </main>
+    <div class="bottom-decoration"></div>
 
 
-  <!-- ==================================================
-       ゲストデータ
-  ================================================== -->
+  </section>
 
-  <script src="guests.js"></script>
+</div>
 
 
-  <script>
 
+<!-- =========================
+     ゲストデータ
+========================== -->
 
-    /* ==================================================
-       URLからID取得
-    ================================================== */
+<script src="guests.js"></script>
 
-    const params =
-      new URLSearchParams(
-        window.location.search
-      );
 
+<script>
 
-    const id =
-      params.get("id");
+  /* =========================
+     URLからID取得
+  ========================== */
 
+  const params =
+    new URLSearchParams(window.location.search);
 
-    /* ==================================================
-       フィルム穴生成
-    ================================================== */
+  const id =
+    params.get("id");
 
-    function createFilmHoles() {
 
+  /* =========================
+     ゲスト情報
+  ========================== */
 
-      const top =
-        document.getElementById(
-          "holesTop"
-        );
+  if (id && typeof guests !== "undefined" && guests[id]) {
 
+    const guest = guests[id];
 
-      const bottom =
-        document.getElementById(
-          "holesBottom"
-        );
 
+    /* 名前 */
 
-      const count =
-        Math.ceil(
-          window.innerWidth / 23
-        );
+    document.getElementById("name").textContent =
+      `${guest.name}さんへ`;
 
 
-      for (
-        let i = 0;
-        i < count;
-        i++
-      ) {
+    /* メッセージ */
 
+    document.getElementById("message").textContent =
+      guest.message;
 
-        const hole1 =
-          document.createElement(
-            "div"
-          );
 
-        hole1.className =
-          "film-hole";
-
-
-        const hole2 =
-          document.createElement(
-            "div"
-          );
-
-        hole2.className =
-          "film-hole";
-
-
-        top.appendChild(
-          hole1
-        );
-
-        bottom.appendChild(
-          hole2
-        );
-
-      }
-
-    }
-
-
-    createFilmHoles();
-
-
-    /* ==================================================
-       写真を設定
-    ================================================== */
-
-    function setPhoto(
-      id,
-      src
-    ) {
-
-
-      const image =
-        document.getElementById(
-          id
-        );
-
-
-      if (!image) {
-
-        return;
-
-      }
-
-
-      if (src) {
-
-        image.src =
-          src;
-
-      } else {
-
-        image.parentElement.style.display =
-          "none";
-
-      }
-
-    }
-
-
-    /* ==================================================
-       ゲスト情報
-    ================================================== */
-
-    if (
-      id &&
-      typeof guests !== "undefined" &&
-      guests[id]
-    ) {
-
-
-      const guest =
-        guests[id];
-
-
-      /* 名前 */
-
-      document.getElementById(
-        "name"
-      ).textContent =
-        `${guest.name}へ`;
-
-
-      /* メッセージ */
-
-      document.getElementById(
-        "message"
-      ).textContent =
-        guest.message;
-
-
-      /* 写真 */
-
-      setPhoto(
-        "photo1",
-        guest.photos[0]
-      );
-
-
-      setPhoto(
-        "photo2",
-        guest.photos[1]
-      );
-
-
-      setPhoto(
-        "photo3",
-        guest.photos[2]
-      );
-
-
-      /* コピー */
-
-      setPhoto(
-        "photo1copy",
-        guest.photos[0]
-      );
-
-
-      setPhoto(
-        "photo2copy",
-        guest.photos[1]
-      );
-
-
-      setPhoto(
-        "photo3copy",
-        guest.photos[2]
-      );
-
-
-    } else {
-
-
-      document.getElementById(
-        "name"
-      ).textContent =
-        "Welcome!";
-
-
-      document.getElementById(
-        "message"
-      ).textContent =
-        "QRコードからアクセスしてください。";
-
-
-    }
-
-
-    /* ==================================================
-       写真自動スクロール
-    ================================================== */
+    /* =========================
+       写真
+    ========================== */
 
     const track =
-      document.getElementById(
-        "photoTrack"
-      );
+      document.getElementById("photoTrack");
 
 
-    const windowArea =
-      document.getElementById(
-        "photoWindow"
-      );
+    const photos =
+      guest.photos || [];
 
 
-    let position = 0;
+    if (photos.length > 0) {
+
+      /*
+       * 写真を2セット並べることで
+       * 無限スクロールっぽく見せる
+       */
+
+      const photoList =
+        [...photos, ...photos];
 
 
-    let velocity =
-        0.38;
+      photoList.forEach((photo, index) => {
+
+        const frame =
+          document.createElement("div");
+
+        frame.className =
+          "photo-frame";
 
 
-    let dragging =
-        false;
+        const img =
+          document.createElement("img");
+
+        img.src =
+          photo;
+
+        img.alt =
+          `${guest.name}さんとの思い出`;
+
+        img.draggable = false;
 
 
-    let startX =
-        0;
+        frame.appendChild(img);
 
+        track.appendChild(frame);
 
-    let startPosition =
-        0;
-
-
-    /* ==================================================
-       1セット分の幅
-    ================================================== */
-
-    function getLoopWidth() {
-
-
-      const cards =
-        track.querySelectorAll(
-          ".photo-card"
-        );
-
-
-      if (
-        cards.length < 4
-      ) {
-
-        return 0;
-
-      }
-
-
-      return (
-        cards[3].offsetLeft -
-        cards[0].offsetLeft
-      );
+      });
 
     }
 
 
-    /* ==================================================
-       アニメーション
-    ================================================== */
-
-    function animate() {
+  } else {
 
 
-      const loopWidth =
-        getLoopWidth();
+    /* =========================
+       IDがない場合
+    ========================== */
+
+    document.getElementById("name").textContent =
+      "Welcome!";
 
 
-      if (
-        !dragging &&
-        loopWidth
-      ) {
+    document.getElementById("message").textContent =
+      "QRコードからアクセスしてください。";
 
-        position -=
-          velocity;
+  }
 
 
-        if (
-          position <=
-          -loopWidth
-        ) {
 
-          position +=
-            loopWidth;
+  /* =========================
+     写真の手動スワイプ
+  ========================== */
 
-        }
+  const photoSection =
+    document.getElementById("photoSection");
 
-      }
-
-
-      track.style.transform =
-        `translate3d(
-          ${position}px,
-          -50%,
-          0
-        )`;
+  const photoTrack =
+    document.getElementById("photoTrack");
 
 
-      requestAnimationFrame(
-        animate
-      );
+  let startX = 0;
+  let currentX = 0;
+  let dragging = false;
+
+
+  photoSection.addEventListener(
+    "touchstart",
+    (e) => {
+
+      startX =
+        e.touches[0].clientX;
+
+      dragging = true;
+
+      photoTrack.style.animationPlayState =
+        "paused";
+
+    },
+    { passive: true }
+  );
+
+
+  photoSection.addEventListener(
+    "touchmove",
+    (e) => {
+
+      if (!dragging) return;
+
+      currentX =
+        e.touches[0].clientX;
+
+      const diff =
+        currentX - startX;
+
+      photoTrack.style.transform =
+        `translateX(${diff}px)`;
+
+    },
+    { passive: true }
+  );
+
+
+  photoSection.addEventListener(
+    "touchend",
+    () => {
+
+      dragging = false;
+
+      photoTrack.style.transform = "";
+
+      photoTrack.style.animationPlayState =
+        "running";
 
     }
+  );
 
 
-    requestAnimationFrame(
-      animate
-    );
-
-
-    /* ==================================================
-       タッチ操作
-    ================================================== */
-
-    windowArea.addEventListener(
-      "touchstart",
-      function(event) {
-
-
-        if (
-          event.touches.length !== 1
-        ) {
-
-          return;
-
-        }
-
-
-        dragging =
-          true;
-
-
-        track.classList.add(
-          "dragging"
-        );
-
-
-        startX =
-          event.touches[0].clientX;
-
-
-        startPosition =
-          position;
-
-
-      },
-      {
-        passive: true
-      }
-    );
-
-
-    windowArea.addEventListener(
-      "touchmove",
-      function(event) {
-
-
-        if (!dragging) {
-
-          return;
-
-        }
-
-
-        const currentX =
-          event.touches[0].clientX;
-
-
-        const delta =
-          currentX -
-          startX;
-
-
-        position =
-          startPosition +
-          delta;
-
-
-        const loopWidth =
-          getLoopWidth();
-
-
-        if (
-          loopWidth &&
-          position <= -loopWidth
-        ) {
-
-          position +=
-            loopWidth;
-
-          startPosition +=
-            loopWidth;
-
-        }
-
-
-        if (
-          loopWidth &&
-          position > 0
-        ) {
-
-          position -=
-            loopWidth;
-
-          startPosition -=
-            loopWidth;
-
-        }
-
-      },
-      {
-        passive: true
-      }
-    );
-
-
-    windowArea.addEventListener(
-      "touchend",
-      function() {
-
-
-        dragging =
-          false;
-
-
-        track.classList.remove(
-          "dragging"
-        );
-
-      }
-    );
-
-
-    /* ==================================================
-       PCマウス操作
-    ================================================== */
-
-    windowArea.addEventListener(
-      "mousedown",
-      function(event) {
-
-
-        dragging =
-          true;
-
-
-        track.classList.add(
-          "dragging"
-        );
-
-
-        startX =
-          event.clientX;
-
-
-        startPosition =
-          position;
-
-      }
-    );
-
-
-    window.addEventListener(
-      "mousemove",
-      function(event) {
-
-
-        if (!dragging) {
-
-          return;
-
-        }
-
-
-        position =
-          startPosition +
-          (
-            event.clientX -
-            startX
-          );
-
-
-        const loopWidth =
-          getLoopWidth();
-
-
-        if (
-          loopWidth &&
-          position <= -loopWidth
-        ) {
-
-          position +=
-            loopWidth;
-
-          startPosition +=
-            loopWidth;
-
-        }
-
-
-        if (
-          loopWidth &&
-          position > 0
-        ) {
-
-          position -=
-            loopWidth;
-
-          startPosition -=
-            loopWidth;
-
-        }
-
-      }
-    );
-
-
-    window.addEventListener(
-      "mouseup",
-      function() {
-
-
-        dragging =
-          false;
-
-
-        track.classList.remove(
-          "dragging"
-        );
-
-      }
-    );
-
-
-  </script>
+</script>
 
 
 </body>
-
 </html>
