@@ -24,7 +24,7 @@
 
   <link
     rel="preconnect"
-    href="https://fonts.googleapis.com"
+    href="https://fonts.gstatic.com"
     crossorigin
   >
 
@@ -244,7 +244,7 @@
 
     /* ==================================================
        上部：フィルムエリア
-       ★ 50% → 48%
+       ※高さは50%のまま
     ================================================== */
 
     .film-section {
@@ -253,7 +253,7 @@
 
       width: 100%;
 
-      height: 48%;
+      height: 50%;
 
       min-height: 310px;
 
@@ -494,75 +494,8 @@
 
 
     /* ==================================================
-       フィルム左右の装飾
-    ================================================== */
-
-    .film-side {
-
-      position: absolute;
-
-      top: 50%;
-
-      transform:
-        translateY(-50%);
-
-      z-index: 30;
-
-      color:
-        rgba(245,241,231,0.75);
-
-      font-family:
-        "Libre Baskerville",
-        serif;
-
-      font-size:
-        8px;
-
-      letter-spacing:
-        0.24em;
-
-      writing-mode:
-        vertical-rl;
-
-      pointer-events:
-        none;
-
-    }
-
-
-    .film-side.left {
-
-      left: 12px;
-
-    }
-
-
-    .film-side.right {
-
-      right: 12px;
-
-      transform:
-        translateY(-50%)
-        rotate(180deg);
-
-    }
-
-
-    /* ==================================================
-       フィルム中央の小さなマーク
-       ★ 今回削除
-    ================================================== */
-
-    /*
-    .film-mark {
-      削除
-    }
-    */
-
-
-    /* ==================================================
        下部メッセージエリア
-       ★ 50% → 52%
+       ※高さは50%のまま
     ================================================== */
 
     .message-section {
@@ -571,7 +504,7 @@
 
       width: 100%;
 
-      height: 52%;
+      height: 50%;
 
       padding:
         27px 35px 18px;
@@ -731,36 +664,8 @@
 
 
     /* ==================================================
-       上部の小さな文字
-    ================================================== */
-
-    .eyebrow {
-
-      position: relative;
-
-      z-index: 3;
-
-      margin:
-        0 0 8px;
-
-      font-family:
-        "Libre Baskerville",
-        serif;
-
-      font-size:
-        7px;
-
-      letter-spacing:
-        0.23em;
-
-      color:
-        rgba(91,73,44,0.75);
-
-    }
-
-
-    /* ==================================================
        宛名
+       ※ TO OUR GUEST は削除
     ================================================== */
 
     .guest-name {
@@ -819,7 +724,7 @@
 
     /* ==================================================
        メッセージスクロール
-       ★ ここは今回変更なし
+       ※ 下側を少し広げる
     ================================================== */
 
     .message-scroll {
@@ -829,7 +734,7 @@
       z-index: 3;
 
       height:
-        calc(100% - 125px);
+        calc(100% - 105px);
 
       overflow-y:
         auto;
@@ -1063,14 +968,6 @@
       }
 
 
-      .eyebrow {
-
-        margin-bottom:
-          5px;
-
-      }
-
-
       .name-line {
 
         margin:
@@ -1166,17 +1063,6 @@
         <div class="film-line top"></div>
 
         <div class="film-line bottom"></div>
-
-
-        <!-- 左右のフィルム文字 -->
-
-        <div class="film-side left">
-          MEMORIES
-        </div>
-
-        <div class="film-side right">
-          RIN & RIN
-        </div>
 
 
         <!-- 写真表示領域 -->
@@ -1298,13 +1184,6 @@
           <div class="notch left"></div>
 
           <div class="notch right"></div>
-
-
-          <!-- 上部タイトル -->
-
-          <p class="eyebrow">
-            TO OUR GUEST
-          </p>
 
 
           <!-- 宛名 -->
