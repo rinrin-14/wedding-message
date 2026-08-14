@@ -239,35 +239,11 @@
        ※ 左右の切り欠き（ノッチ）
     ================================================== */
 
-    .mishin-top {
-
-      position: absolute;
-
-      top: 25px;
-
-      left: 24px;
-      right: 24px;
-
-      height: 0;
-
-      border-top:
-        1.5px dashed
-        rgba(112, 91, 57, 0.4);
-
-      z-index:
-        105;
-
-      pointer-events:
-        none;
-
-    }
-
-
     .tear-notch {
 
       position: absolute;
 
-      top: calc(50% - 8px);
+      top: 50%;
 
       width: 30px;
       height: 30px;
@@ -317,7 +293,7 @@
 
       position: absolute;
 
-      top: calc(50% - 8px);
+      top: 50%;
 
       left: 24px;
       right: 24px;
@@ -368,7 +344,7 @@
 
       width: calc(100% - 14px);
 
-      height: calc(50% - 38px);
+      height: calc(50% - 45px);
 
       margin-left: 7px;
 
@@ -626,10 +602,12 @@
 
       width: 100%;
 
-      height: calc(50% + 24px);
+      height: calc(50% - 23px);
+
+      top: 60px;
 
       padding:
-        27px 6px 2px;
+        27px 3px 0;
 
       background:
         #f7f3e9;
@@ -1213,11 +1191,6 @@
       <div class="corner br"></div>
 
     </div>
-
-
-    <!-- 黒背景エリア上側のミシン目 -->
-
-    <div class="mishin-top"></div>
 
 
     <!-- 写真部分とメッセージ部分の境界（もぎりライン＋切り欠き） -->
