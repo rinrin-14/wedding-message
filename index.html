@@ -122,6 +122,10 @@
     }
 
 
+    /* ==================================================
+       内側の点線：ミシン目（周囲）
+    ================================================== */
+
     .ticket-frame::before {
 
       content: "";
@@ -131,8 +135,8 @@
       inset: 7px;
 
       border:
-        1px solid
-        rgba(112, 91, 57, 0.28);
+        1.5px dashed
+        rgba(112, 91, 57, 0.4);
 
     }
 
@@ -225,6 +229,88 @@
         none;
 
       border-right:
+        none;
+
+    }
+
+
+    /* ==================================================
+       写真部分とメッセージ部分の「もぎり」境界
+       ※ 左右の切り欠き（ノッチ）
+    ================================================== */
+
+    .tear-notch {
+
+      position: absolute;
+
+      top: 50%;
+
+      width: 30px;
+      height: 30px;
+
+      border-radius:
+        50%;
+
+      background:
+        #f5f1e7;
+
+      border:
+        1px solid
+        rgba(112, 91, 57, 0.55);
+
+      transform:
+        translateY(-50%);
+
+      z-index:
+        110;
+
+      pointer-events:
+        none;
+
+    }
+
+
+    .tear-notch.left {
+
+      left: -16px;
+
+    }
+
+
+    .tear-notch.right {
+
+      right: -16px;
+
+    }
+
+
+    /* ==================================================
+       写真部分とメッセージ部分の「もぎり」境界
+       ※ 中央のミシン目ライン
+    ================================================== */
+
+    .tear-line {
+
+      position: absolute;
+
+      top: 50%;
+
+      left: 24px;
+      right: 24px;
+
+      height: 0;
+
+      border-top:
+        1.5px dashed
+        rgba(112, 91, 57, 0.45);
+
+      transform:
+        translateY(-50%);
+
+      z-index:
+        105;
+
+      pointer-events:
         none;
 
     }
@@ -628,7 +714,8 @@
 
 
     /* ==================================================
-       チケット左右の切り欠き
+       チケット左右の切り欠き（旧・カード内蔵版／未使用）
+       ※ 境界の切り欠きは .tear-notch に統合したため非表示のまま
     ================================================== */
 
     .notch {
@@ -691,6 +778,33 @@
 
 
     /* ==================================================
+       フェードイン演出
+    ================================================== */
+
+    @keyframes fadeInUp {
+
+      from {
+
+        opacity: 0;
+
+        transform:
+          translateY(10px);
+
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform:
+          translateY(0);
+
+      }
+
+    }
+
+
+    /* ==================================================
        宛名
     ================================================== */
 
@@ -721,6 +835,12 @@
 
       color:
         #30302d;
+
+      opacity:
+        0;
+
+      animation:
+        fadeInUp 0.9s ease 0.25s forwards;
 
     }
 
@@ -772,6 +892,12 @@
 
       scrollbar-width:
         none;
+
+      opacity:
+        0;
+
+      animation:
+        fadeInUp 0.9s ease 0.55s forwards;
 
     }
 
@@ -1065,6 +1191,14 @@
     </div>
 
 
+    <!-- 写真部分とメッセージ部分の境界（もぎりライン＋切り欠き） -->
+
+    <div class="tear-line"></div>
+
+    <div class="tear-notch left"></div>
+    <div class="tear-notch right"></div>
+
+
     <div class="content">
 
 
@@ -1210,13 +1344,6 @@
         <!-- チケットカード -->
 
         <div class="message-card">
-
-
-          <!-- 左右切り欠き -->
-
-          <div class="notch left"></div>
-
-          <div class="notch right"></div>
 
 
           <!-- 宛名 -->
