@@ -1190,7 +1190,9 @@
 
     <div class="tear-line"></div>
 
-    <div class="tear-label">Thank you</div>
+    <div class="tear-label">
+      Thank you
+    </div>
 
     <div class="tear-notch left"></div>
     <div class="tear-notch right"></div>
@@ -1239,84 +1241,7 @@
           <div
             class="photo-track"
             id="photoTrack"
-          >
-
-
-            <!-- 写真1 -->
-
-            <div class="photo-card">
-
-              <img
-                id="photo1"
-                src=""
-                alt=""
-              >
-
-            </div>
-
-
-            <!-- 写真2 -->
-
-            <div class="photo-card">
-
-              <img
-                id="photo2"
-                src=""
-                alt=""
-              >
-
-            </div>
-
-
-            <!-- 写真3 -->
-
-            <div class="photo-card">
-
-              <img
-                id="photo3"
-                src=""
-                alt=""
-              >
-
-            </div>
-
-
-            <!-- コピー -->
-
-            <div class="photo-card">
-
-              <img
-                id="photo1copy"
-                src=""
-                alt=""
-              >
-
-            </div>
-
-
-            <div class="photo-card">
-
-              <img
-                id="photo2copy"
-                src=""
-                alt=""
-              >
-
-            </div>
-
-
-            <div class="photo-card">
-
-              <img
-                id="photo3copy"
-                src=""
-                alt=""
-              >
-
-            </div>
-
-
-          </div>
+          ></div>
 
         </div>
 
@@ -1427,6 +1352,15 @@
 
 
     /* ==================================================
+       ★ WorkerのURL
+       ここだけ自分のWorker URLに変更
+    ================================================== */
+
+    const WORKER_URL =
+      "https://wedding-memory-worker.rinkawamura1012.workers.dev";
+
+
+    /* ==================================================
        URLからID取得
     ================================================== */
 
@@ -1507,39 +1441,155 @@
 
 
     /* ==================================================
-       写真を設定
+       写真URLを作る
+       Workerから返ってくる
+       guest001/xxxxx.jpg
+       のようなパスをURLに変換
     ================================================== */
 
-    function setPhoto(
-      id,
-      src
+    function createPhotoUrl(
+      path
     ) {
 
 
-      const image =
+      const safePath =
+        path
+          .split("/")
+          .map(
+            part =>
+              encodeURIComponent(part)
+          )
+          .join("/");
+
+
+      return (
+        WORKER_URL +
+        "/" +
+        safePath
+      );
+
+    }
+
+
+    /* ==================================================
+       写真カード生成
+       写真は何枚でもOK
+    ================================================== */
+
+    function createPhotoCards(
+      photos
+    ) {
+
+
+      const track =
         document.getElementById(
-          id
+          "photoTrack"
         );
 
 
-      if (!image) {
+      track.innerHTML =
+        "";
+
+
+      if (
+        !Array.isArray(photos) ||
+        photos.length === 0
+      ) {
 
         return;
 
       }
 
 
-      if (src) {
+      /*
+       * 1セット目
+       */
 
-        image.src =
-          src;
+      photos.forEach(
+        function(photo) {
 
-      } else {
 
-        image.parentElement.style.display =
-          "none";
+          const card =
+            document.createElement(
+              "div"
+            );
 
-      }
+          card.className =
+            "photo-card";
+
+
+          const image =
+            document.createElement(
+              "img"
+            );
+
+
+          image.src =
+            createPhotoUrl(
+              photo
+            );
+
+          image.alt =
+            "";
+
+
+          card.appendChild(
+            image
+          );
+
+
+          track.appendChild(
+            card
+          );
+
+        }
+      );
+
+
+      /*
+       * 2セット目
+       * 無限スクロール用コピー
+       */
+
+      photos.forEach(
+        function(photo) {
+
+
+          const card =
+            document.createElement(
+              "div"
+            );
+
+          card.className =
+            "photo-card";
+
+
+          const image =
+            document.createElement(
+              "img"
+            );
+
+
+          image.src =
+            createPhotoUrl(
+              photo
+            );
+
+          image.alt =
+            "";
+
+
+          card.appendChild(
+            image
+          );
+
+
+          track.appendChild(
+            card
+          );
+
+        }
+      );
 
     }
 
@@ -1548,89 +1598,131 @@
        ゲスト情報
     ================================================== */
 
-    if (
-      id &&
-      typeof guests !== "undefined" &&
-      guests[id]
-    ) {
+    async function loadGuest() {
 
 
-      const guest =
-        guests[id];
+      /*
+       * IDがない場合
+       */
+
+      if (!id) {
 
 
-      /* 名前 */
-
-      document.getElementById(
-        "name"
-      ).textContent =
-        `${guest.name}へ`;
+        document.getElementById(
+          "name"
+        ).textContent =
+          "Welcome!";
 
 
-      /* メッセージ */
-
-      document.getElementById(
-        "message"
-      ).textContent =
-        guest.message;
+        document.getElementById(
+          "message"
+        ).textContent =
+          "QRコードからアクセスしてください。";
 
 
-      /* 写真 */
+        return;
 
-      setPhoto(
-        "photo1",
-        guest.photos[0]
-      );
+      }
 
 
-      setPhoto(
-        "photo2",
-        guest.photos[1]
-      );
+      /*
+       * guests.js から名前・メッセージを取得
+       */
+
+      if (
+        typeof guests !== "undefined" &&
+        guests[id]
+      ) {
 
 
-      setPhoto(
-        "photo3",
-        guest.photos[2]
-      );
+        const guest =
+          guests[id];
 
 
-      /* コピー */
-
-      setPhoto(
-        "photo1copy",
-        guest.photos[0]
-      );
+        document.getElementById(
+          "name"
+        ).textContent =
+          `${guest.name}へ`;
 
 
-      setPhoto(
-        "photo2copy",
-        guest.photos[1]
-      );
+        document.getElementById(
+          "message"
+        ).textContent =
+          guest.message;
+
+      }
 
 
-      setPhoto(
-        "photo3copy",
-        guest.photos[2]
-      );
+      /*
+       * Workerから写真一覧を取得
+       *
+       * 例：
+       * https://worker.../guest001
+       *
+       * ↓
+       *
+       * {
+       *   "photos": [
+       *     "guest001/xxx.jpeg",
+       *     "guest001/yyy.jpeg"
+       *   ]
+       * }
+       */
+
+      try {
 
 
-    } else {
+        const response =
+          await fetch(
+            WORKER_URL +
+            "/" +
+            encodeURIComponent(id)
+          );
 
 
-      document.getElementById(
-        "name"
-      ).textContent =
-        "Welcome!";
+        if (!response.ok) {
+
+          throw new Error(
+            `Worker error: ${response.status}`
+          );
+
+        }
 
 
-      document.getElementById(
-        "message"
-      ).textContent =
-        "QRコードからアクセスしてください。";
+        const data =
+          await response.json();
 
+
+        console.log(
+          "Workerから取得した写真:",
+          data.photos
+        );
+
+
+        createPhotoCards(
+          data.photos
+        );
+
+
+      } catch (error) {
+
+
+        console.error(
+          "写真の取得に失敗しました:",
+          error
+        );
+
+
+      }
 
     }
+
+
+    /*
+     * ゲスト読み込み開始
+     */
+
+    loadGuest();
 
 
     /* ==================================================
@@ -1653,11 +1745,11 @@
 
 
     let velocity =
-        0.38;
+      0.38;
 
 
     let dragging =
-        false;
+      false;
 
 
     let startX =
@@ -1681,8 +1773,25 @@
         );
 
 
+      const totalCards =
+        cards.length;
+
+
       if (
-        cards.length < 4
+        totalCards < 2
+      ) {
+
+        return 0;
+
+      }
+
+
+      const half =
+        totalCards / 2;
+
+
+      if (
+        !Number.isInteger(half)
       ) {
 
         return 0;
@@ -1691,7 +1800,7 @@
 
 
       return (
-        cards[3].offsetLeft -
+        cards[half].offsetLeft -
         cards[0].offsetLeft
       );
 
@@ -1713,6 +1822,7 @@
         !dragging &&
         loopWidth
       ) {
+
 
         position -=
           velocity;
@@ -1828,8 +1938,10 @@
           position <= -loopWidth
         ) {
 
+
           position +=
             loopWidth;
+
 
           startPosition +=
             loopWidth;
@@ -1842,8 +1954,10 @@
           position > 0
         ) {
 
+
           position -=
             loopWidth;
+
 
           startPosition -=
             loopWidth;
@@ -1932,8 +2046,10 @@
           position <= -loopWidth
         ) {
 
+
           position +=
             loopWidth;
+
 
           startPosition +=
             loopWidth;
@@ -1946,8 +2062,10 @@
           position > 0
         ) {
 
+
           position -=
             loopWidth;
+
 
           startPosition -=
             loopWidth;
