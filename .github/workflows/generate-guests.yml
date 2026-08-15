@@ -1,0 +1,68 @@
+name: Generate guests.js
+
+on:
+  push:
+    paths:
+      - "guests.csv"
+      - ".github/workflows/generate-guests.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate guests.js
+        run: |
+          python3 - <<'PY'
+          import csv
+          import json
+
+          with open("guests.csv", "r", encoding="utf-8-sig", newline="") as f:
+              rows = list(csv.DictReader(f))
+
+          guests = {}
+
+          for row in rows:
+              guest_id = row["guest_id"].strip()
+
+              if not guest_id:
+                  continue
+
+              guests[guest_id] = {
+                  "name": row["name"],
+                  "message": row["message"]
+              }
+
+          with open("guests.js", "w", encoding="utf-8") as f:
+              f.write("const guests = ")
+              json.dump(
+                  guests,
+                  f,
+                  ensure_ascii=False,
+                  indent=2
+              )
+              f.write(";\n")
+
+          print(f"Generated guests.js for {len(guests)} guests.")
+          PY
+
+      - name: Commit guests.js
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add guests.js
+
+          if git diff --cached --quiet; then
+            echo "No changes to guests.js"
+          else
+            git commit -m "Auto-generate guests.js from guests.csv"
+            git push
+          fi
