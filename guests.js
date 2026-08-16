@@ -12,7 +12,7 @@ const guests = {
     "message": ""
   },
   "B7tN3zR9Lp": {
-    "name": "むらやまへ",
+    "name": "むらやま",
     "message": ""
   },
   "b9Tn4KxR6J": {
