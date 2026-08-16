@@ -139,6 +139,44 @@
         rgba(112, 91, 57, 0.4);
 
     }
+    
+    /* ==================================================
+       メッセージ左右の縦ミシン目
+    ================================================== */
+
+.message-perforation {
+
+  position: absolute;
+
+  top: 50%;
+
+  bottom: 5px;
+
+  width: 0;
+
+  border-left:
+    1.5px dashed
+    rgba(112, 91, 57, 0.4);
+
+  z-index:
+    104;
+
+  pointer-events:
+    none;
+
+}
+
+.message-perforation.left {
+
+  left: 24px;
+
+}
+
+.message-perforation.right {
+
+  right: 24px;
+
+}
 
 
     /* ==================================================
@@ -1196,7 +1234,9 @@
 
     <div class="tear-notch left"></div>
     <div class="tear-notch right"></div>
-
+    
+    <div class="message-perforation left"></div>
+    <div class="message-perforation right"></div>
 
     <div class="content">
 
