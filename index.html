@@ -877,6 +877,12 @@
 
     }
 
+    .guest-name.english {
+      font-family:
+        "Libre Baskerville",
+        serif;
+    }
+
 
     /* ==================================================
        宛名下ライン
@@ -1679,10 +1685,17 @@
           guests[id];
 
 
-        document.getElementById(
-          "name"
-        ).textContent =
-          `${guest.name}へ`;
+        const nameElement =
+          document.getElementById("name");
+
+        nameElement.textContent =
+          guest.name;
+
+        if (
+          !/[\u3040-\u30ff\u3400-\u9fff]/.test(guest.name)
+        ) {
+          nameElement.classList.add("english");
+        }
 
 
         document.getElementById(
