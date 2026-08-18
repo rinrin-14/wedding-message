@@ -149,20 +149,22 @@
   position: absolute;
 
   top: calc(50% + 1px);
-
   bottom: 5px;
 
-  width: 0;
+  width: 2px;
 
-  border-left:
-    1.5px dashed
-    rgba(112, 91, 57, 0.4);
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(112, 91, 57, 0.45) 0,
+      rgba(112, 91, 57, 0.45) 8px,
+      transparent 8px,
+      transparent 15px
+    );
 
-  z-index:
-    150;
+  z-index: 150;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
 }
 
