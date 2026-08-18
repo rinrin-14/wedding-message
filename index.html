@@ -951,6 +951,53 @@
         none;
 
     }
+    
+    /* ==================================================
+   メッセージ末尾のサイン
+================================================== */
+
+.message-signature {
+
+  text-align: right;
+
+  padding:
+    8px 5px 20px 0;
+
+  font-family:
+    "Parisienne",
+    cursive;
+
+  font-size:
+    24px;
+
+  color:
+    #30302d;
+
+  opacity:
+    0;
+
+  transform:
+    translateY(5px);
+
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+
+}
+
+
+/* メッセージを最後まで読んだら表示 */
+
+.message-scroll.reached-bottom
+.message-signature {
+
+  opacity:
+    1;
+
+  transform:
+    translateY(0);
+
+}
 
 
     /* ==================================================
@@ -1339,6 +1386,18 @@
             >
               メッセージを読み込んでいます。
             </p>
+            
+              <div
+
+                class="message-signature"
+
+                id="messageSignature"
+
+              >
+
+                Rin
+
+              </div>
 
           </div>
 
@@ -1709,6 +1768,41 @@
 
       }
 
+/* ==================================================
+   メッセージを最後までスクロールしたら
+   Rinを表示
+================================================== */
+
+const messageScroll =
+  document.getElementById("messageScroll");
+
+
+function checkMessageScroll() {
+
+  const isAtBottom =
+    messageScroll.scrollTop +
+    messageScroll.clientHeight >=
+    messageScroll.scrollHeight - 5;
+
+
+  if (isAtBottom) {
+
+    messageScroll.classList.add(
+      "reached-bottom"
+    );
+
+  }
+
+}
+
+
+messageScroll.addEventListener(
+  "scroll",
+  checkMessageScroll
+);
+
+
+checkMessageScroll();
 
       /*
        * Workerから写真一覧を取得
