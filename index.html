@@ -344,7 +344,7 @@
       height: 0;
 
       border-top:
-        1.5px dashed
+        1px dashed
         rgba(112, 91, 57, 0.45);
 
       transform:
@@ -750,6 +750,32 @@
 
     }
 
+.message-card::after {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      rgba(90, 75, 50, 0.025) 0.5px,
+      transparent 0.7px
+    );
+
+  background-size:
+    5px 5px;
+
+  opacity:
+    0.5;
+
+  z-index:
+    1;
+
+}
 
     /* ==================================================
        チケット左右の切り欠き（旧・カード内蔵版／未使用）
