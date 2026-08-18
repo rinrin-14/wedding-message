@@ -155,18 +155,19 @@
   top: calc(50% + 1px);
   bottom: 5px;
 
-  width: 2px;
+  width: 1px;
 
   background:
     repeating-linear-gradient(
       to bottom,
-      rgba(126,103,66,0.45) 0,
-      rgba(126,103,66,0.45) 8px,
-      transparent 8px,
-      transparent 15px
+      rgba(112, 91, 57, 0.35) 0,
+      rgba(112, 91, 57, 0.35) 3px,
+      transparent 3px,
+      transparent 9px
     );
 
-  z-index: 150;
+  /* ノッチより後ろ */
+  z-index: 103;
 
   pointer-events: none;
 
@@ -174,16 +175,12 @@
 
 
 .message-perforation.left {
-
   left: 7px;
-
 }
 
 
 .message-perforation.right {
-
   right: 7px;
-
 }
 
 
