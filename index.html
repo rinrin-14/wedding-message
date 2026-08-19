@@ -27,10 +27,10 @@
     href="https://fonts.googleapis.com"
   >
 
-<link
-  href="https://fonts.googleapis.com/css2?family=Parisienne&family=Klee+One&family=Libre+Baskerville&family=Noto+Serif+JP:wght@400;600;700&display=swap"
-  rel="stylesheet"
->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Parisienne&family=Klee+One&family=Libre+Baskerville&family=Noto+Serif+JP:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  >
 
 
   <style>
@@ -77,6 +77,7 @@
 
     /* ==================================================
        ページ本体
+       ※ 全体にごく薄い紙質感
     ================================================== */
 
     .page {
@@ -93,7 +94,14 @@
       overflow: hidden;
 
       background:
+        radial-gradient(
+          rgba(90, 75, 50, 0.025) 0.5px,
+          transparent 0.7px
+        ),
         #f7f3e9;
+
+      background-size:
+        5px 5px;
 
     }
 
@@ -139,49 +147,53 @@
         rgba(112, 91, 57, 0.4);
 
     }
-    
+
+
     /* ==================================================
        メッセージ左右の縦ミシン目
+       ※ 黒いフィルムの左右端と同じ位置
+       ※ ノッチより後ろ
     ================================================== */
-/* ==================================================
-   メッセージ左右の縦ミシン目
-   ※ 黒いフィルムの左右端と同じ位置
-================================================== */
 
-.message-perforation {
+    .message-perforation {
 
-  position: absolute;
+      position: absolute;
 
-  top: 5px;
-  bottom: 5px;
+      top: 5px;
+      bottom: 5px;
 
-  width: 1px;
+      width: 1px;
 
-  background:
-    repeating-linear-gradient(
-      to bottom,
-      rgba(112, 91, 57, 0.35) 0,
-      rgba(112, 91, 57, 0.35) 3px,
-      transparent 3px,
-      transparent 9px
-    );
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(112, 91, 57, 0.35) 0,
+          rgba(112, 91, 57, 0.35) 3px,
+          transparent 3px,
+          transparent 9px
+        );
 
-  /* ノッチより後ろ */
-  z-index: 99;
+      z-index:
+        99;
 
-  pointer-events: none;
+      pointer-events:
+        none;
 
-}
+    }
 
 
-.message-perforation.left {
-  left: 7px;
-}
+    .message-perforation.left {
+
+      left: 7px;
+
+    }
 
 
-.message-perforation.right {
-  right: 7px;
-}
+    .message-perforation.right {
+
+      right: 7px;
+
+    }
 
 
     /* ==================================================
@@ -448,7 +460,8 @@
         1px solid
         rgba(65, 61, 53, 0.4);
 
-      z-index: 10;
+      z-index:
+        10;
 
     }
 
@@ -562,7 +575,8 @@
 
       overflow: hidden;
 
-      z-index: 10;
+      z-index:
+        10;
 
       touch-action:
         pan-y;
@@ -683,6 +697,7 @@
 
     /* ==================================================
        下部メッセージエリア
+       ※ ページ全体と同じ紙質感
     ================================================== */
 
     .message-section {
@@ -699,7 +714,14 @@
         27px 3px 0;
 
       background:
+        radial-gradient(
+          rgba(90, 75, 50, 0.025) 0.5px,
+          transparent 0.7px
+        ),
         #f7f3e9;
+
+      background-size:
+        5px 5px;
 
       overflow:
         hidden;
@@ -725,7 +747,8 @@
       padding:
         10px 12px 8px;
 
-      overflow: hidden;
+      overflow:
+        hidden;
 
       background:
         rgba(250,247,239,0.88);
@@ -750,32 +773,6 @@
 
     }
 
-.message-card::after {
-
-  content: "";
-
-  position: absolute;
-
-  inset: 0;
-
-  pointer-events: none;
-
-  background:
-    radial-gradient(
-      rgba(90, 75, 50, 0.055) 0.7px,
-      transparent 0.9px
-    );
-
-  background-size:
-    4px 4px;
-
-  opacity:
-    0.8;
-
-  z-index:
-    1;
-
-}
 
     /* ==================================================
        チケット左右の切り欠き（旧・カード内蔵版／未使用）
@@ -784,7 +781,8 @@
 
     .notch {
 
-      display: none;
+      display:
+        none;
 
       position: absolute;
 
@@ -801,7 +799,8 @@
         1px solid
         rgba(112,91,57,0.55);
 
-      z-index: 5;
+      z-index:
+        5;
 
     }
 
@@ -876,7 +875,8 @@
 
       position: relative;
 
-      z-index: 3;
+      z-index:
+        3;
 
       margin:
         0;
@@ -908,11 +908,20 @@
 
     }
 
-.guest-name.english {
-  font-family: "Parisienne", cursive !important;
-  letter-spacing: 0;
-  font-weight: 400;
-}
+
+    .guest-name.english {
+
+      font-family:
+        "Parisienne",
+        cursive !important;
+
+      letter-spacing:
+        0;
+
+      font-weight:
+        400;
+
+    }
 
 
     /* ==================================================
@@ -923,11 +932,14 @@
 
       position: relative;
 
-      z-index: 3;
+      z-index:
+        3;
 
-      width: 52px;
+      width:
+        52px;
 
-      height: 1px;
+      height:
+        1px;
 
       margin:
         7px 0 14px;
@@ -946,7 +958,8 @@
 
       position: relative;
 
-      z-index: 3;
+      z-index:
+        3;
 
       height:
         calc(100% - 80px);
@@ -978,53 +991,57 @@
         none;
 
     }
-    
+
+
     /* ==================================================
-   メッセージ末尾のサイン
-================================================== */
+       メッセージ末尾のサイン
+    ================================================== */
 
-.message-signature {
+    .message-signature {
 
-  text-align: right;
+      text-align:
+        right;
 
-  padding:
-    8px 5px 20px 0;
+      padding:
+        8px 5px 20px 0;
 
-  font-family:
-    "Parisienne",
-    cursive;
+      font-family:
+        "Parisienne",
+        cursive;
 
-  font-size:
-    24px;
+      font-size:
+        24px;
 
-  color:
-    #30302d;
+      color:
+        #30302d;
 
-  opacity:
-    0;
+      opacity:
+        0;
 
-  transform:
-    translateY(5px);
+      transform:
+        translateY(5px);
 
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
+      transition:
+        opacity 0.6s ease,
+        transform 0.6s ease;
 
-}
+    }
 
 
-/* メッセージを最後まで読んだら表示 */
+    /* ==================================================
+       メッセージを最後まで読んだら表示
+    ================================================== */
 
-.message-scroll.reached-bottom
-.message-signature {
+    .message-scroll.reached-bottom
+    .message-signature {
 
-  opacity:
-    1;
+      opacity:
+        1;
 
-  transform:
-    translateY(0);
+      transform:
+        translateY(0);
 
-}
+    }
 
 
     /* ==================================================
@@ -1075,13 +1092,17 @@
 
       bottom: 14px;
 
-      z-index: 4;
+      z-index:
+        4;
 
-      display: flex;
+      display:
+        flex;
 
-      align-items: flex-end;
+      align-items:
+        flex-end;
 
-      justify-content: space-between;
+      justify-content:
+        space-between;
 
     }
 
@@ -1144,7 +1165,8 @@
 
       bottom: 5px;
 
-      height: 1px;
+      height:
+        1px;
 
       background:
         repeating-linear-gradient(
@@ -1155,7 +1177,8 @@
           transparent 15px
         );
 
-      z-index: 4;
+      z-index:
+        4;
 
     }
 
@@ -1175,7 +1198,8 @@
       transform:
         translateX(-50%);
 
-      z-index: 6;
+      z-index:
+        6;
 
       color:
         rgba(126,103,66,0.58);
@@ -1318,9 +1342,10 @@
 
     <div class="tear-notch left"></div>
     <div class="tear-notch right"></div>
-    
+
     <div class="message-perforation left"></div>
     <div class="message-perforation right"></div>
+
 
     <div class="content">
 
@@ -1413,18 +1438,14 @@
             >
               メッセージを読み込んでいます。
             </p>
-            
-              <div
 
-                class="message-signature"
 
-                id="messageSignature"
-
-              >
-
-                Rin
-
-              </div>
+            <div
+              class="message-signature"
+              id="messageSignature"
+            >
+              Rin
+            </div>
 
           </div>
 
@@ -1778,13 +1799,19 @@
         const nameElement =
           document.getElementById("name");
 
+
         nameElement.textContent =
           guest.name;
+
 
         if (
           !/[\u3040-\u30ff\u3400-\u9fff]/.test(guest.name)
         ) {
-          nameElement.classList.add("english");
+
+          nameElement.classList.add(
+            "english"
+          );
+
         }
 
 
@@ -1795,57 +1822,50 @@
 
       }
 
-/* ==================================================
-   メッセージを最後までスクロールしたら
-   Rinを表示
-================================================== */
 
-const messageScroll =
-  document.getElementById("messageScroll");
+      /* ==================================================
+         メッセージを最後までスクロールしたら
+         Rinを表示
+      ================================================== */
 
-
-function checkMessageScroll() {
-
-  const isAtBottom =
-    messageScroll.scrollTop +
-    messageScroll.clientHeight >=
-    messageScroll.scrollHeight - 5;
+      const messageScroll =
+        document.getElementById(
+          "messageScroll"
+        );
 
 
-  if (isAtBottom) {
-
-    messageScroll.classList.add(
-      "reached-bottom"
-    );
-
-  }
-
-}
+      function checkMessageScroll() {
 
 
-messageScroll.addEventListener(
-  "scroll",
-  checkMessageScroll
-);
+        const isAtBottom =
+          messageScroll.scrollTop +
+          messageScroll.clientHeight >=
+          messageScroll.scrollHeight - 5;
 
 
-checkMessageScroll();
+        if (isAtBottom) {
 
-      /*
-       * Workerから写真一覧を取得
-       *
-       * 例：
-       * https://worker.../guest001
-       *
-       * ↓
-       *
-       * {
-       *   "photos": [
-       *     "guest001/xxx.jpeg",
-       *     "guest001/yyy.jpeg"
-       *   ]
-       * }
-       */
+          messageScroll.classList.add(
+            "reached-bottom"
+          );
+
+        }
+
+      }
+
+
+      messageScroll.addEventListener(
+        "scroll",
+        checkMessageScroll
+      );
+
+
+      checkMessageScroll();
+
+
+      /* ==================================================
+         Workerから写真一覧を取得
+      ================================================== */
 
       try {
 
