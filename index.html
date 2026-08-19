@@ -772,6 +772,45 @@
         none;
 
     }
+    
+    .message-card::after {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at 20% 20%,
+      rgba(120, 100, 70, 0.045),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 80% 70%,
+      rgba(120, 100, 70, 0.035),
+      transparent 50%
+    ),
+    radial-gradient(
+      rgba(90, 75, 50, 0.025) 0.5px,
+      transparent 0.8px
+    );
+
+  background-size:
+    auto,
+    auto,
+    5px 5px;
+
+  opacity:
+    0.9;
+
+  z-index:
+    1;
+
+}
 
 
     /* ==================================================
