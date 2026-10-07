@@ -50,10 +50,10 @@
       overflow: hidden;
 
       background:
-        #efefed;
+        #0b0b0b;
 
       color:
-        #181818;
+        #f5f5f3;
 
     }
 
@@ -88,7 +88,7 @@
       overflow: hidden;
 
       background:
-        #f8f8f6;
+        #0b0b0b;
 
     }
 
@@ -105,7 +105,7 @@
 
       border:
         1px solid
-        #181818;
+        rgba(255,255,255,0.65);
 
       pointer-events:
         none;
@@ -130,15 +130,13 @@
 
       border:
         1px solid
-        rgba(24,24,24,0.18);
+        rgba(255,255,255,0.16);
 
     }
 
 
     /* ==================================================
        四隅
-       ※ 従来の切符感を削って
-          シンプルな角の処理に変更
     ================================================== */
 
     .corner {
@@ -149,7 +147,7 @@
       height: 15px;
 
       background:
-        #f8f8f6;
+        #0b0b0b;
 
       z-index:
         101;
@@ -163,10 +161,12 @@
       left: -2px;
 
       border-right:
-        1px solid #181818;
+        1px solid
+        rgba(255,255,255,0.65);
 
       border-bottom:
-        1px solid #181818;
+        1px solid
+        rgba(255,255,255,0.65);
 
       border-radius:
         0 0 100% 0;
@@ -180,10 +180,12 @@
       right: -2px;
 
       border-left:
-        1px solid #181818;
+        1px solid
+        rgba(255,255,255,0.65);
 
       border-bottom:
-        1px solid #181818;
+        1px solid
+        rgba(255,255,255,0.65);
 
       border-radius:
         0 0 0 100%;
@@ -197,10 +199,12 @@
       left: -2px;
 
       border-right:
-        1px solid #181818;
+        1px solid
+        rgba(255,255,255,0.65);
 
       border-top:
-        1px solid #181818;
+        1px solid
+        rgba(255,255,255,0.65);
 
       border-radius:
         0 100% 0 0;
@@ -214,10 +218,12 @@
       right: -2px;
 
       border-left:
-        1px solid #181818;
+        1px solid
+        rgba(255,255,255,0.65);
 
       border-top:
-        1px solid #181818;
+        1px solid
+        rgba(255,255,255,0.65);
 
       border-radius:
         100% 0 0 0;
@@ -227,7 +233,7 @@
 
     /* ==================================================
        中央境界
-       ※ 見た目だけ残す
+       ※ Thank youラベルは削除
     ================================================== */
 
     .tear-line {
@@ -243,7 +249,7 @@
 
       border-top:
         1px solid
-        rgba(24,24,24,0.16);
+        rgba(255,255,255,0.18);
 
       z-index:
         105;
@@ -256,52 +262,14 @@
 
     .tear-label {
 
-      position: absolute;
-
-      top: 49%;
-
-      left: 50%;
-
-      transform:
-        translate(-50%, -50%);
-
-      z-index:
-        106;
-
-      padding:
-        0 14px;
-
-      background:
-        #f8f8f6;
-
-      font-family:
-        "Libre Baskerville",
-        serif;
-
-      font-size:
-        8px;
-
-      letter-spacing:
-        0.24em;
-
-      text-transform:
-        uppercase;
-
-      color:
-        #777;
-
-      white-space:
-        nowrap;
-
-      pointer-events:
+      display:
         none;
 
     }
 
 
     /* ==================================================
-       中央左右の丸
-       ※ 旧チケットのノッチはかなり控えめに
+       中央左右の切り欠き
     ================================================== */
 
     .tear-notch {
@@ -317,11 +285,11 @@
         50%;
 
       background:
-        #efefed;
+        #0b0b0b;
 
       border:
         1px solid
-        rgba(24,24,24,0.18);
+        rgba(255,255,255,0.18);
 
       transform:
         translateY(-50%);
@@ -337,21 +305,22 @@
 
     .tear-notch.left {
 
-      left: -10px;
+      left:
+        -10px;
 
     }
 
 
     .tear-notch.right {
 
-      right: -10px;
+      right:
+        -10px;
 
     }
 
 
     /* ==================================================
        縦ミシン目
-       ※ かなり薄くして残す
     ================================================== */
 
     .message-perforation {
@@ -366,8 +335,8 @@
       background:
         repeating-linear-gradient(
           to bottom,
-          rgba(24,24,24,0.16) 0,
-          rgba(24,24,24,0.16) 2px,
+          rgba(255,255,255,0.16) 0,
+          rgba(255,255,255,0.16) 2px,
           transparent 2px,
           transparent 9px
         );
@@ -383,14 +352,16 @@
 
     .message-perforation.left {
 
-      left: 17px;
+      left:
+        17px;
 
     }
 
 
     .message-perforation.right {
 
-      right: 17px;
+      right:
+        17px;
 
     }
 
@@ -435,7 +406,7 @@
         hidden;
 
       background:
-        #181818;
+        #050505;
 
       z-index:
         10;
@@ -444,66 +415,15 @@
 
 
     /* ==================================================
-       写真エリア上部タイトル
+       写真エリア上の文字
+       ※ 今回は完全削除
     ================================================== */
 
-    .film-section::before {
-
-      content:
-        "MEMORY";
-
-      position: absolute;
-
-      top: 24px;
-      left: 26px;
-
-      z-index:
-        25;
-
-      font-family:
-        "Libre Baskerville",
-        serif;
-
-      font-size:
-        8px;
-
-      font-weight:
-        700;
-
-      letter-spacing:
-        0.28em;
-
-      color:
-        rgba(255,255,255,0.82);
-
-    }
-
-
+    .film-section::before,
     .film-section::after {
 
-      content:
-        "RIN & CHIKA / 2026";
-
-      position: absolute;
-
-      top: 24px;
-      right: 26px;
-
-      z-index:
-        25;
-
-      font-family:
-        "Libre Baskerville",
-        serif;
-
-      font-size:
-        7px;
-
-      letter-spacing:
-        0.16em;
-
-      color:
-        rgba(255,255,255,0.55);
+      display:
+        none;
 
     }
 
@@ -579,7 +499,7 @@
         1px;
 
       background:
-        #f8f8f6;
+        #f5f5f3;
 
       opacity:
         0.92;
@@ -717,7 +637,7 @@
 
       box-shadow:
         0 8px 20px
-        rgba(0,0,0,0.28);
+        rgba(0,0,0,0.45);
 
       pointer-events:
         none;
@@ -761,7 +681,7 @@
         24px 32px 18px;
 
       background:
-        #f8f8f6;
+        #0b0b0b;
 
       overflow:
         hidden;
@@ -771,8 +691,6 @@
 
     /* ==================================================
        メッセージカード
-       ※ ベージュのカード感をやめて
-          紙面のような構成に変更
     ================================================== */
 
     .message-card {
@@ -786,22 +704,23 @@
         100%;
 
       border:
-        none;
+        1px solid
+        rgba(255,255,255,0.55);
 
       padding:
-        4px 8px 10px;
+        18px 18px 10px;
 
       overflow:
         hidden;
 
       background:
-        transparent;
+        #0b0b0b;
 
     }
 
 
     /* ==================================================
-       紙面のごく薄い質感
+       ごく薄い紙面テクスチャ
     ================================================== */
 
     .message-card::after {
@@ -817,7 +736,7 @@
 
       background:
         radial-gradient(
-          rgba(20,20,20,0.035) 0.45px,
+          rgba(255,255,255,0.06) 0.45px,
           transparent 0.7px
         );
 
@@ -825,7 +744,7 @@
         6px 6px;
 
       opacity:
-        0.35;
+        0.25;
 
       z-index:
         1;
@@ -865,7 +784,7 @@
         1.4;
 
       color:
-        #181818;
+        #f5f5f3;
 
       opacity:
         0;
@@ -910,13 +829,13 @@
         38px;
 
       height:
-        2px;
+        1px;
 
       margin:
         9px 0 17px;
 
       background:
-        #181818;
+        rgba(255,255,255,0.7);
 
     }
 
@@ -995,7 +914,7 @@
         pre-line;
 
       color:
-        #303030;
+        rgba(245,245,243,0.9);
 
     }
 
@@ -1020,7 +939,7 @@
         27px;
 
       color:
-        #181818;
+        #f5f5f3;
 
       opacity:
         0;
@@ -1057,10 +976,10 @@
         absolute;
 
       left:
-        8px;
+        18px;
 
       right:
-        8px;
+        18px;
 
       bottom:
         12px;
@@ -1096,7 +1015,7 @@
         0.17em;
 
       color:
-        #555;
+        rgba(245,245,243,0.65);
 
     }
 
@@ -1120,7 +1039,7 @@
         right;
 
       color:
-        #555;
+        rgba(245,245,243,0.65);
 
     }
 
@@ -1135,10 +1054,10 @@
         absolute;
 
       left:
-        8px;
+        18px;
 
       right:
-        8px;
+        18px;
 
       bottom:
         4px;
@@ -1147,10 +1066,7 @@
         1px;
 
       background:
-        #181818;
-
-      opacity:
-        0.35;
+        rgba(255,255,255,0.55);
 
       z-index:
         4;
@@ -1160,7 +1076,6 @@
 
     /* ==================================================
        ハート
-       ※ 小さく控えめに
     ================================================== */
 
     .little-heart {
@@ -1181,7 +1096,7 @@
         6;
 
       color:
-        #181818;
+        rgba(245,245,243,0.7);
 
       font-size:
         8px;
@@ -1259,7 +1174,7 @@
       .message-card {
 
         padding:
-          2px 7px 8px;
+          14px 16px 8px;
 
       }
 
@@ -1323,7 +1238,7 @@
 
         box-shadow:
           0 15px 50px
-          rgba(0,0,0,0.12);
+          rgba(0,0,0,0.35);
 
       }
 
@@ -1356,9 +1271,7 @@
 
     <div class="tear-line"></div>
 
-    <div class="tear-label">
-      Thank you
-    </div>
+    <!-- Thank you は削除 -->
 
     <div class="tear-notch left"></div>
     <div class="tear-notch right"></div>
@@ -1944,6 +1857,10 @@
       0;
 
 
+    /* ==================================================
+       1セット分の幅
+    ================================================== */
+
     function getLoopWidth() {
 
 
@@ -1986,6 +1903,10 @@
 
     }
 
+
+    /* ==================================================
+       アニメーション
+    ================================================== */
 
     function animate() {
 
@@ -2039,7 +1960,6 @@
 
     /* ==================================================
        タッチ操作
-       ※ 変更なし
     ================================================== */
 
     windowArea.addEventListener(
@@ -2167,7 +2087,6 @@
 
     /* ==================================================
        PCマウス操作
-       ※ 変更なし
     ================================================== */
 
     windowArea.addEventListener(
