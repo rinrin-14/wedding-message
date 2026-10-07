@@ -10,20 +10,15 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Wedding Memory</title>
+  <title>Wedding Memory Ticket</title>
 
 
-  <!-- ================================
-       Google Fonts
-  ================================= -->
+  <!-- Google Fonts -->
 
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Parisienne&family=Klee+One&family=Libre+Baskerville:wght@400;700&family=Noto+Serif+JP:wght@400;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Parisienne&family=Klee+One&family=Libre+Baskerville&family=Noto+Serif+JP:wght@400;600;700&display=swap"
     rel="stylesheet"
   >
 
@@ -49,11 +44,9 @@
 
       overflow: hidden;
 
-      background:
-        #0b0b0b;
+      background: #11110f;
 
-      color:
-        #f5f5f3;
+      color: #f5f1e7;
 
     }
 
@@ -87,8 +80,7 @@
 
       overflow: hidden;
 
-      background:
-        #0b0b0b;
+      background: #11110f;
 
     }
 
@@ -101,24 +93,18 @@
 
       position: absolute;
 
-      inset: 10px;
+      inset: 1px;
 
       border:
-        1px solid
-        rgba(255,255,255,0.65);
+        2px solid
+        rgba(245,241,231,0.7);
 
-      pointer-events:
-        none;
+      pointer-events: none;
 
-      z-index:
-        100;
+      z-index: 100;
 
     }
 
-
-    /* ==================================================
-       内側フレーム
-    ================================================== */
 
     .ticket-frame::before {
 
@@ -129,9 +115,48 @@
       inset: 7px;
 
       border:
-        1px solid
-        rgba(255,255,255,0.16);
+        1.5px dashed
+        rgba(245,241,231,0.38);
 
+    }
+
+
+    /* ==================================================
+       メッセージ左右の縦ミシン目
+    ================================================== */
+
+    .message-perforation {
+
+      position: absolute;
+
+      top: 5px;
+      bottom: 5px;
+
+      width: 1px;
+
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(245,241,231,0.28) 0,
+          rgba(245,241,231,0.28) 3px,
+          transparent 3px,
+          transparent 9px
+        );
+
+      z-index: 99;
+
+      pointer-events: none;
+
+    }
+
+
+    .message-perforation.left {
+      left: 7px;
+    }
+
+
+    .message-perforation.right {
+      right: 7px;
     }
 
 
@@ -143,14 +168,16 @@
 
       position: absolute;
 
-      width: 15px;
-      height: 15px;
+      width: 26px;
+      height: 26px;
 
-      background:
-        #0b0b0b;
+      background: #11110f;
 
-      z-index:
-        101;
+      border:
+        1px solid
+        rgba(245,241,231,0.7);
+
+      z-index: 101;
 
     }
 
@@ -160,16 +187,11 @@
       top: -2px;
       left: -2px;
 
-      border-right:
-        1px solid
-        rgba(255,255,255,0.65);
-
-      border-bottom:
-        1px solid
-        rgba(255,255,255,0.65);
-
       border-radius:
-        0 0 100% 0;
+        0 0 24px 0;
+
+      border-top: none;
+      border-left: none;
 
     }
 
@@ -179,16 +201,11 @@
       top: -2px;
       right: -2px;
 
-      border-left:
-        1px solid
-        rgba(255,255,255,0.65);
-
-      border-bottom:
-        1px solid
-        rgba(255,255,255,0.65);
-
       border-radius:
-        0 0 0 100%;
+        0 0 0 24px;
+
+      border-top: none;
+      border-right: none;
 
     }
 
@@ -198,16 +215,11 @@
       bottom: -2px;
       left: -2px;
 
-      border-right:
-        1px solid
-        rgba(255,255,255,0.65);
-
-      border-top:
-        1px solid
-        rgba(255,255,255,0.65);
-
       border-radius:
-        0 100% 0 0;
+        0 24px 0 0;
+
+      border-bottom: none;
+      border-left: none;
 
     }
 
@@ -217,152 +229,90 @@
       bottom: -2px;
       right: -2px;
 
-      border-left:
-        1px solid
-        rgba(255,255,255,0.65);
-
-      border-top:
-        1px solid
-        rgba(255,255,255,0.65);
-
       border-radius:
-        100% 0 0 0;
+        24px 0 0 0;
+
+      border-bottom: none;
+      border-right: none;
 
     }
 
 
     /* ==================================================
-       中央境界
-       ※ Thank youラベルは削除
-    ================================================== */
-
-    .tear-line {
-
-      position: absolute;
-
-      top: 49%;
-
-      left: 28px;
-      right: 28px;
-
-      height: 0;
-
-      border-top:
-        1px solid
-        rgba(255,255,255,0.18);
-
-      z-index:
-        105;
-
-      pointer-events:
-        none;
-
-    }
-
-
-    .tear-label {
-
-      display:
-        none;
-
-    }
-
-
-    /* ==================================================
-       中央左右の切り欠き
+       中央のもぎり
+       ※ Thank you ラベルは削除
     ================================================== */
 
     .tear-notch {
 
       position: absolute;
 
-      top: 49%;
+      top: 50%;
 
-      width: 18px;
-      height: 18px;
+      width: 30px;
+      height: 30px;
 
-      border-radius:
-        50%;
+      border-radius: 50%;
 
-      background:
-        #0b0b0b;
+      background: #11110f;
 
       border:
         1px solid
-        rgba(255,255,255,0.18);
+        rgba(245,241,231,0.7);
 
       transform:
         translateY(-50%);
 
-      z-index:
-        110;
+      z-index: 110;
 
-      pointer-events:
-        none;
+      pointer-events: none;
 
     }
 
 
     .tear-notch.left {
-
-      left:
-        -10px;
-
+      left: -16px;
     }
 
 
     .tear-notch.right {
+      right: -16px;
+    }
 
-      right:
-        -10px;
+
+    /* 中央の線もかなり薄く */
+
+    .tear-line {
+
+      position: absolute;
+
+      top: 50%;
+
+      left: 24px;
+      right: 24px;
+
+      height: 0;
+
+      border-top:
+        1px dashed
+        rgba(245,241,231,0.28);
+
+      transform:
+        translateY(-50%);
+
+      z-index: 105;
+
+      pointer-events: none;
 
     }
 
 
     /* ==================================================
-       縦ミシン目
+       中央ラベル削除
     ================================================== */
 
-    .message-perforation {
-
-      position: absolute;
-
-      top: 15px;
-      bottom: 15px;
-
-      width: 1px;
-
-      background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(255,255,255,0.16) 0,
-          rgba(255,255,255,0.16) 2px,
-          transparent 2px,
-          transparent 9px
-        );
-
-      z-index:
-        99;
-
-      pointer-events:
-        none;
-
-    }
-
-
-    .message-perforation.left {
-
-      left:
-        17px;
-
-    }
-
-
-    .message-perforation.right {
-
-      right:
-        17px;
-
+    .tear-label {
+      display: none;
     }
 
 
@@ -383,47 +333,34 @@
 
 
     /* ==================================================
-       上部：写真エリア
+       上部：フィルムエリア
+       少し狭くした
     ================================================== */
 
     .film-section {
 
       position: relative;
 
-      width:
-        calc(100% - 32px);
+      width: calc(100% - 14px);
 
-      height:
-        calc(49% - 20px);
+      /*
+       * 以前より少し高さを縮小
+       */
+      height: calc(46% - 38px);
 
-      margin-left:
-        16px;
+      margin-left: 7px;
 
-      top:
-        24px;
+      top: 30px;
 
-      overflow:
-        hidden;
+      overflow: hidden;
 
-      background:
-        #050505;
+      background: #252624;
 
-      z-index:
-        10;
+      border-bottom:
+        1px solid
+        rgba(245,241,231,0.18);
 
-    }
-
-
-    /* ==================================================
-       写真エリア上の文字
-       ※ 今回は完全削除
-    ================================================== */
-
-    .film-section::before,
-    .film-section::after {
-
-      display:
-        none;
+      z-index: 10;
 
     }
 
@@ -439,41 +376,34 @@
       left: 0;
       right: 0;
 
-      height: 12px;
+      height: 17px;
 
-      z-index:
-        20;
+      z-index: 20;
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      justify-content:
-        space-around;
+      justify-content: space-around;
 
-      overflow:
-        hidden;
+      overflow: hidden;
 
-      pointer-events:
-        none;
+      pointer-events: none;
 
     }
 
 
     .film-holes.top {
-
-      top:
-        8px;
-
+      top: 8px;
     }
 
 
     .film-holes.bottom {
+      bottom: 8px;
 
-      bottom:
-        8px;
+      display: flex;
+
+      z-index: 200;
 
     }
 
@@ -481,34 +411,31 @@
     .film-hole {
 
       flex:
-        0 0 12px;
+        0 0 13px;
 
-      width:
-        12px;
+      width: 13px;
+      height: 9px;
 
-      height:
-        7px;
+      min-width: 13px;
+      min-height: 9px;
 
-      min-width:
-        12px;
+      border-radius: 2px;
 
-      min-height:
-        7px;
+      background: #f5f1e7;
 
-      border-radius:
-        1px;
+      opacity: 0.92;
 
-      background:
-        #f5f5f3;
+    }
 
-      opacity:
-        0.92;
 
+    .film-line {
+      display: none;
     }
 
 
     /* ==================================================
        写真表示領域
+       ※ フィルムのど真ん中に配置
     ================================================== */
 
     .photo-window {
@@ -518,22 +445,21 @@
       left: 0;
       right: 0;
 
-      top: 54%;
+      /*
+       * 上下中央
+       */
+      top: 50%;
 
-      height:
-        68%;
+      height: 70%;
 
       transform:
         translateY(-50%);
 
-      overflow:
-        hidden;
+      overflow: hidden;
 
-      z-index:
-        10;
+      z-index: 10;
 
-      touch-action:
-        pan-y;
+      touch-action: pan-y;
 
     }
 
@@ -547,17 +473,13 @@
 
       height: 100%;
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      gap:
-        14px;
+      gap: 18px;
 
-      width:
-        max-content;
+      width: max-content;
 
       transform:
         translate3d(
@@ -566,26 +488,19 @@
           0
         );
 
-      will-change:
-        transform;
+      will-change: transform;
 
-      user-select:
-        none;
+      user-select: none;
 
-      -webkit-user-select:
-        none;
+      -webkit-user-select: none;
 
-      cursor:
-        grab;
+      cursor: grab;
 
     }
 
 
     .photo-track.dragging {
-
-      cursor:
-        grabbing;
-
+      cursor: grabbing;
     }
 
 
@@ -600,63 +515,44 @@
       flex:
         0 0 auto;
 
-      height:
-        100%;
+      height: 100%;
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      justify-content:
-        center;
+      justify-content: center;
 
     }
 
 
     .photo-card img {
 
-      display:
-        block;
+      display: block;
 
-      height:
-        100%;
+      height: 100%;
 
-      width:
-        auto;
+      width: auto;
 
-      max-width:
-        61vw;
+      max-width: 61vw;
 
-      object-fit:
-        contain;
+      object-fit: contain;
 
-      border-radius:
-        0;
+      border-radius: 2px;
 
       box-shadow:
-        0 8px 20px
+        0 3px 10px
         rgba(0,0,0,0.45);
 
-      pointer-events:
-        none;
+      pointer-events: none;
 
-      -webkit-user-drag:
-        none;
+      -webkit-user-drag: none;
 
     }
 
 
-    /* ==================================================
-       フィルムマーク
-    ================================================== */
-
     .film-mark {
-
-      display:
-        none;
-
+      display: none;
     }
 
 
@@ -668,23 +564,22 @@
 
       position: relative;
 
-      width:
-        100%;
+      width: 100%;
 
-      height:
-        calc(51% - 5px);
+      /*
+       * 上部を縮めた分、
+       * 下部を少し広めに
+       */
+      height: calc(54% - 10px);
 
-      top:
-        20px;
+      top: 25px;
 
       padding:
-        24px 32px 18px;
+        24px 3px 0;
 
-      background:
-        #0b0b0b;
+      background: #11110f;
 
-      overflow:
-        hidden;
+      overflow: hidden;
 
     }
 
@@ -697,30 +592,25 @@
 
       position: relative;
 
-      width:
-        100%;
-
-      height:
-        100%;
+      width: 100%;
+      height: 100%;
 
       border:
         1px solid
-        rgba(255,255,255,0.55);
+        rgba(245,241,231,0.58);
 
       padding:
-        18px 18px 10px;
+        10px 18px 8px;
 
-      overflow:
-        hidden;
+      overflow: hidden;
 
-      background:
-        #0b0b0b;
+      background: #11110f;
 
     }
 
 
     /* ==================================================
-       ごく薄い紙面テクスチャ
+       メッセージカードの質感
     ================================================== */
 
     .message-card::after {
@@ -731,63 +621,73 @@
 
       inset: 0;
 
-      pointer-events:
-        none;
+      pointer-events: none;
 
       background:
         radial-gradient(
-          rgba(255,255,255,0.06) 0.45px,
-          transparent 0.7px
+          ellipse at 20% 20%,
+          rgba(245,241,231,0.035),
+          transparent 45%
+        ),
+        radial-gradient(
+          ellipse at 80% 70%,
+          rgba(245,241,231,0.025),
+          transparent 50%
+        ),
+        radial-gradient(
+          rgba(245,241,231,0.025) 0.5px,
+          transparent 0.8px
         );
 
       background-size:
-        6px 6px;
+        auto,
+        auto,
+        5px 5px;
 
-      opacity:
-        0.25;
+      opacity: 0.7;
 
-      z-index:
-        1;
+      z-index: 1;
 
     }
 
 
     /* ==================================================
+       上部文字は削除
+    ================================================== */
+
+    .eyebrow {
+      display: none;
+    }
+
+
+    /* ==================================================
        宛名
+       少し小さく
     ================================================== */
 
     .guest-name {
 
-      position:
-        relative;
+      position: relative;
 
-      z-index:
-        3;
+      z-index: 3;
 
-      margin:
-        0;
+      margin: 0;
 
       font-family:
-        "Noto Serif JP",
-        serif;
+        "Klee One",
+        cursive;
 
-      font-size:
-        25px;
+      font-size: 18px;
 
-      font-weight:
-        600;
+      font-weight: 600;
 
-      letter-spacing:
-        0.06em;
+      letter-spacing: 0.08em;
 
-      line-height:
-        1.4;
+      line-height: 1.5;
 
-      color:
-        #f5f5f3;
+      color: #f5f1e7;
 
-      opacity:
-        0;
+      opacity: 0;
 
       animation:
         fadeInUp 1.4s ease 0.35s forwards;
@@ -801,14 +701,11 @@
         "Parisienne",
         cursive !important;
 
-      font-size:
-        32px;
+      letter-spacing: 0;
 
-      letter-spacing:
-        0;
+      font-weight: 400;
 
-      font-weight:
-        400;
+      font-size: 27px;
 
     }
 
@@ -819,23 +716,19 @@
 
     .name-line {
 
-      position:
-        relative;
+      position: relative;
 
-      z-index:
-        3;
+      z-index: 3;
 
-      width:
-        38px;
+      width: 52px;
 
-      height:
-        1px;
+      height: 1px;
 
       margin:
-        9px 0 17px;
+        7px 0 14px;
 
       background:
-        rgba(255,255,255,0.7);
+        rgba(245,241,231,0.5);
 
     }
 
@@ -846,29 +739,22 @@
 
     .message-scroll {
 
-      position:
-        relative;
+      position: relative;
 
-      z-index:
-        3;
+      z-index: 3;
 
       height:
-        calc(100% - 82px);
+        calc(100% - 80px);
 
-      overflow-y:
-        auto;
+      overflow-y: auto;
 
-      padding-right:
-        8px;
+      padding-right: 5px;
 
-      -webkit-overflow-scrolling:
-        touch;
+      -webkit-overflow-scrolling: touch;
 
-      scrollbar-width:
-        none;
+      scrollbar-width: none;
 
-      opacity:
-        0;
+      opacity: 0;
 
       animation:
         fadeInUp 1.6s ease 0.7s forwards;
@@ -877,45 +763,7 @@
 
 
     .message-scroll::-webkit-scrollbar {
-
-      display:
-        none;
-
-    }
-
-
-    /* ==================================================
-       本文
-    ================================================== */
-
-    .message {
-
-      margin:
-        0;
-
-      padding-bottom:
-        20px;
-
-      font-family:
-        "Klee One",
-        "Noto Serif JP",
-        serif;
-
-      font-size:
-        14px;
-
-      line-height:
-        2.05;
-
-      letter-spacing:
-        0.045em;
-
-      white-space:
-        pre-line;
-
-      color:
-        rgba(245,245,243,0.9);
-
+      display: none;
     }
 
 
@@ -925,24 +773,20 @@
 
     .message-signature {
 
-      text-align:
-        right;
+      text-align: right;
 
       padding:
-        8px 4px 20px 0;
+        8px 5px 20px 0;
 
       font-family:
         "Parisienne",
         cursive;
 
-      font-size:
-        27px;
+      font-size: 24px;
 
-      color:
-        #f5f5f3;
+      color: #f5f1e7;
 
-      opacity:
-        0;
+      opacity: 0;
 
       transform:
         translateY(5px);
@@ -957,8 +801,7 @@
     .message-scroll.reached-bottom
     .message-signature {
 
-      opacity:
-        1;
+      opacity: 1;
 
       transform:
         translateY(0);
@@ -967,34 +810,54 @@
 
 
     /* ==================================================
+       本文
+    ================================================== */
+
+    .message {
+
+      margin: 0;
+
+      padding-bottom: 20px;
+
+      font-family:
+        "Klee One",
+        "Noto Serif JP",
+        serif;
+
+      font-size: 14px;
+
+      line-height: 2.05;
+
+      letter-spacing: 0.045em;
+
+      white-space: pre-line;
+
+      color: #f5f1e7;
+
+    }
+
+
+    /* ==================================================
        下部情報
+       1行に変更
     ================================================== */
 
     .message-bottom {
 
-      position:
-        absolute;
+      position: absolute;
 
-      left:
-        18px;
+      left: 24px;
+      right: 24px;
 
-      right:
-        18px;
+      bottom: 14px;
 
-      bottom:
-        12px;
+      z-index: 4;
 
-      z-index:
-        4;
+      display: flex;
 
-      display:
-        flex;
+      align-items: center;
 
-      align-items:
-        flex-end;
-
-      justify-content:
-        space-between;
+      justify-content: space-between;
 
     }
 
@@ -1005,17 +868,16 @@
         "Libre Baskerville",
         serif;
 
-      font-size:
-        7px;
+      font-size: 7px;
 
-      line-height:
-        1.8;
+      line-height: 1;
 
-      letter-spacing:
-        0.17em;
+      letter-spacing: 0.12em;
 
       color:
-        rgba(245,245,243,0.65);
+        rgba(245,241,231,0.68);
+
+      white-space: nowrap;
 
     }
 
@@ -1026,50 +888,47 @@
         "Libre Baskerville",
         serif;
 
-      font-size:
-        7px;
+      font-size: 7px;
 
-      line-height:
-        1.7;
+      line-height: 1;
 
-      letter-spacing:
-        0.13em;
+      letter-spacing: 0.11em;
 
-      text-align:
-        right;
+      text-align: right;
 
       color:
-        rgba(245,245,243,0.65);
+        rgba(245,241,231,0.68);
+
+      white-space: nowrap;
 
     }
 
 
     /* ==================================================
-       下部ライン
+       下部点線
     ================================================== */
 
     .bottom-dash {
 
-      position:
-        absolute;
+      position: absolute;
 
-      left:
-        18px;
+      left: 24px;
+      right: 24px;
 
-      right:
-        18px;
+      bottom: 5px;
 
-      bottom:
-        4px;
-
-      height:
-        1px;
+      height: 1px;
 
       background:
-        rgba(255,255,255,0.55);
+        repeating-linear-gradient(
+          to right,
+          rgba(245,241,231,0.38) 0,
+          rgba(245,241,231,0.38) 8px,
+          transparent 8px,
+          transparent 15px
+        );
 
-      z-index:
-        4;
+      z-index: 4;
 
     }
 
@@ -1080,26 +939,21 @@
 
     .little-heart {
 
-      position:
-        absolute;
+      position: absolute;
 
-      left:
-        50%;
+      left: 50%;
 
-      bottom:
-        8px;
+      bottom: 13px;
 
       transform:
         translateX(-50%);
 
-      z-index:
-        6;
+      z-index: 6;
 
       color:
-        rgba(245,245,243,0.7);
+        rgba(245,241,231,0.55);
 
-      font-size:
-        8px;
+      font-size: 11px;
 
     }
 
@@ -1112,8 +966,7 @@
 
       from {
 
-        opacity:
-          0;
+        opacity: 0;
 
         transform:
           translateY(10px);
@@ -1122,8 +975,7 @@
 
       to {
 
-        opacity:
-          1;
+        opacity: 1;
 
         transform:
           translateY(0);
@@ -1134,31 +986,14 @@
 
 
     /* ==================================================
-       旧要素
-       ※ JSやHTML構造を壊さないため残す
-    ================================================== */
-
-    .notch,
-    .eyebrow,
-    .film-line {
-
-      display:
-        none;
-
-    }
-
-
-    /* ==================================================
        スマホ小画面
     ================================================== */
 
     @media (max-height: 700px) {
 
-
       .film-section {
 
-        min-height:
-          280px;
+        min-height: 250px;
 
       }
 
@@ -1166,7 +1001,7 @@
       .message-section {
 
         padding:
-          20px 30px 14px;
+          20px 3px 15px;
 
       }
 
@@ -1174,34 +1009,30 @@
       .message-card {
 
         padding:
-          14px 16px 8px;
+          14px 18px 13px;
 
       }
 
 
       .guest-name {
 
-        font-size:
-          22px;
+        font-size: 18px;
 
       }
 
 
       .guest-name.english {
 
-        font-size:
-          29px;
+        font-size: 26px;
 
       }
 
 
       .message {
 
-        font-size:
-          13px;
+        font-size: 13px;
 
-        line-height:
-          1.95;
+        line-height: 1.95;
 
       }
 
@@ -1209,7 +1040,7 @@
       .name-line {
 
         margin:
-          6px 0 12px;
+          5px 0 10px;
 
       }
 
@@ -1222,7 +1053,6 @@
 
     @media (min-width: 700px) {
 
-
       body {
 
         padding:
@@ -1233,12 +1063,13 @@
 
       .page {
 
-        height:
-          850px;
+        height: 850px;
+
+        border-radius: 12px;
 
         box-shadow:
           0 15px 50px
-          rgba(0,0,0,0.35);
+          rgba(0,0,0,0.45);
 
       }
 
@@ -1271,7 +1102,9 @@
 
     <div class="tear-line"></div>
 
-    <!-- Thank you は削除 -->
+    <div class="tear-label">
+      Thank you
+    </div>
 
     <div class="tear-notch left"></div>
     <div class="tear-notch right"></div>
@@ -1284,7 +1117,7 @@
 
 
       <!-- =================================================
-           写真エリア
+           写真・フィルムエリア
       ================================================== -->
 
       <section class="film-section">
@@ -1303,7 +1136,6 @@
 
 
         <div class="film-line top"></div>
-
         <div class="film-line bottom"></div>
 
 
@@ -1333,8 +1165,6 @@
         <div class="message-card">
 
 
-          <!-- 宛名 -->
-
           <h1
             id="name"
             class="guest-name"
@@ -1343,12 +1173,8 @@
           </h1>
 
 
-          <!-- ライン -->
-
           <div class="name-line"></div>
 
-
-          <!-- メッセージ -->
 
           <div
             class="message-scroll"
@@ -1377,20 +1203,20 @@
 
           <div class="message-bottom">
 
+
             <div class="wedding-mark">
 
-              RIN & RIN<br>
-              WEDDING
+              THANK YOU FOR COMING
 
             </div>
 
 
             <div class="thank-you">
 
-              THANK YOU FOR<br>
-              CELEBRATING WITH US
+              7 NOV 2026
 
             </div>
+
 
           </div>
 
@@ -1417,18 +1243,15 @@
 
   <!-- ==================================================
        ゲストデータ
-       ※ ここは変更なし
-  ================================================== -->
+    ================================================== -->
 
   <script src="guests.js"></script>
 
 
   <script>
 
-
     /* ==================================================
        WorkerのURL
-       ※ 変更なし
     ================================================== */
 
     const WORKER_URL =
@@ -1455,7 +1278,6 @@
 
     function createFilmHoles() {
 
-
       const top =
         document.getElementById(
           "holesTop"
@@ -1479,7 +1301,6 @@
         i < count;
         i++
       ) {
-
 
         const hole1 =
           document.createElement(
@@ -1516,14 +1337,10 @@
 
 
     /* ==================================================
-       写真URLを作る
-       ※ 変更なし
+       写真URL
     ================================================== */
 
-    function createPhotoUrl(
-      path
-    ) {
-
+    function createPhotoUrl(path) {
 
       const safePath =
         path
@@ -1546,13 +1363,9 @@
 
     /* ==================================================
        写真カード生成
-       ※ 変更なし
     ================================================== */
 
-    function createPhotoCards(
-      photos
-    ) {
-
+    function createPhotoCards(photos) {
 
       const track =
         document.getElementById(
@@ -1560,8 +1373,7 @@
         );
 
 
-      track.innerHTML =
-        "";
+      track.innerHTML = "";
 
 
       if (
@@ -1576,7 +1388,6 @@
 
       photos.forEach(
         function(photo) {
-
 
           const card =
             document.createElement(
@@ -1598,8 +1409,7 @@
               photo
             );
 
-          image.alt =
-            "";
+          image.alt = "";
 
 
           card.appendChild(
@@ -1618,7 +1428,6 @@
       photos.forEach(
         function(photo) {
 
-
           const card =
             document.createElement(
               "div"
@@ -1639,8 +1448,7 @@
               photo
             );
 
-          image.alt =
-            "";
+          image.alt = "";
 
 
           card.appendChild(
@@ -1660,14 +1468,11 @@
 
     /* ==================================================
        ゲスト情報
-       ※ 変更なし
     ================================================== */
 
     async function loadGuest() {
 
-
       if (!id) {
-
 
         document.getElementById(
           "name"
@@ -1691,13 +1496,14 @@
         guests[id]
       ) {
 
-
         const guest =
           guests[id];
 
 
         const nameElement =
-          document.getElementById("name");
+          document.getElementById(
+            "name"
+          );
 
 
         nameElement.textContent =
@@ -1705,7 +1511,9 @@
 
 
         if (
-          !/[\u3040-\u30ff\u3400-\u9fff]/.test(guest.name)
+          !/[\u3040-\u30ff\u3400-\u9fff]/.test(
+            guest.name
+          )
         ) {
 
           nameElement.classList.add(
@@ -1724,8 +1532,7 @@
 
 
       /* ==================================================
-         メッセージを最後までスクロールしたら
-         Rinを表示
+         メッセージ末尾でRin表示
       ================================================== */
 
       const messageScroll =
@@ -1735,7 +1542,6 @@
 
 
       function checkMessageScroll() {
-
 
         const isAtBottom =
           messageScroll.scrollTop +
@@ -1764,12 +1570,10 @@
 
 
       /* ==================================================
-         Workerから写真一覧を取得
-         ※ 変更なし
+         Workerから写真一覧
       ================================================== */
 
       try {
-
 
         const response =
           await fetch(
@@ -1806,12 +1610,10 @@
 
       } catch (error) {
 
-
         console.error(
           "写真の取得に失敗しました:",
           error
         );
-
 
       }
 
@@ -1823,7 +1625,6 @@
 
     /* ==================================================
        写真自動スクロール
-       ※ 変更なし
     ================================================== */
 
     const track =
@@ -1840,21 +1641,13 @@
 
     let position = 0;
 
+    let velocity = 0.38;
 
-    let velocity =
-      0.38;
+    let dragging = false;
 
+    let startX = 0;
 
-    let dragging =
-      false;
-
-
-    let startX =
-      0;
-
-
-    let startPosition =
-      0;
+    let startPosition = 0;
 
 
     /* ==================================================
@@ -1862,7 +1655,6 @@
     ================================================== */
 
     function getLoopWidth() {
-
 
       const cards =
         track.querySelectorAll(
@@ -1910,7 +1702,6 @@
 
     function animate() {
 
-
       const loopWidth =
         getLoopWidth();
 
@@ -1920,14 +1711,11 @@
         loopWidth
       ) {
 
-
-        position -=
-          velocity;
+        position -= velocity;
 
 
         if (
-          position <=
-          -loopWidth
+          position <= -loopWidth
         ) {
 
           position +=
@@ -1966,7 +1754,6 @@
       "touchstart",
       function(event) {
 
-
         if (
           event.touches.length !== 1
         ) {
@@ -1976,8 +1763,7 @@
         }
 
 
-        dragging =
-          true;
+        dragging = true;
 
 
         track.classList.add(
@@ -1992,7 +1778,6 @@
         startPosition =
           position;
 
-
       },
       {
         passive: true
@@ -2003,7 +1788,6 @@
     windowArea.addEventListener(
       "touchmove",
       function(event) {
-
 
         if (!dragging) {
 
@@ -2035,10 +1819,8 @@
           position <= -loopWidth
         ) {
 
-
           position +=
             loopWidth;
-
 
           startPosition +=
             loopWidth;
@@ -2051,10 +1833,8 @@
           position > 0
         ) {
 
-
           position -=
             loopWidth;
-
 
           startPosition -=
             loopWidth;
@@ -2072,10 +1852,7 @@
       "touchend",
       function() {
 
-
-        dragging =
-          false;
-
+        dragging = false;
 
         track.classList.remove(
           "dragging"
@@ -2093,10 +1870,7 @@
       "mousedown",
       function(event) {
 
-
-        dragging =
-          true;
-
+        dragging = true;
 
         track.classList.add(
           "dragging"
@@ -2117,7 +1891,6 @@
     window.addEventListener(
       "mousemove",
       function(event) {
-
 
         if (!dragging) {
 
@@ -2143,10 +1916,8 @@
           position <= -loopWidth
         ) {
 
-
           position +=
             loopWidth;
-
 
           startPosition +=
             loopWidth;
@@ -2159,10 +1930,8 @@
           position > 0
         ) {
 
-
           position -=
             loopWidth;
-
 
           startPosition -=
             loopWidth;
@@ -2177,10 +1946,7 @@
       "mouseup",
       function() {
 
-
-        dragging =
-          false;
-
+        dragging = false;
 
         track.classList.remove(
           "dragging"
@@ -2188,7 +1954,6 @@
 
       }
     );
-
 
   </script>
 
