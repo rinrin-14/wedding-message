@@ -36,10 +36,10 @@ jobs:
                   continue
 
               guests[guest_id] = {
-                  "name": row["name"],
-                  "message": row["message"],
-                  “from”: row["from"]
-              }
+“name”: row[“name”],
+“message”: row[“message”],
+“from”: row.get(“from”, “”).strip() or “Rin”
+}
 
           with open("guests.js", "w", encoding="utf-8") as f:
               f.write("const guests = ")
