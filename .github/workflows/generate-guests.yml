@@ -35,7 +35,7 @@ jobs:
               if not guest_id:
                   continue
 
-              guests[guest_id] = {
+guests[guest_id] = {
 “name”: row[“name”],
 “message”: row[“message”],
 “from”: row.get(“from”, “”).strip() or “Rin”
