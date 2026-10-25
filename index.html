@@ -1,1966 +1,2225 @@
 <!DOCTYPE html>
-<html lang="ja">
-
+<html>
 <head>
-
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Wedding Memory Ticket</title>
-
-
-  <!-- Google Fonts -->
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-
-  <link href="https://fonts.googleapis.com/css2?family=Italianno&family=Nunito+Sans:wght@400;600&family=Zen+Kurenaido&display=swap" 
-    rel="stylesheet"
-  >
-
-
-  <style>
-
-    /* ==================================================
-       基本設定
-    ================================================== */
-
-    * {
-      box-sizing: border-box;
-    }
-
-
-    html,
-    body {
-
-      margin: 0;
-
-      width: 100%;
-      height: 100%;
-
-      overflow: hidden;
-
-      background: #11110f;
-
-      color: #f5f1e7;
-
-    }
-
-
-    body {
-
-      font-family:
-        "Noto Serif JP",
-        serif;
-
-      -webkit-font-smoothing:
-        antialiased;
-
-    }
-
-
-    /* ==================================================
-       ページ本体
-    ================================================== */
-
-    .page {
-
-      position: relative;
-
-      width: 100%;
-      height: 100dvh;
-
-      max-width: 600px;
-
-      margin: 0 auto;
-
-      overflow: hidden;
-
-      background: #11110f;
-
-    }
-
-
-    /* ==================================================
-       外側フレーム
-    ================================================== */
-
-    .ticket-frame {
-
-      position: absolute;
-
-      inset: 1px;
-
-      border:
-        2px solid
-        rgba(245,241,231,0.7);
-
-      pointer-events: none;
-
-      z-index: 100;
-
-    }
-
-
-    .ticket-frame::before {
-
-      content: "";
-
-      position: absolute;
-
-      inset: 7px;
-
-      border:
-        1.5px dashed
-        rgba(245,241,231,0.38);
-
-    }
-
-
-    /* ==================================================
-       メッセージ左右の縦ミシン目
-    ================================================== */
-
-    .message-perforation {
-
-      position: absolute;
-
-      top: 5px;
-      bottom: 5px;
-
-      width: 1px;
-
-      background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(245,241,231,0.28) 0,
-          rgba(245,241,231,0.28) 3px,
-          transparent 3px,
-          transparent 9px
-        );
-
-      z-index: 99;
-
-      pointer-events: none;
-
-    }
-
-
-    .message-perforation.left {
-      left: 7px;
-    }
-
-
-    .message-perforation.right {
-      right: 7px;
-    }
-
-
-    /* ==================================================
-       四隅
-    ================================================== */
-
-    .corner {
-
-      position: absolute;
-
-      width: 26px;
-      height: 26px;
-
-      background: #11110f;
-
-      border:
-        1px solid
-        rgba(245,241,231,0.7);
-
-      z-index: 101;
-
-    }
-
-
-    .corner.tl {
-
-      top: -2px;
-      left: -2px;
-
-      border-radius:
-        0 0 24px 0;
-
-      border-top: none;
-      border-left: none;
-
-    }
-
-
-    .corner.tr {
-
-      top: -2px;
-      right: -2px;
-
-      border-radius:
-        0 0 0 24px;
-
-      border-top: none;
-      border-right: none;
-
-    }
-
-
-    .corner.bl {
-
-      bottom: -2px;
-      left: -2px;
-
-      border-radius:
-        0 24px 0 0;
-
-      border-bottom: none;
-      border-left: none;
-
-    }
-
-
-    .corner.br {
-
-      bottom: -2px;
-      right: -2px;
-
-      border-radius:
-        24px 0 0 0;
-
-      border-bottom: none;
-      border-right: none;
-
-    }
-
-
-    /* ==================================================
-       中央のもぎり
-       ※ Thank you ラベルは削除
-    ================================================== */
-
-    .tear-notch {
-
-      position: absolute;
-
-      top: calc(48% - 4px);
-
-      width: 30px;
-      height: 30px;
-
-      border-radius: 50%;
-
-      background: #11110f;
-
-      border:
-        1px solid
-        rgba(245,241,231,0.7);
-
-      transform:
-        translateY(-50%);
-
-      z-index: 110;
-
-      pointer-events: none;
-
-    }
-
-
-    .tear-notch.left {
-      left: -16px;
-    }
-
-
-    .tear-notch.right {
-      right: -16px;
-    }
-
-
-    /* 中央の線もかなり薄く */
-
-    .tear-line {
-
-      position: absolute;
-
-      top: calc(46% - 8px);
-
-      left: 24px;
-      right: 24px;
-
-      height: 0;
-
-      border-top:
-        1px dashed
-        rgba(245,241,231,0.28);
-
-      transform:
-        translateY(-50%);
-
-      z-index: 105;
-
-      pointer-events: none;
-
-    }
-
-
-    /* ==================================================
-       中央ラベル削除
-    ================================================== */
-
-    .tear-label {
-      display: none;
-    }
-
-
-    /* ==================================================
-       メインコンテンツ
-    ================================================== */
-
-    .content {
-
-      position: relative;
-
-      width: 100%;
-      height: 100%;
-
-      overflow: hidden;
-
-    }
-
-
-    /* ==================================================
-       上部：フィルムエリア
-       少し狭くした
-    ================================================== */
-
-    .film-section {
-
-      position: relative;
-
-      width: calc(100% - 14px);
-
-      /*
-       * 以前より少し高さを縮小
-       */
-      height: calc(46% - 38px);
-
-      margin-left: 7px;
-
-      top: 30px;
-
-      overflow: hidden;
-
-      background: #252624;
-
-      border-bottom:
-        1px solid
-        rgba(245,241,231,0.18);
-
-      z-index: 10;
-
-    }
-
-
-    /* ==================================================
-       フィルム穴
-    ================================================== */
-
-    .film-holes {
-
-      position: absolute;
-
-      left: 0;
-      right: 0;
-
-      height: 17px;
-
-      z-index: 20;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-around;
-
-      overflow: hidden;
-
-      pointer-events: none;
-
-    }
-
-
-    .film-holes.top {
-      top: 8px;
-    }
-
-
-    .film-holes.bottom {
-      bottom: 8px;
-
-      display: flex;
-
-      z-index: 200;
-
-    }
-
-
-    .film-hole {
-
-      flex:
-        0 0 13px;
-
-      width: 13px;
-      height: 9px;
-
-      min-width: 13px;
-      min-height: 9px;
-
-      border-radius: 2px;
-
-      background: #f5f1e7;
-
-      opacity: 0.92;
-
-    }
-
-
-    .film-line {
-      display: none;
-    }
-
-
-    /* ==================================================
-       写真表示領域
-       ※ フィルムのど真ん中に配置
-    ================================================== */
-
-    .photo-window {
-
-      position: absolute;
-
-      left: 0;
-      right: 0;
-
-      /*
-       * 上下中央
-       */
-      top: 50%;
-
-      height: 70%;
-
-      transform:
-        translateY(-50%);
-
-      overflow: hidden;
-
-      z-index: 10;
-
-      touch-action: pan-y;
-
-    }
-
-
-    .photo-track {
-
-      position: absolute;
-
-      top: 50%;
-      left: 0;
-
-      height: 100%;
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 18px;
-
-      width: max-content;
-
-      transform:
-        translate3d(
-          0,
-          -50%,
-          0
-        );
-
-      will-change: transform;
-
-      user-select: none;
-
-      -webkit-user-select: none;
-
-      cursor: grab;
-
-    }
-
-
-    .photo-track.dragging {
-      cursor: grabbing;
-    }
-
-
-    /* ==================================================
-       写真
-    ================================================== */
-
-    .photo-card {
-
-      position: relative;
-
-      flex:
-        0 0 auto;
-
-      height: 100%;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-    }
-
-
-    .photo-card img {
-
-      display: block;
-
-      height: 100%;
-
-      width: auto;
-
-      max-width: 61vw;
-
-      object-fit: contain;
-
-      border-radius: 2px;
-
-      box-shadow:
-        0 3px 10px
-        rgba(0,0,0,0.45);
-
-      pointer-events: none;
-
-      -webkit-user-drag: none;
-
-    }
-
-
-    .film-mark {
-      display: none;
-    }
-
-
-    /* ==================================================
-       下部メッセージエリア
-    ================================================== */
-
-    .message-section {
-
-      position: relative;
-
-      width: 100%;
-
-      /*
-       * 上部を縮めた分、
-       * 下部を少し広めに
-       */
-      height: calc(54% - 10px);
-
-      top: 25px;
-
-      padding:
-        24px 3px 0;
-
-      background: #11110f;
-
-      overflow: hidden;
-
-    }
-
-
-    /* ==================================================
-       メッセージカード
-    ================================================== */
-
-    .message-card {
-
-      position: relative;
-
-      width: 100%;
-      height: 100%;
-
-      border:
-        1px solid
-        rgba(245,241,231,0.58);
-
-      padding:
-        10px 18px 8px;
-
-      overflow: hidden;
-
-      background: #11110f;
-
-    }
-
-
-    /* ==================================================
-       メッセージカードの質感
-    ================================================== */
-
-    .message-card::after {
-
-      content: "";
-
-      position: absolute;
-
-      inset: 0;
-
-      pointer-events: none;
-
-      background:
-        radial-gradient(
-          ellipse at 20% 20%,
-          rgba(245,241,231,0.035),
-          transparent 45%
-        ),
-        radial-gradient(
-          ellipse at 80% 70%,
-          rgba(245,241,231,0.025),
-          transparent 50%
-        ),
-        radial-gradient(
-          rgba(245,241,231,0.025) 0.5px,
-          transparent 0.8px
-        );
-
-      background-size:
-        auto,
-        auto,
-        5px 5px;
-
-      opacity: 0.7;
-
-      z-index: 1;
-
-    }
-
-
-    /* ==================================================
-       上部文字は削除
-    ================================================== */
-
-    .eyebrow {
-      display: none;
-    }
-
-
-    /* ==================================================
-       宛名
-       少し小さく
-    ================================================== */
-
-    .guest-name {
-
-      position: relative;
-
-      z-index: 3;
-
-      margin: 0;
-
-      font-family:
-        "Nunito Sans",
-        cursive;
-
-      font-size: 18px;
-
-      font-weight: 600;
-
-      letter-spacing: 0.08em;
-
-      line-height: 1.5;
-
-      color: #f5f1e7;
-
-      opacity: 0;
-
-      animation:
-        fadeInUp 1.4s ease 0.35s forwards;
-
-    }
-
-
-    .guest-name.english {
-
-      font-family:
-        "Italianno",
-        cursive !important;
-
-      letter-spacing: 0;
-
-      font-weight: 400;
-
-      font-size: 27px;
-
-    }
-
-
-    /* ==================================================
-       宛名下ライン
-    ================================================== */
-
-    .name-line {
-
-      position: relative;
-
-      z-index: 3;
-
-      width: 128px;
-
-      height: 1px;
-
-      margin:
-        7px 0 14px;
-
-      background:
-        rgba(245,241,231,0.5);
-
-    }
-
-
-    /* ==================================================
-       メッセージスクロール
-    ================================================== */
-
-    .message-scroll {
-
-      position: relative;
-
-      z-index: 3;
-
-      height:
-        calc(100% - 65px);
-
-      overflow-y: auto;
-
-      padding-right: 5px;
-
-      -webkit-overflow-scrolling: touch;
-
-      scrollbar-width: none;
-
-      opacity: 0;
-
-      animation:
-        fadeInUp 1.6s ease 0.7s forwards;
-
-    }
-
-
-    .message-scroll::-webkit-scrollbar {
-      display: none;
-    }
-
-
-    /* ==================================================
-       サイン
-    ================================================== */
-
-    .message-signature {
-
-      text-align: right;
-
-      padding:
-        8px 5px 20px 0;
-
-      font-family:
-        "Italianno",
-        cursive;
-
-      font-size: 24px;
-
-      color: #f5f1e7;
-
-      opacity: 0;
-
-      transform:
-        translateY(5px);
-
-      transition:
-        opacity 0.6s ease,
-        transform 0.6s ease;
-
-    }
-
-
-    .message-scroll.reached-bottom
-    .message-signature {
-
-      opacity: 1;
-
-      transform:
-        translateY(0);
-
-    }
-
-
-    /* ==================================================
-       本文
-    ================================================== */
-
-    .message {
-
-      margin: 0;
-
-      padding-bottom: 20px;
-
-      font-family:
-        "Nunito Sans",
-        sans-serif;
-
-      font-size: 14px;
-
-      line-height: 2.05;
-
-      letter-spacing: 0.045em;
-
-      white-space: pre-line;
-
-      color: #f5f1e7;
-
-    }
-
-
-    /* ==================================================
-       下部情報
-       1行に変更
-    ================================================== */
-
-    .message-bottom {
-
-      position: absolute;
-
-      left: 24px;
-      right: 24px;
-
-      bottom: 14px;
-
-      z-index: 4;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-    }
-
-
-    .wedding-mark {
-
-      font-family:
-        "Zen Kurenaido",
-        serif;
-
-      font-size: 7px;
-
-      line-height: 1;
-
-      letter-spacing: 0.12em;
-
-      color:
-        rgba(245,241,231,0.68);
-
-      white-space: nowrap;
-
-    }
-
-
-    .thank-you {
-
-      font-family:
-        "Zen Kurenaido",
-        serif;
-
-      font-size: 7px;
-
-      line-height: 1;
-
-      letter-spacing: 0.11em;
-
-      text-align: right;
-
-      color:
-        rgba(245,241,231,0.68);
-
-      white-space: nowrap;
-
-    }
-
-
-    /* ==================================================
-       下部点線
-    ================================================== */
-
-    .bottom-dash {
-
-      position: absolute;
-
-      left: 24px;
-      right: 24px;
-
-      bottom: 5px;
-
-      height: 1px;
-
-      background:
-        repeating-linear-gradient(
-          to right,
-          rgba(245,241,231,0.38) 0,
-          rgba(245,241,231,0.38) 8px,
-          transparent 8px,
-          transparent 15px
-        );
-
-      z-index: 4;
-
-    }
-
-
-    /* ==================================================
-       ハート
-    ================================================== */
-
-    .little-heart {
-
-      position: absolute;
-
-      left: 50%;
-
-      bottom: 13px;
-
-      transform:
-        translateX(-50%);
-
-      z-index: 6;
-
-      color:
-        rgba(245,241,231,0.55);
-
-      font-size: 11px;
-
-    }
-
-
-    /* ==================================================
-       フェードイン
-    ================================================== */
-
-    @keyframes fadeInUp {
-
-      from {
-
-        opacity: 0;
-
-        transform:
-          translateY(10px);
-
-      }
-
-      to {
-
-        opacity: 1;
-
-        transform:
-          translateY(0);
-
-      }
-
-    }
-
-
-    /* ==================================================
-       スマホ小画面
-    ================================================== */
-
-    @media (max-height: 700px) {
-
-      .film-section {
-
-        min-height: 250px;
-
-      }
-
-
-      .message-section {
-
-        padding:
-          20px 3px 15px;
-
-      }
-
-
-      .message-card {
-
-        padding:
-          14px 18px 13px;
-
-      }
-
-
-      .guest-name {
-
-        font-size: 18px;
-
-      }
-
-
-      .guest-name.english {
-
-        font-size: 26px;
-
-      }
-
-
-      .message {
-
-        font-size: 13px;
-
-        line-height: 1.95;
-
-      }
-
-
-      .name-line {
-
-        margin:
-          5px 0 10px;
-
-      }
-
-    }
-
-
-    /* ==================================================
-       PC
-    ================================================== */
-
-    @media (min-width: 700px) {
-
-      body {
-
-        padding:
-          20px 0;
-
-      }
-
-
-      .page {
-
-        height: 850px;
-
-        border-radius: 12px;
-
-        box-shadow:
-          0 15px 50px
-          rgba(0,0,0,0.45);
-
-      }
-
-    }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>支出メモ</title>
+
+<style>
+
+/* =====================================
+   0. 全体設定（アプリの基本）
+===================================== */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f2f4f7;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 70px; /* 下部タブ分の余白 */
+  color: #333;
+}
+
+/* 中央のアプリ本体 */
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  min-height: 100vh;
+  padding: 16px;
+  box-sizing: border-box;
+  padding-bottom: 80px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+/* =====================================
+   1. 見出し
+===================================== */
+
+h2 {
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+
+h3 {
+  font-size: 14px;
+  color: #555;
+  margin: 16px 0 6px;
+}
+
+
+/* =====================================
+   2. 入力・ボタン（全ページ共通）
+===================================== */
+
+input,
+select,
+button {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+/* 入力欄 */
+input,
+select {
+  padding: 8px;
+  margin: 4px 0 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+}
+
+/* ボタン */
+button {
+  padding: 8px;
+  margin-bottom: 10px;
+  background: #4A90E2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+
+/* =====================================
+   3. カードデザイン（統一）
+===================================== */
+
+.card,
+.report-card,
+#summaryBox,
+.balance-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  margin-bottom: 12px;
+}
+
+/* ダッシュボード横並び */
+.dashboard {
+  display: flex;
+  gap: 10px;
+}
+
+.card-title {
+  font-size: 12px;
+  color: #777;
+}
+
+.card-value {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+/* =====================================
+   4. 月ナビ
+===================================== */
+
+.month-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.month-nav button {
+  width: 60px;
+}
+
+.month-nav span {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+
+/* =====================================
+   5. 明細リスト
+===================================== */
+
+#list {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+  padding: 10px 6px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* 上段 */
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.date {
+  width: 90px;
+  flex-shrink: 0;
+  color: #666;
+}
+
+.shop {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.amount {
+  width: 90px;
+  text-align: right;
+  font-weight: bold;
+}
+
+/* 下段 */
+.item-sub {
+  font-size: 12px;
+  color: #999;
+  margin-left: 98px;
+}
+
+/* 削除ボタン */
+.delete-btn {
+  background: none;
+  border: none;
+  color: #bbb;
+  font-size: 14px;
+  cursor: pointer;
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.delete-btn:hover {
+  color: #666;
+}
+
+
+/* =====================================
+   6. フィルターパネル
+===================================== */
+
+#filterPanel {
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  padding: 8px;
+  margin: 8px 0;
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 13px;
+}
+
+#filterPanel label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+/* =====================================
+   7. グラフ共通
+===================================== */
+
+/* 横スクロール部分 */
+.chart-scroll {
+  overflow-x: auto;
+}
+
+/* 月次支出グラフ */
+#monthlyChartContainer {
+  display: flex;
+  width: 100%;
+  height: 260px;
+}
+
+#monthlyYAxis {
+  width: 60px;
+  flex-shrink: 0;
+  background: #fff;
+  border-right: 1px solid #ddd;
+}
+
+#monthlyChartScroll {
+  overflow-x: auto;
+  width: 100%;
+}
+
+#monthlyChart {
+  height: 260px;
+}
+
+/* 銀行残高グラフ */
+#bankChartContainer {
+  display: flex;
+  width: 100%;
+  height: 180px;
+}
+
+#bankChartAxis {
+  width: 60px;
+  flex-shrink: 0;
+  background: #fff;
+  border-right: 1px solid #ddd;
+}
+
+#bankChartScroll {
+  overflow-x: auto;
+  width: 100%;
+}
+
+
+/* =====================================
+   8. グラフツールチップ
+===================================== */
+
+#chartTooltip {
+  position: fixed;
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  padding: 6px 8px;
+  font-size: 12px;
+  border-radius: 6px;
+  pointer-events: none;
+  display: none;
+  z-index: 9999;
+}
+
+
+/* =====================================
+   9. 凡例（グラフの色説明）
+===================================== */
+
+#chartLegend {
+  font-size: 11px;
+  margin-top: 6px;
+  line-height: 1.6;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.legend-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+
+/* =====================================
+   10. 下部タブ（ナビ）
+===================================== */
+.tabs {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  background: #fff;
+  border-top: 1px solid #ddd;
+  z-index: 1000;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 12px 0;
+  background: #f2f4f7;
+  color: #333;
+  border: none;
+  margin: 0;
+}
+
+.tabs button.active {
+  background: #4A90E2;
+  color: #fff;
+  font-weight: bold;
+}
+
+.tabs button:hover {
+  background: #dde3ea;
+}
+
+/* =====================================
+   フィルター 正式版（安定構造）
+===================================== */
+
+/* 全体 */
+#filterPanel {
+  border: 1px solid #e0e0e0;
+  background: #fafafa;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 13px;
+
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+/* ボタンエリア */
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.filter-actions button {
+  width: auto;
+  font-size: 11px;
+  padding: 4px 8px;
+  margin: 0;
+}
+
+/* カテゴリ1行 */
+#filterPanel label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 4px 2px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+/* 最後の線消す */
+#filterPanel label:last-of-type {
+  border-bottom: none;
+}
+
+/* カテゴリ名 */
+#filterPanel label span {
+  flex: 1;
+}
+
+/* チェックを右固定 */
+#filterPanel input[type="checkbox"] {
+  margin-left: 10px;
+}
+
+#filterPanel label {
+  width: 100%;
+}
+
+/* カテゴリ名をちゃんと横に広げる */
+#filterPanel label span {
+  flex: 1;
+  white-space: nowrap;       /* 改行させない */
+  text-overflow: ellipsis;   /* …表示 */
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size:  13px;
+}
+
+.filter-row label {
+  width: 60px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.filter-row select,
+.filter-row input {
+  flex: 1;
+  padding: 6px;
+  font-size: 14px;
+  border-radius:  6px;
+}
+
+.filter-row button {
+  padding: 6px 12px;
+}
+
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.category-chip {
+  padding: 6px 12px;
+  border-radius: 16px;
+  background: #f1f3f6;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.category-chip.active {
+  background: #4f7df3;
+  color: white;
+  transform: scale(0.95);
+}
+
+#bigTotal {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.total-label {
+  font-size: 14px;
+  color: #888;
+}
+
+.total-value {
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+.category-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  background: #f7f7f7;
+  font-size: 15px;
+  transition: transform 0.15s ease;
+}
+
+.cat-name {
+  color: #333;
+}
+
+.cat-amount {
+  font-weight: 600;
+}
+
+.category-row:hover {
+  transform: scale(1.03);
+}
+/* =========================
+シャープテーマ
+========================= */
+
+/* 角丸を少し減らす */
+.card,
+.report-card,
+#summaryBox,
+.balance-card {
+border-radius: 8px;
+box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* ボタンをキリッと */
+button {
+border-radius: 6px;
+font-weight: 500;
+}
+
+/* タブをシャープに */
+.tabs button {
+border-radius: 0;
+}
+
+/* リストを引き締め */
+li {
+padding: 8px 4px;
+}
+
+
+</style>
 
 </head>
 
-
 <body>
+<div class="container">
 
+  <div id="expensePage">
 
-  <main class="page">
+    <h2>支出記録</h2>
 
-
-    <!-- 外側フレーム -->
-
-    <div class="ticket-frame">
-
-      <div class="corner tl"></div>
-      <div class="corner tr"></div>
-      <div class="corner bl"></div>
-      <div class="corner br"></div>
-
+    <div class="month-nav">
+      <button onclick="prevMonth()">＜</button>
+      <span id="monthLabel"></span>
+      <button onclick="nextMonth()">＞</button>
     </div>
 
+  <div id="summaryBox">
 
-    <!-- 中央境界 -->
-
-    <div class="tear-line"></div>
-
-    <div class="tear-label">
-      Thank you
+    <div id="bigTotal">
+      <div class="total-label">今月合計</div>
+      <div class="total-value" id="totalAmount">0円</div>
     </div>
 
-    <div class="tear-notch left"></div>
-    <div class="tear-notch right"></div>
+    <hr>
 
-    <div class="message-perforation left"></div>
-    <div class="message-perforation right"></div>
+    <div id="categoryTotals"></div>
+
+  </div>
+
+  <div class="filter-row">
+    <label>カテゴリ</label>
+
+    <div id="categoryFilter" class="category-filter">
+      <span class="category-chip" data-category="食費">食費</span>
+      <span class="category-chip" data-category="外食">外食</span>
+      <span class="category-chip" data-category="日用品">日用品</span>
+      <span class="category-chip" data-category="交通">交通</span>
+      <span class="category-chip" data-category="固定費">固定費</span>
+      <span class="category-chip" data-category="レジャー">レジャー</span>
+      <span class="category-chip" data-category="その他">その他</span>
+    </div>
+  </div>
+
+<div class="filter-row">
+  <label>ソート</label>
+  <select id="primarySort" onchange="updateDisplay()">
+    <option value="date">日付優先</option>
+    <option value="amount">金額優先</option>
+  </select>
+
+  <select id="sortDate" onchange="updateDisplay()">
+    <option value="none">日付：—</option>
+    <option value="desc">新しい順</option>
+    <option value="asc">古い順</option>
+  </select>
+
+  <select id="sortAmount" onchange="updateDisplay()">
+    <option value="none">金額：—</option>
+    <option value="desc">高い順</option>
+    <option value="asc">低い順</option>
+  </select>
+</div>
+
+<div class="filter-row">
+  <label>金額</label>
+  <input type="number" id="minAmount" placeholder="最低金額" onchange ="updateDisplay()">
+  <span>〜</span>
+  <input type="number" id="maxAmount" placeholder="最高金額" onchange ="updateDisplay()">
+</div>
 
 
-    <div class="content">
+  <h3>記録一覧</h3>
+  <ul id="list"></ul>
+
+  </div>
+
+<div id="accountPage" style="display:none;">
+
+  <h2>口座記録</h2>
+
+  <div class="balance-card total-balance">
+    <div class="balance-title">合計残高</div>
+    <div id="totalBankBalanceDisplay" class="balance-amount"></div>
+  </div>
+
+  <div style="margin-bottom:10px;">
+    <button onclick="switchAccount('main')">メイン</button>
+    <button onclick="switchAccount('oiwai')">お祝い</button>
+    <button onclick="switchAccount('charin')">ちゃりん</button>
+  </div>
+
+  <h3>現在の残高</h3>
+  <div class="balance-card">
+    <div class="balance-title">現在の残高</div>
+    <div id="bankBalanceDisplay" class="balance-amount"></div>
+    <div id="bankMonthlyChange" class="balance-change"></div>
+  </div>
+
+  <h3>取引明細</h3>
+  <div id="bankList" class="bank-list"></div>
+
+</div>
+
+<div id="reportPage" style="display:none;">
+
+  <div class="report-card">
+    <h2>月次レポート</h2>
+
+    <h3>銀行残高推移</h3>
+    <div style="display:flex;">
+      <canvas id="bankChartAxis" width="60" height="180"></canvas>
+
+      <div style="overflow-x:auto;">
+        <canvas id="bankChart" height="180" style="min-width:600px;"></canvas>
+      </div>
+    </div>
+
+    <!-- 月次カテゴリグラフ -->
+    <div id="monthlyChartContainer">
+      <canvas id="monthlyYAxis" height="260"></canvas>
+
+      <div id="monthlyChartScroll">
+        <canvas id="monthlyChart" height="260"></canvas>
+      </div>
+    </div>
+
+    <div id="chartLegend"></div>
+
+    <!-- 月別テキストレポート -->
+    <div id="monthlyReport">
+      <h3>月別一覧</h3>
+      <div id="monthlyList"></div>
+
+      <h3>前月比較</h3>
+      <div id="monthCompare"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<div id="managePage" style="display:none;">
+
+  <h2>明細データ管理</h2>
+
+  <div class="card">
+
+    <h3>カード明細</h3>
+    <input type="file" id="csvFile" accept=".csv">
+    <button onclick="importCSV()">CSV取込</button>
 
 
-      <!-- =================================================
-           写真・フィルムエリア
-      ================================================== -->
+    <h3>銀行明細</h3>
+    <input type="file" id="bankCsvFile" accept=".csv">
+    <button onclick="importBankCSV()">CSV取込</button>
+  </div>
 
-      <section class="film-section">
+  <button onclick="toggleForm()" style="margin-bottom:16px;">明細追加</button>
+
+  <div id="recordForm" style="display:none;">
+
+  <div class="card">
+
+  日付: <input type="date" id="date"><br><br>
+  金額: <input type="number" id="amount"><br><br>
+
+  支払い方法:
+  <select id="account">
+    <option value="自分カード">自分カード</option>
+    <option value="家族カード">家族カード</option>
+    <option value="現金">現金</option>
+  </select>
+  <br><br>
+
+  店名: <input type="text" id="shop"><br><br>
+
+  カテゴリ:
+  <select id="category">
+    <option value="食費">食費</option>
+    <option value="外食">外食</option>
+    <option value="日用品">日用品</option>
+    <option value="交通">交通</option>
+    <option value="固定費">固定費</option>
+    <option value="レジャー">レジャー</option>
+    <option value="その他">その他</option>
+  </select>
+  <br><br>
+
+  メモ: <input type="text" id="memo"><br><br>
+
+  <button onclick="addRecord()">保存</button>
+
+  </div>
+
+  </div>
 
 
-        <div
-          class="film-holes top"
-          id="holesTop"
-        ></div>
+  <div class="card">
+    <h3>データ削除</h3>
+    <button onclick="clearExpenseRecords()" style="background:#e53935;">
+      カード明細削除
+    </button>
+
+    <button onclick="clearBankRecords()" style="background:#e53935;">
+      銀行明細削除
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>バックアップ</h3>
+    <button onclick="exportBackup()">バックアップ保存</button>
+    <input type="file" id="importFile" accept=".json" onchange="importBackup(event)" />
+  </div>
+
+</div>
 
 
-        <div
-          class="film-holes bottom"
-          id="holesBottom"
-        ></div>
+<div id="chartTooltip" style="
+  position: fixed;
+  background: rgba(0,0,0,0.75);
+  color: white;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  pointer-events: none;
+  display: none;
+  z-index: 9999;
+"></div>
 
 
-        <div class="film-line top"></div>
-        <div class="film-line bottom"></div>
+<div class="tabs">
+  <button onclick="showPage('expense')">支出記録</button>
+  <button onclick="showPage('account')">口座記録</button>
+  <button onclick="showPage('report')">レポート</button>
+  <button onclick="showPage('manage')">管理</button>
+</div>
 
 
-        <div
-          class="photo-window"
-          id="photoWindow"
-        >
 
-          <div
-            class="photo-track"
-            id="photoTrack"
-          ></div>
+<script>
 
+// =======================
+// 初期データ読み込み
+// =======================
+let appData = JSON.parse(localStorage.getItem("familyAppData")) || {
+  records: [],
+  bankAccounts: {
+    main: [],
+    oiwai: [],
+    charin: []
+  }
+};
+
+// --- 銀行口座の初期化（旧データ救済込み） ---
+if (!appData.bankAccounts) {
+  appData.bankAccounts = {
+    main: appData.bankRecords || [],
+    oiwai: [],
+    charin: []
+  };
+}
+
+let currentAccount = "main";
+
+let records = appData.records;
+
+const categoryRules = [
+
+  // ===== 食費（スーパー・コンビニ）=====
+  { keyword: "セブン", category: "食費" },
+  { keyword: "ファミマ", category: "食費" },
+  { keyword: "ファミリーマート", category: "食費" },
+  { keyword: "ローソン", category: "食費" },
+  { keyword: "マルエツ", category: "食費" },
+  { keyword: "ライフ", category: "食費" },
+  { keyword: "サミット", category: "食費" },
+  { keyword: "ハナマサ", category: "食費" },
+  { keyword: "まいばすけっと", category: "食費" },
+  { keyword: "リコス", category: "食費" },
+
+  // ===== 外食 =====
+  { keyword: "焼肉", category: "外食" },
+  { keyword: "天ぷら", category: "外食" },
+  { keyword: "松屋", category: "外食" },
+  { keyword: "大戸屋", category: "外食" },
+  { keyword: "マクドナルド", category: "外食" },
+  { keyword: "UBERJP_EATS", category: "外食" },
+  { keyword: "スシロー", category: "外食" },
+  { keyword: "やよい軒", category: "外食" },
+  { keyword: "餃子の王将", category: "外食" },
+  { keyword: "キリンシティ", category: "外食" },
+  { keyword: "日高屋", category: "外食" },
+  { keyword: "すき家", category: "外食" },
+  { keyword: "吉野家", category: "外食" },
+  { keyword: "鳥貴族", category: "外食" },
+  { keyword: "ボン花火", category: "外食" },
+  { keyword: "イエロ", category: "外食" },
+  { keyword: "ドトール", category: "外食" },
+  { keyword: "プロント", category: "外食" },
+  { keyword: "そば", category: "外食" },
+  { keyword: "カフェ", category: "外食" },
+  { keyword: "cafe", category: "外食" },
+  { keyword: "CAFE", category: "外食" },
+  { keyword: "ｃａｆｅ", category: "外食" },
+  { keyword: "ＣＡＦＥ", category: "外食" },
+  { keyword: "コーヒー", category: "外食" },
+  { keyword: "coffee", category: "外食" },
+  { keyword: "COFFEE", category: "外食" },
+  { keyword: "ｃｏｆｆｅｅ", category: "外食" },
+  { keyword: "ＣＯＦＦＥＥ", category: "外食" },
+  { keyword: "レストラン", category: "外食" },
+  { keyword: "ブルーシール", category: "外食" },
+  { keyword: "Ａ＆Ｗ", category: "外食" },
+
+  { keyword: "ラクテンペイ", category: "外食" },
+  { keyword: "楽天ペイ", category: "外食" },
+
+  // ===== 日用品 =====
+  { keyword: "AMAZON.CO.JP", category: "日用品" },
+  { keyword: "ＡＭＡＺＯＮ．ＣＯ", category: "日用品" },
+  { keyword: "AMAZON", category: "日用品" },
+  { keyword: "ＡＭＡＺＯＮ", category: "日用品" },
+  { keyword: "楽天", category: "日用品" },
+  { keyword: "無印", category: "日用品" },
+  { keyword: "ニトリ", category: "日用品" },
+  { keyword: "ダイソー", category: "日用品" },
+  { keyword: "ワッツ", category: "日用品" },
+  { keyword: "セリア", category: "日用品" },
+  { keyword: "ハンズ", category: "日用品" },
+  { keyword: "ドン・キホーテ", category: "日用品" },
+  { keyword: "マツモトキヨシ", category: "日用品" },
+  { keyword: "ドラッグ", category: "日用品" },
+
+  // ===== 交通 =====
+  { keyword: "バス", category: "交通" },
+  { keyword: "交通", category: "交通" },
+  { keyword: "京成", category: "交通" },
+  { keyword: "スカイライナー", category: "交通" },
+  { keyword: "ＧＯアプリ", category: "交通" },
+  { keyword: "タクシー", category: "交通" },
+  { keyword: "キャブ", category: "交通" },
+  { keyword: "カ－シェア", category: "交通" },
+  { keyword: "第一交通", category: "交通" },
+  { keyword: "国際自動車", category: "交通" },
+  { keyword: "PASMO", category: "交通" },
+  { keyword: "ＰＡＳＭＯ", category: "交通" },
+  { keyword: "ETC", category: "交通" },
+  { keyword: "ＥＴＣ", category: "交通" },
+  { keyword: "給油", category: "交通" },
+
+  // ===== 固定費 =====
+  { keyword: "東京電力", category: "固定費" },
+  { keyword: "電力", category: "固定費" },
+  { keyword: "水道", category: "固定費" },
+
+  // ===== レジャー・旅行 =====
+  { keyword: "ホテル", category: "レジャー" },
+  { keyword: "レンタカー", category: "レジャー" },
+  { keyword: "skyticket", category: "レジャー" },
+  { keyword: "ｓｋｙｔｉｃｋｅｔ", category: "レジャー" },
+  { keyword: "水族館", category: "レジャー" },
+  { keyword: "じゃらん", category: "レジャー" },
+  { keyword: "御菓子御殿", category: "レジャー" },
+
+  // ===== 決済系（中身不明）=====
+  { keyword: "Square", category: "その他" },
+  { keyword: "Ｓｑｕａｒｅ", category: "その他" },
+  { keyword: "楽天ペイ", category: "その他" }
+];
+
+const categoryColors = {
+  "食費": "#FF6B6B",
+  "外食": "#FF9F43",
+  "日用品": "#4ECDC4",
+  "交通": "#5F6CAF",
+  "固定費": "#7868E6",
+  "レジャー": "#F368E0",
+  "その他": "#8395A7"
+};
+
+
+// 表示中の年月
+let displayDate = new Date();
+
+let filterCategory = "all";
+
+const categories = [
+  "食費",
+  "外食",
+  "日用品",
+  "交通",
+  "固定費",
+  "レジャー",
+  "その他"
+];
+
+// =======================
+// ページ読み込み時
+// =======================
+window.onload = function () {
+  updateDisplay();
+  showPage("expense");
+};
+
+function showPage(page) {
+
+  const expense = document.getElementById("expensePage");
+  const account = document.getElementById("accountPage");
+  const report = document.getElementById("reportPage");
+  const manage = document.getElementById("managePage");
+
+  // 全部非表示
+  if (expense) expense.style.display = "none";
+  if (account) account.style.display = "none";
+  if (report) report.style.display = "none";
+  if (manage) manage.style.display = "none";
+
+  // 表示切り替え
+  if (page === "expense" && expense) {
+    expense.style.display = "block";
+    updateDisplay();
+  }
+
+  if (page === "account" && account) {
+    account.style.display = "block";
+    drawBankList();   // ←銀行一覧表示
+    drawTotalBankBalance();
+  }
+
+  if (page === "report" && report) {
+    report.style.display = "block";
+    updateMonthlyReport();
+    drawMonthlyChartByCategory();
+    drawBankBalanceChart();
+  }
+
+  if (page === "manage" && manage) {
+    manage.style.display = "block";
+  }
+
+  // タブのアクティブ状態更新
+  document.querySelectorAll(".tabs button").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  if (page === "expense") {
+    document.querySelector('.tabs button[onclick="showPage(\'expense\')"]').classList.add("active");
+  }
+  if (page === "account") {
+    document.querySelector('.tabs button[onclick="showPage(\'account\')"]').classList.add("active");
+  }
+  if (page === "report") {
+    document.querySelector('.tabs button[onclick="showPage(\'report\')"]').classList.add("active");
+  }
+  if (page === "manage") {
+    document.querySelector('.tabs button[onclick="showPage(\'manage\')"]').classList.add("active");
+  }
+}
+
+function updateMonthlyReport() {
+  const reportDiv = document.getElementById("monthlyReport");
+  if (!reportDiv) return; // 要素なければ何もしない
+
+  let monthMap = {};
+
+  records.forEach(r => {
+    const d = new Date(r.date);
+    const key = d.getFullYear() + "-" + (d.getMonth() + 1);
+    monthMap[key] = (monthMap[key] || 0) + Number(r.amount);
+  });
+
+  drawMonthlyChartByCategory();
+
+  const sortedMonths = Object.keys(monthMap).sort((a,b)=>{
+    return new Date(a) - new Date(b);
+  });
+
+  // 一覧表示
+  const listDiv = document.getElementById("monthlyList");
+  listDiv.innerHTML = "";
+
+  sortedMonths.slice().reverse().forEach(m => {
+    listDiv.innerHTML += `${m}：${monthMap[m].toLocaleString()}円<br>`;
+  });
+
+  // 前月比較
+  const compareDiv = document.getElementById("monthCompare");
+
+  if (sortedMonths.length >= 2) {
+    const last = sortedMonths[sortedMonths.length - 1];
+    const prev = sortedMonths[sortedMonths.length - 2];
+
+    const diff = monthMap[last] - monthMap[prev];
+    const sign = diff >= 0 ? "+" : "";
+
+    compareDiv.innerHTML = `
+      今月：${monthMap[last].toLocaleString()}円<br>
+      前月：${monthMap[prev].toLocaleString()}円<br>
+      差：${sign}${diff.toLocaleString()}円
+    `;
+  } else {
+    compareDiv.innerHTML = "データがまだ少ないです";
+  }
+
+  drawLegend();
+}
+
+function detectCategory(shopName) {
+  if (!shopName) return "その他";
+
+  const s = shopName.toUpperCase();
+
+  for (let rule of categoryRules) {
+    if (s.includes(rule.keyword.toUpperCase())) {
+      return rule.category;
+    }
+  }
+  return "その他";
+}
+
+// フィルター開閉
+function toggleFilter() {
+  const panel = document.getElementById("filterPanel");
+  panel.style.display = panel.style.display === "none" ? "block" : "none";
+}
+
+// 全選択
+function selectAllCategories() {
+  const checks = document.querySelectorAll("#filterPanel input[type='checkbox']");
+  checks.forEach(c => c.checked = true);
+  updateDisplay();
+}
+
+// 全解除
+function clearAllCategories() {
+  const checks = document.querySelectorAll("#filterPanel input[type='checkbox']");
+  checks.forEach(c => c.checked = false);
+  updateDisplay();
+}
+
+// 選択カテゴリ取得（updateDisplayで使う）
+function getSelectedCategories() {
+  const chips = document.querySelectorAll(".category-chip.active");
+  return Array.from(chips).map(chip => chip.dataset.category);
+}
+
+// =======================
+// 月表示更新
+// =======================
+function updateDisplay() {
+
+  // ===== レポートからの月ジャンプ =====
+  const selectedMonth = localStorage.getItem("selectedMonth");
+  if (selectedMonth) {
+    const [year, month] = selectedMonth.split("-");
+    displayDate = new Date(year, month - 1);
+
+    localStorage.removeItem("selectedMonth");
+  }
+
+  const displayMonth = displayDate.getMonth() + 1;
+  const displayYear = displayDate.getFullYear();
+
+  // 年月ラベル
+  document.getElementById("monthLabel").textContent =
+    displayYear + "年" + displayMonth + "月";
+
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  let myCard = 0;
+  let familyCard = 0;
+  let cash = 0;
+
+  let categoryMap = {};
+
+  const minInput = document.getElementById("minAmount")?.value;
+  const maxInput = document.getElementById("maxAmount")?.value;
+
+  const minAmount = minInput !== "" ? Number(minInput) : -Infinity;
+  const maxAmount = maxInput !== "" ? Number(maxInput) : Infinity;
+
+  // ===== 月フィルター =====
+  const filteredRecords = records.filter(r => {
+    const d = new Date(r.date);
+    const amount = Number(r.amount);
+
+    const selectedCategories = [
+      ...document.querySelectorAll(".category-chip.active")
+    ].map(chip => chip.dataset.category);
+
+    return (
+      d.getMonth() + 1 === displayMonth &&
+      d.getFullYear() === displayYear &&
+      amount >= minAmount &&
+      amount <= maxAmount &&
+      (
+        selectedCategories.length === 0 ||
+        selectedCategories.includes(r.category)
+      )
+    );
+  });
+
+  // ===== ソート（ここに追加）=====
+  const sortDate = document.getElementById("sortDate")?.value || "none";
+  const sortAmount = document.getElementById("sortAmount")?.value || "none";
+
+  const primary = document.getElementById("primarySort").value;
+
+  let priority = ["date", "amount"];
+
+  priority = priority.filter(p => p !== primary);
+
+  priority.unshift(primary);
+
+  filteredRecords.sort((a, b) => {
+
+    for (let key of priority) {
+
+      if (key === "date" && sortDate !== "none") {
+        const diff = new Date(a.date) - new Date(b.date);
+        if (diff !== 0) return sortDate === "asc" ? diff : -diff;
+      }
+
+      if (key === "amount" && sortAmount !== "none") {
+        const diff = a.amount - b.amount;
+        if (diff !== 0) return sortAmount === "asc" ? diff : -diff;
+      }
+    }
+    return 0;
+  });
+
+
+
+  // ===== 表示 =====
+  filteredRecords.forEach((r) => {
+
+    const originalIndex = records.indexOf(r);
+
+    const category = r.category || "その他";
+
+    const li = document.createElement("li");
+
+    li.innerHTML = `
+      <div class="item-row">
+        <span class="date">${r.date}</span>
+        <span class="shop">${r.shop}</span>
+        <span class="amount">${Number(r.amount).toLocaleString()}円</span>
+        <button class="delete-btn" onclick="deleteRecord(${originalIndex})">×</button>
+      </div>
+
+      <div class="item-sub">
+        <select onchange="changeCategory(${originalIndex}, this.value)">
+          <option value="食費" ${category === "食費" ? "selected" : ""}>食費</option>
+          <option value="外食" ${category === "外食" ? "selected" : ""}>外食</option>
+          <option value="日用品" ${category === "日用品" ? "selected" : ""}>日用品</option>
+          <option value="交通" ${category === "交通" ? "selected" : ""}>交通</option>
+          <option value="固定費" ${category === "固定費" ? "selected" : ""}>固定費</option>
+          <option value="レジャー" ${category === "レジャー" ? "selected" : ""}>レジャー</option>
+          <option value="その他" ${category === "その他" ? "selected" : ""}>その他</option>
+        </select>
+        ｜${r.account}
+        ${r.memo ? `｜${r.memo}` : ""}
+      </div>
+    `;
+
+    list.appendChild(li);
+
+    // カード合計
+    if (r.account === "自分カード") myCard += r.amount;
+    if (r.account === "家族カード") familyCard += r.amount;
+    if (r.account === "現金") cash += r.amount;
+
+    // カテゴリ合計
+    categoryMap[category] = (categoryMap[category] || 0) + Number(r.amount);
+  });
+
+  if (list.innerHTML === "") {
+    list.innerHTML = "<li>該当する記録がありません</li>";
+  }
+
+  // ===== カテゴリ表示 =====
+  const categoryTotalsDiv = document.getElementById("categoryTotals");
+  categoryTotalsDiv.innerHTML = "";
+
+  Object.entries(categoryMap)
+    .sort((a, b) => b[1] - a[1])
+    .forEach(([category, amount]) => {
+
+    const row = document.createElement("div");
+    row.className = "category-row";
+
+
+    row.innerHTML = `
+      <span class="cat-name">${category}</span>
+      <span class="cat-amount">${amount.toLocaleString()}円</span>
+    `;
+
+    categoryTotalsDiv.appendChild(row);
+  });
+
+  // ===== 総合計 =====
+  const total = filteredRecords.reduce(
+    (sum, r) => sum + Number(r.amount),
+    0
+  );
+
+document.getElementById("totalAmount").textContent =
+  total.toLocaleString();
+
+  updateMonthlyReport();
+
+  const balanceEl = document.getElementById("bankBalance");
+  if (balanceEl) {
+    balanceEl.textContent = getLatestBalance().toLocaleString();
+  }
+
+  updateBankUI();
+  updateMonthTotalUI();
+}
+
+function switchAccount(accountName) {
+  currentAccount = accountName;
+  drawBankList();
+  drawBankBalanceChart();
+}
+
+function updateBankUI() {
+  const el = document.getElementById("bankBalance");
+  if (!el) return;
+
+  const balance = getLatestBalance();
+  el.textContent = balance.toLocaleString() + "円";
+}
+
+function updateMonthTotalUI() {
+  const el = document.getElementById("monthTotal");
+  if (!el) return;
+
+  let total = 0;
+
+  records.forEach(r => {
+    const d = new Date(r.date);
+    if (
+      d.getFullYear() === displayDate.getFullYear() &&
+      d.getMonth() === displayDate.getMonth()
+    ) {
+      total += Number(r.amount);
+    }
+  });
+
+  el.textContent = total.toLocaleString() + "円";
+}
+
+function drawMonthlyChart(monthMap) {
+  const canvas = document.getElementById("monthlyChart");
+  const ctx = canvas.getContext("2d");
+
+  const months = Object.keys(monthMap).sort((a,b)=> new Date(a) - new Date(b));
+  const values = months.map(m => monthMap[m]);
+
+  if (months.length === 0) return;
+
+  canvas.width = canvas.parentElement.offsetWidth;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const max = Math.max(...values);
+  const barWidth = canvas.width / months.length;
+
+  months.forEach((month, i) => {
+    const value = monthMap[month];
+    const height = (value / max) * (canvas.height - 40);
+
+    const x = i * barWidth + 10;
+    const y = canvas.height - height - 20;
+
+    // 棒
+    ctx.fillStyle = "#4CAF50";
+    ctx.fillRect(x, y, barWidth - 20, height);
+
+    // 月ラベル
+    ctx.fillStyle = "#333";
+    ctx.font = "10px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(month.split("-")[1] + "月", x + (barWidth - 20)/2, canvas.height - 5);
+  });
+}
+
+function drawMonthlyChartByCategory() {
+
+  const chartCanvas = document.getElementById("monthlyChart");
+  const yCanvas = document.getElementById("monthlyYAxis");
+
+  if (!chartCanvas || !yCanvas) return;
+
+  const chartCtx = chartCanvas.getContext("2d");
+  const yCtx = yCanvas.getContext("2d");
+
+  const chartHeightPx = 260;
+
+  // ★高さ統一（先に取得してから設定）
+  chartCanvas.height = chartHeightPx;
+  yCanvas.height = chartHeightPx;
+  yCanvas.width = 60;
+
+  const selectedCategories = getSelectedCategories();
+  let hoverAreas = [];
+  let monthMap = {};
+
+  records.forEach(r => {
+    const d = new Date(r.date);
+    const key = d.getFullYear() + "-" + (d.getMonth() + 1);
+    const category = r.category || "その他";
+
+    if (
+      selectedCategories.length > 0 &&
+      !selectedCategories.includes(category)
+    ) return;
+
+    if (!monthMap[key]) monthMap[key] = {};
+    monthMap[key][category] =
+      (monthMap[key][category] || 0) + Number(r.amount);
+  });
+
+  const months = Object.keys(monthMap).sort((a,b)=> new Date(a) - new Date(b));
+  if (months.length === 0) return;
+
+  const barWidth = 30;   // ← 少し細く
+  const gap = 25;
+  const sidePadding = 20;
+
+  const bottomPadding = 30;
+  const topPadding = 10;
+
+  const chartHeight = chartCanvas.height - bottomPadding - topPadding;
+
+  const totals = months.map(m =>
+    Object.values(monthMap[m]).reduce((a,b)=>a+b,0)
+  );
+
+  const maxTotal = Math.max(...totals);
+  const unit = 100000;
+  const maxAxis = Math.ceil(maxTotal / unit) * unit || unit;
+
+  // 横スクロール幅
+  chartCanvas.width =
+  months.length * (barWidth + gap) + sidePadding * 2;
+
+  chartCtx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
+  yCtx.clearRect(0, 0, yCanvas.width, yCanvas.height);
+
+  // ===== Y軸 =====
+  yCtx.fillStyle = "#666";
+  yCtx.font = "11px sans-serif";
+  yCtx.textAlign = "right";
+  yCtx.textBaseline = "middle";
+
+  for (let v = 0; v <= maxAxis; v += unit) {
+    const y =
+      chartCanvas.height -
+      bottomPadding -
+      (v / maxAxis) * chartHeight;
+
+    yCtx.fillText((v/10000) + "万円", 55, y);
+
+    chartCtx.beginPath();
+    chartCtx.moveTo(0, y);
+    chartCtx.lineTo(chartCanvas.width, y);
+    chartCtx.strokeStyle = "#eee";
+    chartCtx.stroke();
+  }
+
+  // ===== 棒描画 =====
+  months.forEach((month, i) => {
+
+    let stackedHeight = 0;
+    const x = sidePadding + i * (barWidth + gap);
+
+    categories.forEach(cat => {
+
+      const value = (monthMap[month][cat] || 0);
+      if (!value) return;
+
+      const height = (value / maxAxis) * chartHeight;
+      const y =
+        chartCanvas.height -
+        bottomPadding -
+        stackedHeight -
+        height;
+
+      const isLatestMonth = (i === months.length - 1);
+      chartCtx.globalAlpha = isLatestMonth ? 1 : 0.7;
+
+      chartCtx.fillStyle = categoryColors[cat];
+      chartCtx.fillRect(x, y, barWidth, height);
+
+      chartCtx.globalAlpha = isLatestMonth ? 1 : 0.5;
+
+      hoverAreas.push({
+        month,
+        category: cat,
+        value,
+        x,
+        y,
+        width: barWidth,
+        height
+      });
+
+      stackedHeight += height;
+    });
+
+    chartCtx.fillStyle = "#333";
+    chartCtx.font = "10px sans-serif";
+    chartCtx.textAlign = "center";
+    chartCtx.fillText(
+      month.split("-")[1] + "月",
+      x + barWidth/2,
+      chartCanvas.height - 5
+    );
+  });
+
+  // ===== ホバー =====
+  const tooltip = document.getElementById("chartTooltip");
+
+  chartCanvas.onmousemove = function(e) {
+    const rect = chartCanvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    let found = null;
+
+    hoverAreas.forEach(area => {
+      if (
+        mouseX >= area.x &&
+        mouseX <= area.x + area.width &&
+        mouseY >= area.y &&
+        mouseY <= area.y + area.height
+      ) {
+        found = area;
+      }
+    });
+
+    if (found) {
+      tooltip.style.display = "block";
+      tooltip.style.left = e.pageX + "px";
+      tooltip.style.top = e.pageY + "px";
+      tooltip.innerHTML =
+        `${found.month}<br>${found.category}：${found.value.toLocaleString()}円`;
+    } else {
+      tooltip.style.display = "none";
+    }
+  };
+
+  chartCanvas.onmouseleave = function() {
+    tooltip.style.display = "none";
+  };
+
+  drawLegend();
+
+
+  // ===== グラフクリックでタブ移動 =====
+  chartCanvas.onclick = function(e) {
+
+    const rect = chartCanvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+
+    const barIndex = Math.floor(x / (barWidth + gap));
+    const selectedMonth = months[barIndex];
+
+    if (!selectedMonth) return;
+
+    // 月を保存
+    localStorage.setItem("selectedMonth", selectedMonth);
+
+    // 支出タブへ移動
+    showPage("expense");
+
+    // フィルタ処理（後で実装）
+  };
+
+  // ===== 最新月へ自動スクロール =====
+  const scrollArea = document.getElementById("monthlyChartScroll");
+  if (scrollArea) {
+    scrollArea.scrollLeft = scrollArea.scrollWidth;
+  }
+}
+
+
+function drawLegend() {
+  const legend = document.getElementById("chartLegend");
+  legend.innerHTML = "";
+
+  const selectedCategories = getSelectedCategories();
+
+  selectedCategories.forEach(cat => {
+    const color = categoryColors[cat];
+
+    legend.innerHTML += `
+      <span style="display:inline-block; margin-right:10px;">
+        <span style="
+          display:inline-block;
+          width:10px;
+          height:10px;
+          background:${color};
+          margin-right:4px;
+        "></span>
+        ${cat}
+      </span>
+    `;
+  });
+}
+
+
+function getLatestBalance() {
+
+  const records = appData.bankAccounts[currentAccount];
+
+  if (!records || records.length === 0) {
+    return 0;
+  }
+
+  const latest = [...records].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  )[0];
+
+  return latest.balance || 0;
+}
+
+function drawBankBalanceChart() {
+  const canvas = document.getElementById("bankChart");
+  const axisCanvas = document.getElementById("bankChartAxis");
+
+  if (!canvas || !axisCanvas) return;
+
+  const bankRecords = appData.bankAccounts[currentAccount];
+
+  if (!bankRecords || bankRecords.length === 0) return;
+
+  const ctx = canvas.getContext("2d");
+  const axisCtx = axisCanvas.getContext("2d");
+
+  // =====================
+  // 月末残高
+  // =====================
+  let monthEndMap = {};
+
+  appData.bankAccounts[currentAccount].forEach(r => {
+    const d = new Date(r.date);
+    const key = d.getFullYear() + "-" + (d.getMonth() + 1);
+
+    if (
+      !monthEndMap[key] ||
+      new Date(r.date) > new Date(monthEndMap[key].date)
+    ) {
+      monthEndMap[key] = r;
+    }
+  });
+
+  const months = Object.keys(monthEndMap).sort(
+    (a, b) => new Date(a) - new Date(b)
+  );
+  if (months.length === 0) return;
+
+  // 横幅（スクロール用）
+  canvas.width = Math.max(months.length * 80, 600);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  axisCtx.clearRect(0, 0, axisCanvas.width, axisCanvas.height);
+
+  const balances = months.map(m => monthEndMap[m].balance);
+
+  const max = Math.max(...balances);
+  const min = Math.min(...balances);
+
+  // ★10万円単位に丸める
+  const unit = 100000;
+  const displayMax = Math.ceil(max / unit) * unit;
+  const displayMin = Math.floor(min / unit) * unit;
+  const range = displayMax - displayMin || unit;
+
+  const padding = 20;
+  const chartHeight = canvas.height - padding * 2;
+  const stepX =
+    months.length > 1
+      ? (canvas.width - padding * 2) / (months.length - 1)
+      : 0;
+
+  // =====================
+  // Y軸（固定canvasに描画）
+  // =====================
+  axisCtx.strokeStyle = "#eee";
+  axisCtx.fillStyle = "#666";
+  axisCtx.font = "10px sans-serif";
+  axisCtx.textAlign = "right";
+
+  const steps = range / unit;
+
+  for (let i = 0; i <= steps; i++) {
+    const value = displayMin + unit * i;
+
+    const y =
+      axisCanvas.height -
+      padding -
+      ((value - displayMin) / range) * chartHeight;
+
+    // グリッド線（グラフ側）
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(canvas.width, y);
+    ctx.strokeStyle = "#f0f0f0";
+    ctx.stroke();
+
+    // ラベル（軸側）
+    axisCtx.fillText(
+      Math.round(value / 10000) + "万円",
+      axisCanvas.width - 5,
+      y + 3
+    );
+  }
+
+  // =====================
+  // 折れ線
+  // =====================
+  ctx.strokeStyle = "#4A90E2";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+
+  let points = [];
+
+  months.forEach((month, i) => {
+    const balance = monthEndMap[month].balance;
+
+    const x = padding + i * stepX;
+    const y =
+      canvas.height -
+      padding -
+      ((balance - displayMin) / range) * chartHeight;
+
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+
+    points.push({ x, y, month, balance });
+  });
+
+  ctx.stroke();
+
+  // 点
+  ctx.fillStyle = "#4A90E2";
+  points.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // 月ラベル
+  ctx.fillStyle = "#333";
+  ctx.font = "10px sans-serif";
+  ctx.textAlign = "center";
+
+  months.forEach((month, i) => {
+    const x = padding + i * stepX;
+    const m = month.split("-")[1];
+    ctx.fillText(m + "月", x, canvas.height - 5);
+  });
+
+  // =====================
+  // ホバー
+  // =====================
+  const tooltip = document.getElementById("chartTooltip");
+  if (!tooltip) return;
+
+  canvas.onmousemove = function(e) {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    let found = null;
+
+    points.forEach(p => {
+      const dx = mouseX - p.x;
+      const dy = mouseY - p.y;
+      if (Math.sqrt(dx * dx + dy * dy) < 10) {
+        found = p;
+      }
+    });
+
+    if (found) {
+      tooltip.style.display = "block";
+      tooltip.style.left = e.clientX + 10 + "px";
+      tooltip.style.top = e.clientY - 20 + "px";
+
+      const [y, m] = found.month.split("-");
+      tooltip.innerHTML =
+        `${y}年${m}月<br><strong>${found.balance.toLocaleString()}円</strong>`;
+    } else {
+      tooltip.style.display = "none";
+    }
+  };
+
+  canvas.onmouseleave = function() {
+    tooltip.style.display = "none";
+  };
+
+  // =====================
+  // 今表示中の月へスクロール
+  // =====================
+  const currentKey =
+    displayDate.getFullYear() + "-" + (displayDate.getMonth() + 1);
+
+  const index = months.indexOf(currentKey);
+
+  if (index !== -1) {
+    const scrollContainer = canvas.parentElement;
+
+    const targetX = padding + index * stepX;
+
+    scrollContainer.scrollLeft =
+      targetX - scrollContainer.clientWidth / 2;
+  }
+}
+
+// =======================
+// 銀行明細リスト表示（口座記録タブ用）
+// =======================
+function drawBankList() {
+
+  const bankRecords = appData.bankAccounts[currentAccount];
+
+  const listEl = document.getElementById("bankList");
+  const balanceEl = document.getElementById("bankBalanceDisplay");
+
+  const changeEl = document.getElementById("bankMonthlyChange");
+
+  if (balanceEl) {
+    balanceEl.textContent =
+      getLatestBalance(bankRecords).toLocaleString() + " 円";
+  }
+
+  if (changeEl) {
+    const change = getThisMonthBankChange();
+    const sign = change >= 0 ? "+" : "";
+    const color = change >= 0 ? "#4CAF50" : "#E53935";
+
+    changeEl.textContent = `今月の増減 ${sign}${change.toLocaleString()}円`;
+    changeEl.style.color = color;
+  }
+
+  if (!listEl) return;
+
+  // 残高表示
+  if (balanceEl) {
+    balanceEl.textContent =
+      getLatestBalance(bankRecords).toLocaleString() + " 円";
+  }
+
+  if (!bankRecords || bankRecords.length === 0) {
+    listEl.innerHTML = "銀行データがありません";
+    return;
+  }
+
+  // 新しい順に並び替え
+  const sorted = [...bankRecords].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+
+  // 最新20件だけ表示
+  const recent = sorted;
+
+  listEl.innerHTML = "";
+
+  recent.forEach(r => {
+
+    const amountColor = r.amount >= 0 ? "#4CAF50" : "#E53935";
+
+    listEl.innerHTML += `
+      <div class="bank-item" style="
+        display:flex;
+        justify-content:space-between;
+        border-bottom:1px solid #eee;
+        padding:6px 0;
+        font-size:12px;
+      ">
+        <div>
+          <div>${r.date}</div>
+          <div style="color:#666;">${r.description}</div>
         </div>
-
-
-      </section>
-
-
-      <!-- =================================================
-           メッセージエリア
-      ================================================== -->
-
-      <section class="message-section">
-
-
-        <div class="message-card">
-
-
-          <h1
-            id="name"
-            class="guest-name"
-          >
-            Thank you!
-          </h1>
-
-
-          <div class="name-line"></div>
-
-
-          <div
-            class="message-scroll"
-            id="messageScroll"
-          >
-
-            <p
-              id="message"
-              class="message"
-            >
-              メッセージを読み込んでいます。
-            </p>
-
-
-            <div
-              class="message-signature"
-              id="messageSignature"
-            >
-              Rin
-            </div>
-
+        <div style="text-align:right;">
+          <div style="color:${amountColor};">
+            ${r.amount.toLocaleString()}円
           </div>
-
-
-          <!-- 下部情報 -->
-
-          <div class="message-bottom">
-
-
-            <div class="wedding-mark">
-
-              THANK YOU FOR COMING
-
-            </div>
-
-
-            <div class="thank-you">
-
-              7 NOV 2026
-
-            </div>
-
-
+          <div style="color:#999; font-size:11px;">
+            残高 ${r.balance.toLocaleString()}円
           </div>
-
-
-          <div class="little-heart">
-            ♥
-          </div>
-
-
-          <div class="bottom-dash"></div>
-
-
         </div>
+      </div>
+    `;
+  });
+}
 
+function drawTotalBankBalance() {
 
-      </section>
+  const accounts = appData.bankAccounts;
 
+  function getLatestBalance(accountArray) {
+    if (!accountArray || accountArray.length === 0) return 0;
+    return Number(accountArray[0].balance) || 0;
+  }
 
-    </div>
+  const mainBalance = getLatestBalance(accounts.main);
+  const oiwaiBalance = getLatestBalance(accounts.oiwai);
+  const charinBalance = getLatestBalance(accounts.charin);
 
+  const total = mainBalance + oiwaiBalance + charinBalance;
 
-  </main>
+  document.getElementById("totalBankBalanceDisplay").textContent =
+    total.toLocaleString() + " 円";
+}
 
+function getThisMonthBankChange() {
 
-  <!-- ==================================================
-       ゲストデータ
-    ================================================== -->
+  const bankRecords = appData.bankAccounts[currentAccount];
+  if (!bankRecords || bankRecords.length === 0) return 0;
 
-  <script src="guests.js"></script>
+  const now = new Date();
+  const thisMonth = now.getMonth();
+  const thisYear = now.getFullYear();
 
+  const thisMonthRecords = bankRecords.filter(r => {
+    const d = new Date(r.date);
+    return d.getMonth() === thisMonth && d.getFullYear() === thisYear;
+  });
 
-  <script>
+  if (thisMonthRecords.length < 2) return 0;
 
-    /* ==================================================
-       WorkerのURL
-    ================================================== */
+  // 日付順に並べる
+  thisMonthRecords.sort((a,b)=> new Date(a.date) - new Date(b.date));
 
-    const WORKER_URL =
-      "https://wedding-memory-worker.rinkawamura1012.workers.dev";
+  const first = Number(thisMonthRecords[0].amount);
+  const last  = Number(thisMonthRecords[thisMonthRecords.length-1].amount);
 
+  return last - first;
+}
 
-    /* ==================================================
-       URLからID取得
-    ================================================== */
+function clearExpenseRecords() {
+  if (!confirm("支出データをすべて削除します。よろしいですか？")) return;
 
-    const params =
-      new URLSearchParams(
-        window.location.search
-      );
+  records = [];
+  appData.records = records;
 
+  saveData();
+  updateDisplay();
+  drawMonthlyChartByCategory();
 
-    const id =
-      params.get("id");
+  alert("支出データを削除しました");
+}
 
+function clearBankRecords() {
+  if (!confirm("銀行明細をすべて削除します。よろしいですか？")) return;
 
-    /* ==================================================
-       フィルム穴生成
-    ================================================== */
+  appData.bankAccounts.main =[];
+  appData.bankAccounts.oiwai =[];
+  appData.bankAccounts.charin =[];
 
-    function createFilmHoles() {
+  alert("銀行明細を削除しました");
+}
 
-      const top =
-        document.getElementById(
-          "holesTop"
-        );
+function addRecord() {
+  const date = document.getElementById("date").value;
+  const amount = Number(document.getElementById("amount").value);
+  const account = document.getElementById("account").value;
+  const shop = document.getElementById("shop").value;
+  const category = document.getElementById("category").value;
+  const memo = document.getElementById("memo").value;
 
+  if (!date || !amount) {
+    alert("日付と金額は必須です");
+    return;
+  }
 
-      const bottom =
-        document.getElementById(
-          "holesBottom"
-        );
+  records.push({
+    date: date,
+    amount: amount,
+    account: account,
+    shop: shop,
+    category: category,
+    memo: memo
+  });
 
+  saveData();
+  updateDisplay();
 
-      const count =
-        Math.ceil(
-          window.innerWidth / 23
-        );
+  // 入力リセット
+  document.getElementById("amount").value = "";
+  document.getElementById("shop").value = "";
+  document.getElementById("memo").value = "";
+}
 
+// =======================
+// 月切替
+// =======================
+function prevMonth() {
+  displayDate.setMonth(displayDate.getMonth() - 1);
+  updateDisplay();
+}
 
-      for (
-        let i = 0;
-        i < count;
-        i++
-      ) {
+function nextMonth() {
+  displayDate.setMonth(displayDate.getMonth() + 1);
+  updateDisplay();
+}
 
-        const hole1 =
-          document.createElement(
-            "div"
-          );
+// =======================
+// 削除
+// =======================
+function deleteRecord(index) {
+  records.splice(index, 1);
+  saveData();
+  updateDisplay();
+}
 
-        hole1.className =
-          "film-hole";
+// =======================
+// CSV取り込み（重複防止付き）
+// =======================
+function importCSV() {
+  const fileInput = document.getElementById("csvFile");
+  const file = fileInput.files[0];
+  if (!file) return;
 
+  const reader = new FileReader();
 
-        const hole2 =
-          document.createElement(
-            "div"
-          );
+  reader.onload = function (e) {
+    const text = e.target.result;
+    const lines = text.split("\n");
 
-        hole2.className =
-          "film-hole";
+    // 1行目でカード判定
+    const header = lines[0];
+    let accountType = "自分カード";
 
-
-        top.appendChild(
-          hole1
-        );
-
-        bottom.appendChild(
-          hole2
-        );
-
-      }
-
+    if (header.includes("Ｏｌｉｖｅ")) {
+      accountType = "自分カード";
+    }
+    if (header.includes("ゴールドＶＩＳＡ")) {
+      accountType = "家族カード";
     }
 
+    let addedCount = 0;
 
-    createFilmHoles();
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+
+      const cols = line.split(",");
+
+      const date = cols[0];
+      const shop = cols[1];
+      const amount = Number(cols[2]);
+
+      if (!date || !amount) continue;
+
+      const formattedDate = date.replace(/\//g, "-");
+
+      const category = detectCategory(shop);
 
 
-    /* ==================================================
-       写真URL
-    ================================================== */
-
-    function createPhotoUrl(path) {
-
-      const safePath =
-        path
-          .split("/")
-          .map(
-            part =>
-              encodeURIComponent(part)
-          )
-          .join("/");
-
-
-      return (
-        WORKER_URL +
-        "/" +
-        safePath
+      // 重複チェック
+      const isDuplicate = records.some(r =>
+        r.date === formattedDate &&
+        r.amount === amount &&
+        r.shop === shop &&
+        r.account === accountType
       );
 
+      if (!isDuplicate) {
+        records.push({
+	  date: formattedDate,
+	  amount,
+	  account: accountType,
+	  shop,
+	  category: category,
+	  memo: "CSV"
+	});
+        addedCount++;
+      }
     }
 
+    saveData();
+    updateDisplay();
 
-    /* ==================================================
-       写真カード生成
-    ================================================== */
+    alert(addedCount + "件取り込みました");
+  };
 
-    function createPhotoCards(photos) {
+  reader.readAsText(file, "Shift_JIS");
+}
 
-      const track =
-        document.getElementById(
-          "photoTrack"
-        );
+// 数値変換関数
+function parseNumber(str) {
+  if (!str) return 0;
 
+  return Number(
+    String(str)
+      .replace(/,/g, "")
+      .replace(/[^\d\-]/g, "") // 数字とマイナス以外全部削除
+  ) || 0;
+}
 
-      track.innerHTML = "";
+// =======================
+// 銀行CSV取り込み
+// =======================
+function importBankCSV() {
 
+  const fileInput = document.getElementById("bankCsvFile");
+  const file = fileInput.files[0];
+  if (!file) {
+    alert("CSVファイルを選択してください");
+    return;
+  }
 
-      if (
-        !Array.isArray(photos) ||
-        photos.length === 0
-      ) {
+  // ===== ファイル名で口座判定 =====
+  let targetAccount = "main";
+  const fileName = file.name.toLowerCase();
 
-        return;
+  if (fileName.includes("お祝い")) {
+    targetAccount = "oiwai";
+  } else if (fileName.includes("ちゃりん")) {
+    targetAccount = "charin";
+  }
 
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+
+    const text = e.target.result;
+    const lines = text.split("\n");
+
+    let added = 0;
+
+    for (let i = 1; i < lines.length; i++) {
+
+      let line = lines[i].trim();
+      if (!line) continue;
+
+      // ===== ダブルクォート除去 =====
+      const cols = line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
+      if (!cols) continue;
+
+      if (i === 1) console.log(cols);
+
+      // 先頭と末尾の " を除去
+      for (let j = 0; j < cols.length; j++) {
+        cols[j] = cols[j].replace(/^"|"$/g, "");
       }
+      if (cols.length < 5) continue;
 
+      const dateStr = cols[0];
+      const description = cols[1];
+      const outAmount = parseNumber(cols[2]);
+      const inAmount = parseNumber(cols[3]);
+      const balance = parseNumber(cols[4]);
 
-      photos.forEach(
-        function(photo) {
+      // 日付整形
+      const formattedDate = dateStr.replace(/\//g, "-");
 
-          const card =
-            document.createElement(
-              "div"
-            );
+      const amount = inAmount > 0 ? inAmount : -outAmount;
 
-          card.className =
-            "photo-card";
-
-
-          const image =
-            document.createElement(
-              "img"
-            );
-
-
-          image.src =
-            createPhotoUrl(
-              photo
-            );
-
-          image.alt = "";
-
-
-          card.appendChild(
-            image
-          );
-
-
-          track.appendChild(
-            card
-          );
-
-        }
+      // 重複チェック（重要）
+      const isDuplicate = appData.bankAccounts[targetAccount].some(r =>
+        r.date === formattedDate &&
+        r.amount === amount &&
+        r.balance === balance &&
+        r.description === description
       );
 
+      if (isDuplicate) continue;
 
-      photos.forEach(
-        function(photo) {
+      appData.bankAccounts[targetAccount].push({
+        date: formattedDate,
+        description: description,
+        amount: amount,
+        balance: balance
+      });
 
-          const card =
-            document.createElement(
-              "div"
-            );
-
-          card.className =
-            "photo-card";
-
-
-          const image =
-            document.createElement(
-              "img"
-            );
-
-
-          image.src =
-            createPhotoUrl(
-              photo
-            );
-
-          image.alt = "";
-
-
-          card.appendChild(
-            image
-          );
-
-
-          track.appendChild(
-            card
-          );
-
-        }
-      );
-
+      added++;
     }
 
+    alert(added + "件取り込みました");
 
-    /* ==================================================
-       ゲスト情報
-    ================================================== */
+    localStorage.setItem("familyAppData", JSON.stringify(appData));
 
-    async function loadGuest() {
+    drawBankBalanceChart();
+    drawBankList();
+    drawTotalBankBalance();
+  };
 
-      if (!id) {
+  reader.readAsText(file, "Shift_JIS");
+}
 
-        document.getElementById(
-          "name"
-        ).textContent =
-          "Welcome!";
+function changeCategory(index, newCategory) {
+  records[index].category = newCategory;
+  saveData();
+  updateDisplay();
+}
 
+function toggleForm() {
+  const form = document.getElementById("recordForm");
 
-        document.getElementById(
-          "message"
-        ).textContent =
-          "QRコードからアクセスしてください。";
+  if (form.style.display === "none") {
+    form.style.display = "block";
+  } else {
+    form.style.display = "none";
+  }
+}
 
+// ===== カテゴリチップクリック処理 =====
+document.querySelectorAll(".category-chip").forEach(chip => {
+  chip.addEventListener("click", () => {
+    chip.classList.toggle("active");
+    updateDisplay();
+  });
+});
 
-        return;
+function exportBackup() {
+  const dataStr = JSON.stringify(appData, null, 2);
+  const blob = new Blob([dataStr], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
 
-      }
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "family_kakeibo_backup.json";
+  a.click();
 
+  URL.revokeObjectURL(url);
+}
 
-      if (
-        typeof guests !== "undefined" &&
-        guests[id]
-      ) {
+function importBackup(event) {
+  const file = event.target.files[0];
+  if (!file) return;
 
-        const guest =
-          guests[id];
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const importedData = JSON.parse(e.target.result);
 
+      localStorage.setItem("familyAppData", JSON.stringify(importedData));
 
-        const nameElement =
-          document.getElementById(
-            "name"
-          );
+      alert("復元完了！ページをリロードします。");
+      location.reload();
 
-
-        nameElement.textContent =
-          guest.name;
-
-
-        if (
-          !/[\u3040-\u30ff\u3400-\u9fff]/.test(
-            guest.name
-          )
-        ) {
-
-          nameElement.classList.add(
-            "english"
-          );
-
-        }
-
-
-        document.getElementById(
-          "message"
-        ).textContent =
-          guest.message;
-          
-        document.getElementById(
-          "messageSignature"
-          ).textContent =
-          guest.from || "Rin";
-
-      }
-
-
-      /* ==================================================
-         メッセージ末尾でRin表示
-      ================================================== */
-
-      const messageScroll =
-        document.getElementById(
-          "messageScroll"
-        );
-
-
-      function checkMessageScroll() {
-
-        const isAtBottom =
-          messageScroll.scrollTop +
-          messageScroll.clientHeight >=
-          messageScroll.scrollHeight - 5;
-
-
-        if (isAtBottom) {
-
-          messageScroll.classList.add(
-            "reached-bottom"
-          );
-
-        }
-
-      }
-
-
-      messageScroll.addEventListener(
-        "scroll",
-        checkMessageScroll
-      );
-
-
-      checkMessageScroll();
-
-
-      /* ==================================================
-         Workerから写真一覧
-      ================================================== */
-
-      try {
-
-        const response =
-          await fetch(
-            WORKER_URL +
-            "/" +
-            encodeURIComponent(id) +
-            "/"
-          );
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            `Worker error: ${response.status}`
-          );
-
-        }
-
-
-        const data =
-          await response.json();
-
-
-        console.log(
-          "Workerから取得した写真:",
-          data.photos
-        );
-
-
-        createPhotoCards(
-          data.photos
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          "写真の取得に失敗しました:",
-          error
-        );
-
-      }
-
+    } catch (error) {
+      alert("読み込み失敗。JSONファイル確認してね。");
     }
+  };
 
+  reader.readAsText(file);
+}
 
-    loadGuest();
+function saveData() {
+  appData.records = records;
+  appData.bankRecords = bankRecords;
+  appData.latestBankBalance = latestBankBalance;
 
+  localStorage.setItem("familyAppData", JSON.stringify(appData));
+}
 
-    /* ==================================================
-       写真自動スクロール
-    ================================================== */
-
-    const track =
-      document.getElementById(
-        "photoTrack"
-      );
-
-
-    const windowArea =
-      document.getElementById(
-        "photoWindow"
-      );
-
-
-    let position = 0;
-
-    let velocity = 0.38;
-
-    let dragging = false;
-
-    let startX = 0;
-
-    let startPosition = 0;
-
-
-    /* ==================================================
-       1セット分の幅
-    ================================================== */
-
-    function getLoopWidth() {
-
-      const cards =
-        track.querySelectorAll(
-          ".photo-card"
-        );
-
-
-      const totalCards =
-        cards.length;
-
-
-      if (
-        totalCards < 2
-      ) {
-
-        return 0;
-
-      }
-
-
-      const half =
-        totalCards / 2;
-
-
-      if (
-        !Number.isInteger(half)
-      ) {
-
-        return 0;
-
-      }
-
-
-      return (
-        cards[half].offsetLeft -
-        cards[0].offsetLeft
-      );
-
-    }
-
-
-    /* ==================================================
-       アニメーション
-    ================================================== */
-
-    function animate() {
-
-      const loopWidth =
-        getLoopWidth();
-
-
-      if (
-        !dragging &&
-        loopWidth
-      ) {
-
-        position -= velocity;
-
-
-        if (
-          position <= -loopWidth
-        ) {
-
-          position +=
-            loopWidth;
-
-        }
-
-      }
-
-
-      track.style.transform =
-        `translate3d(
-          ${position}px,
-          -50%,
-          0
-        )`;
-
-
-      requestAnimationFrame(
-        animate
-      );
-
-    }
-
-
-    requestAnimationFrame(
-      animate
-    );
-
-
-    /* ==================================================
-       タッチ操作
-    ================================================== */
-
-    windowArea.addEventListener(
-      "touchstart",
-      function(event) {
-
-        if (
-          event.touches.length !== 1
-        ) {
-
-          return;
-
-        }
-
-
-        dragging = true;
-
-
-        track.classList.add(
-          "dragging"
-        );
-
-
-        startX =
-          event.touches[0].clientX;
-
-
-        startPosition =
-          position;
-
-      },
-      {
-        passive: true
-      }
-    );
-
-
-    windowArea.addEventListener(
-      "touchmove",
-      function(event) {
-
-        if (!dragging) {
-
-          return;
-
-        }
-
-
-        const currentX =
-          event.touches[0].clientX;
-
-
-        const delta =
-          currentX -
-          startX;
-
-
-        position =
-          startPosition +
-          delta;
-
-
-        const loopWidth =
-          getLoopWidth();
-
-
-        if (
-          loopWidth &&
-          position <= -loopWidth
-        ) {
-
-          position +=
-            loopWidth;
-
-          startPosition +=
-            loopWidth;
-
-        }
-
-
-        if (
-          loopWidth &&
-          position > 0
-        ) {
-
-          position -=
-            loopWidth;
-
-          startPosition -=
-            loopWidth;
-
-        }
-
-      },
-      {
-        passive: true
-      }
-    );
-
-
-    windowArea.addEventListener(
-      "touchend",
-      function() {
-
-        dragging = false;
-
-        track.classList.remove(
-          "dragging"
-        );
-
-      }
-    );
-
-
-    /* ==================================================
-       PCマウス操作
-    ================================================== */
-
-    windowArea.addEventListener(
-      "mousedown",
-      function(event) {
-
-        dragging = true;
-
-        track.classList.add(
-          "dragging"
-        );
-
-
-        startX =
-          event.clientX;
-
-
-        startPosition =
-          position;
-
-      }
-    );
-
-
-    window.addEventListener(
-      "mousemove",
-      function(event) {
-
-        if (!dragging) {
-
-          return;
-
-        }
-
-
-        position =
-          startPosition +
-          (
-            event.clientX -
-            startX
-          );
-
-
-        const loopWidth =
-          getLoopWidth();
-
-
-        if (
-          loopWidth &&
-          position <= -loopWidth
-        ) {
-
-          position +=
-            loopWidth;
-
-          startPosition +=
-            loopWidth;
-
-        }
-
-
-        if (
-          loopWidth &&
-          position > 0
-        ) {
-
-          position -=
-            loopWidth;
-
-          startPosition -=
-            loopWidth;
-
-        }
-
-      }
-    );
-
-
-    window.addEventListener(
-      "mouseup",
-      function() {
-
-        dragging = false;
-
-        track.classList.remove(
-          "dragging"
-        );
-
-      }
-    );
-
-  </script>
-
-
+</script>
+</div>
 </body>
-
 </html>
