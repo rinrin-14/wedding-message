@@ -37,7 +37,7 @@ jobs:
 
               guests[guest_id] = {
                   "name": row["name"],
-                  "message": row["message"]
+                  "message": row["message"],
                   “from”: row["from"]
               }
 
